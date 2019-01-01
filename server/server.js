@@ -8,16 +8,11 @@ const port = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// const router = express.Router(); 
-
-router.get('/', (req, res) => {
-  res.json({ message: 'hooray! welcome to our api!' });
-});
 
 app.use('/api/v1/', router);
 
 app.listen(port, () => {
-  console.log(`App is strolling at http://localhost:${port}`);
+  console.log(`Questioner app is strolling at http://127.0.0.1:${port}`);
 });
 
 export default app;
