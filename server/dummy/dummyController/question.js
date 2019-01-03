@@ -16,9 +16,10 @@ class QuestionController {
       title,
       body,
     };
-    const errorMessages = Validator.validate(fields, 'required|string');
+    const validator = new Validator();
+    validator.validate(fields, 'required|string');
 
-    if (errorMessages === true) {
+    if (!validator.hasErrors) {
       const foundUsername = dummyUser.find(user => user.username === req.body.user);
       const foundMeetup = dummyMeetup.find(meetup => meetup.topic === req.body.meetup);
 
@@ -62,7 +63,7 @@ class QuestionController {
       }
     } else {
       return res.status(400).json({
-        errorMessages,
+        errorMessages:validator.getErrors()
       });
     }
   }
@@ -72,14 +73,14 @@ class QuestionController {
     const fields = {
       user
     }
-    const errorMessages = Validator.validate(fields, 'required|string');
-    if (errorMessages === true) {
+    const validator = new Validator();
+    validator.validate(fields, 'required|string');
+    if (!validator.hasErrors) {
       const foundUsername = dummyUser.find(user => user.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
       const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
         let votes = foundQuestion.votes
-        console.log(`oldcount: ${upcount}`)
         if (upcount % 2 !== 0) {
           let totalVote = votes +1;
           foundQuestion.votes = totalVote;
@@ -94,7 +95,6 @@ class QuestionController {
             totalVote
           }
           upcount += 1;
-        console.log(`count : ${upcount}`)
           return res.status(200).json({
             status:200,
             message: 'Upvote successful',
@@ -113,7 +113,7 @@ class QuestionController {
       }
     } else {
       return res.status(400).json({
-        errorMessages,
+        errorMessages:validator.getErrors()
       });
     }
   }
@@ -123,14 +123,14 @@ class QuestionController {
     const fields = {
       user
     }
-    const errorMessages = Validator.validate(fields, 'required|string');
-    if (errorMessages === true) {
+    const validator = new Validator();
+    validator.validate(fields, 'required|string');
+    if (!validator.hasErrors) {
       const foundUsername = dummyUser.find(user => user.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
       const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
         let votes = foundQuestion.votes
-        console.log(downcount)
         if (downcount % 2 !== 0) {
           let totalVote = votes -1;
           foundQuestion.votes = totalVote;
@@ -163,7 +163,7 @@ class QuestionController {
       }
     } else {
       return res.status(400).json({
-        errorMessages,
+        errorMessages:validator.getErrors()
       });
     }
   }

@@ -24,7 +24,7 @@ router.post('/meetups/:id/rsvps', rsvpMeetup);
 
 // question endpoints
 router.post('/questions', createQuestion);
-router.post('/questions/:id/upvote', upVote);
-router.post('/questions/:id/downvote', downVote);
+router.patch('/questions/:id/upvote', upVote);
+router.patch('/questions/:id/downvote', downVote);
 
 export default router;
