@@ -27,7 +27,7 @@ describe('Meetups', () => {
     it('should get a single meetup record', (done) => {
       const id = 1;
       chai.request(app)
-        .get(`/api/v1/meetups/${id}`)
+        .get(`/api/v1/meetup/${id}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');

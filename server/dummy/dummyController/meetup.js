@@ -1,25 +1,25 @@
 import dummyMeetup from '../dummyModel/dummyMeetups';
 import Validator from '../_helpers/post_validators';
 
+
 class MeetupController {
   static getAllMeetups(req, res) {
-    console.log(typeof dummyMeetup)
+    console.log(typeof dummyMeetup);
     if (dummyMeetup.length === 0) {
       return res.status(404).json({
-        status:404,
-        message: 'No meetup is available'
-      })
-    } else {
-      return res.status(200).json({
-  		  status: 200,
-  	    data: dummyMeetup,
-  	  });
+        status: 404,
+        message: 'No meetup is available',
+      });
     }
+    return res.status(200).json({
+		  status: 200,
+	    data: dummyMeetup,
+	  });
   }
 
   static getSingleMeetup(req, res) {
     const foundMeetup = dummyMeetup.find(meetup => meetup.id === parseInt(req.params.id, 10));
-    
+
     if (foundMeetup) {
       return res.status(200).json({
         status: 200,
@@ -34,32 +34,31 @@ class MeetupController {
 
   static getUpcomingMeetups(req, res) {
     const currentDate = new Date();
-    let upcomingMeetups = [];
-    for(let meetup of dummyMeetup) {
-      let happeningOn = new Date(meetup.happeningOn);
-      let isHappeningOnYear =happeningOn.getFullYear() >= currentDate.getFullYear();
-      let isHappeningOnMonth = happeningOn.getMonth() >= currentDate.getMonth();
-      let isHappeningOnDate = happeningOn.getDate() > currentDate.getDate();
-      
+    const upcomingMeetups = [];
+    for (const meetup of dummyMeetup) {
+      const happeningOn = new Date(meetup.happeningOn);
+      const isHappeningOnYear = happeningOn.getFullYear() >= currentDate.getFullYear();
+      const isHappeningOnMonth = happeningOn.getMonth() >= currentDate.getMonth();
+      const isHappeningOnDate = happeningOn.getDate() > currentDate.getDate();
+
       if (isHappeningOnYear) {
         if (isHappeningOnMonth) {
           if (isHappeningOnDate) {
-
             upcomingMeetups.push(meetup);
           }
         }
       } else {
         return res.status(404).json({
-          status:404,
-          message: 'There are no upcoming meetups'
-        })
+          status: 404,
+          message: 'There are no upcoming meetups',
+        });
       }
     }
 
     return res.status(200).json({
-      status:200,
-      data: upcomingMeetups
-    }) 
+      status: 200,
+      data: upcomingMeetups,
+    });
   }
 
   static createMeetup(req, res) {
@@ -70,21 +69,21 @@ class MeetupController {
       happeningOn,
       location,
     };
+    const validator = new Validator();
+    validator.validate(fields, 'required|string');
+    if (!validator.hasErrors) {
+      let isDuplicate = false;
 
-    const errorMessages = Validator.validate(fields, 'required|string');
-    let isDuplicate = false;
+      for (const event of dummyMeetup) {
+        isDuplicate = event.topic === fields.topic && event.location === fields.location;
+      }
+      if (isDuplicate) {
+        return res.status(409).json({
+          status: 409,
+          error: `This event '${fields.topic}' cannot be created twice`,
+        });
+      }
 
-    for (const event of dummyMeetup) {
-      isDuplicate = event.topic === fields.topic && event.location === fields.location;
-    }
-    if (isDuplicate) {
-      return res.status(409).json({ 
-        status:409,
-        error: `This event '${fields.topic}' cannot be created twice` 
-      });
-    }
-
-    if (errorMessages === true) {
       const id = dummyMeetup.length + 1;
       const meetupDetail = {
         id,
@@ -102,53 +101,50 @@ class MeetupController {
         message: 'Create meetup successful',
         data: meetupDetail,
       });
-    } else {
-      return res.status(400).json({
-        errorMessages,
-      });
     }
+    
+    return res.status(400).json({
+      errorMessages:validator.getErrors()
+    });
   }
 
   static rsvpMeetup(req, res) {
     const { meetupTopic, status } = req.body;
-    
+    const validator = new Validator();
     const field = {
       meetupTopic,
-    }
+    };
 
-    let rsvpStatus = status === 'yes' ||  status === 'no' || status === 'maybe'
+    const rsvpStatus = status === 'yes' || status === 'no' || status === 'maybe';
 
-    const errorMessages = Validator.validate(field, 'required|string');
+    const errorMessages = validator.validate(field, 'required|string');
     if (errorMessages === true) {
       const foundMeetup = dummyMeetup.find(meetup => meetup.topic === meetupTopic);
-      if (foundMeetup) {        
+      if (foundMeetup) {
         if (rsvpStatus) {
-          let meetup = foundMeetup.id;
+          const meetup = foundMeetup.id;
           const rsvpDetail = {
             meetup,
-            topic : meetupTopic,
+            topic: meetupTopic,
             status,
-          }
+          };
           return res.status(201).json({
             status: 201,
             message: 'Rsvp meetup successful',
             data: rsvpDetail,
-          })
-        } else {
-          return res.status(400).json({
-            error: 'Rsvp should be yes, no, or maybe'
-          })
+          });
         }
-      } else {
-         return res.status(404).json({
-          error: 'Meetup not found'
-        })
+        return res.status(400).json({
+          error: 'Rsvp should be yes, no, or maybe',
+        });
       }
-    } else {
-      return res.status(400).json({
-        errorMessages,
+      return res.status(404).json({
+        error: 'Meetup not found',
       });
-    }    
+    }
+    return res.status(400).json({
+      errorMessages,
+    });
   }
 }
 

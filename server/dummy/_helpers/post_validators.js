@@ -4,16 +4,14 @@ import dummyMeetup from '../dummyModel/dummyMeetups';
 class Validator {
 
 	constructor(){
-		this.errors =[];
-
+		this._errors =[];
+		this.hasErrors = false;
 	}
 	validate (value, rules){
-		 
-		this.errors = [];
 		  
 	  this.validateRules(value, rules)
 		 
-		return this.errors.length === 0 ? true : this.errors;
+		// return this.errors.length === 0 ? true : this.errors;
 	}
 
 	validateRules (value, rules){
@@ -34,21 +32,24 @@ class Validator {
 
 	string(value, key){
 		if (typeof value !== 'string' ) {
-			this.errors.push({error: `This field:${key} must be a string`})
+			this.hasErrors = true;
+			this._errors.push({error: `This field:${key} must be a string`})
 		}
 		return  
 	}
 
   required(value, key){
   	if (value === '' || value === null || typeof value === 'undefined' ) {
-  		this.errors.push({error: `This field:${key} cannot be empty`})
+  		this.hasErrors = true;
+  		this._errors.push({error: `This field:${key} cannot be empty`})
   	}
   	return  
   }
 
   integer(value, key){
 		if (typeof value !== 'number' ) {
-			this.errors.push({error: `This field:${key} must be a number`})
+			this.hasErrors = true;
+			this._errors.push({error: `This field:${key} must be a number`})
 		}
 		return  
 	}
@@ -57,7 +58,10 @@ class Validator {
 		// if (value )
 	}
 
+	getErrors () {
+		return this._errors;
+	}
 
 }
 
-export default (new Validator());
+export default Validator;

@@ -13,18 +13,6 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to our Queestioner api!' });
 });
 
-// router.get('*', (req, res) => {
-//   res.status(404).json({
-//   	status: 404,
-//   	message: 'Page not found!',
-//   });
-// });
-// router.post('*', (req, res) => {
-//   res.status(404).json({
-//   	status: 404,
-//   	message: 'Page not found!',
-//   });
-// });
 
 // meetup endpoints
 router.get('/meetups', getAllMeetups);
