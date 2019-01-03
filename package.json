@@ -5,7 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --exec babel-node --presets babel-preset-env ./server/server.js",
-    
     "test": "nyc mocha --exit --timeout 10000 ./server/test/**/*.js --compilers js:babel-core/register",
     "babel-node": "babel-node app --presets=env",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -34,7 +33,8 @@
   },
   "homepage": "https://github.com/NedyUdombat/Questioner#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "moment": "^2.23.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
