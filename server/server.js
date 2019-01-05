@@ -5,7 +5,7 @@ import router from './routes/index';
 
 
 const app = express();
-const port = 8080;
+const port = Number(process.env.PORT || 8000);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/v1', router);
 
 app.listen(port, () => {
-  console.log(`Questioner app is live at http://127.0.0.1:${port}`);
+  console.log(`Questioner app is live at http://127.0.0.1:${port}`, port, process.env.PORT);
 });
 
 export default app;

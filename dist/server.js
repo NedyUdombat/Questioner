@@ -19,7 +19,7 @@ var _index2 = _interopRequireDefault(_index);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
-var port = 8080;
+var port = Number(process.env.PORT || 8000);
 
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use('/api/v1', _index2.default);
 
 app.listen(port, function () {
-  console.log('Questioner app is live at http://127.0.0.1:' + port);
+  console.log('Questioner app is live at http://127.0.0.1:' + port, port, process.env.PORT);
 });
 
 exports.default = app;
