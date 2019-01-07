@@ -3,18 +3,17 @@ import dummyUser from '../dummyModel/dummyUser';
 import Validator from '../_helpers/post_validators';
 
 class MeetupController {
-  
   static getAllMeetups(req, res) {
-    if (dummyMeetup.length === 0) {
-      return res.status(404).json({
-        status: 404,
-        message: 'No meetup is available',
+    if (dummyMeetup.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully retrieved all meetups',
+        data: dummyMeetup,
       });
     }
-    return res.status(200).json({
-      status: 200,
-      message: 'Successfully retrieved all meetups',
-      data: dummyMeetup,
+    return res.status(404).json({
+      status: 404,
+      message: 'No meetup is available',
     });
   }
 
@@ -37,19 +36,19 @@ class MeetupController {
   static getUpcomingMeetups(req, res) {
     const currentDate = new Date();
     const upcomingMeetups = [];
-    for (let meetup of dummyMeetup) {
+    for (const meetup of dummyMeetup) {
       const happeningOn = new Date(meetup.happeningOn);
       if (happeningOn.getFullYear() === currentDate.getFullYear()) {
-        if ( happeningOn.getMonth() > currentDate.getMonth()) {
+        if (happeningOn.getMonth() > currentDate.getMonth()) {
           upcomingMeetups.push(meetup);
         } else if (happeningOn.getMonth() === currentDate.getMonth()) {
           if (happeningOn.getDate() > currentDate.getDate()) {
             upcomingMeetups.push(meetup);
           }
         }
-      } else if(happeningOn.getFullYear() > currentDate.getFullYear()){
+      } else if (happeningOn.getFullYear() > currentDate.getFullYear()) {
         upcomingMeetups.push(meetup);
-      } 
+      }
     }
     if (upcomingMeetups.length === 0) {
       return res.status(404).json({
@@ -73,9 +72,9 @@ class MeetupController {
       const foundUser = dummyUser.find(user => user.username === req.body.username);
       if (foundUser.isAdmin === false) {
         return res.status(401).json({
-          status:401,
-          error: 'Only an Admin can create meetups'
-        })
+          status: 401,
+          error: 'Only an Admin can create meetups',
+        });
       }
       let isDuplicate = false;
       for (const event of dummyMeetup) {
