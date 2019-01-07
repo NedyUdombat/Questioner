@@ -30,16 +30,16 @@ var MeetupController = function () {
   _createClass(MeetupController, null, [{
     key: 'getAllMeetups',
     value: function getAllMeetups(req, res) {
-      if (_dummyMeetups2.default.length === 0) {
-        return res.status(404).json({
-          status: 404,
-          message: 'No meetup is available'
+      if (_dummyMeetups2.default.length > 0) {
+        return res.status(200).json({
+          status: 200,
+          message: 'Successfully retrieved all meetups',
+          data: _dummyMeetups2.default
         });
       }
-      return res.status(200).json({
-        status: 200,
-        message: 'Successfully retrieved all meetups',
-        data: _dummyMeetups2.default
+      return res.status(404).json({
+        status: 404,
+        message: 'No meetup is available'
       });
     }
   }, {
