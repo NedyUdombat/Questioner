@@ -20,8 +20,8 @@ class QuestionController {
     validator.validate(fields, 'required|string');
 
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(user => user.username === req.body.user);
-      const foundMeetup = dummyMeetup.find(meetup => meetup.topic === req.body.meetup);
+      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
+      const foundMeetup = dummyMeetup.find(aMeetup => aMeetup.topic === req.body.meetup);
 
       if (foundUsername && foundMeetup) {
         const id = dummyQuestion.length + 1;
@@ -50,122 +50,114 @@ class QuestionController {
           meetupId,
           title,
           body,
-        }
+        };
         return res.status(201).json({
           status: 201,
           message: 'Question asked successfully',
           data: resDetails,
         });
-      } else {
-        return res.status(404).json({
-          error: 'User or Meetup does not exist',
-        });
       }
-    } else {
-      return res.status(400).json({
-        errorMessages:validator.getErrors()
+      return res.status(404).json({
+        error: 'User or Meetup does not exist',
       });
     }
+    return res.status(400).json({
+      errorMessages: validator.getErrors(),
+    });
   }
 
-  static upVote (req, res) {
+  static upVote(req, res) {
     const { user } = req.body;
     const fields = {
-      user
-    }
+      user,
+    };
     const validator = new Validator();
     validator.validate(fields, 'required|string');
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(user => user.username === req.body.user);
+      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
       const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
-        let votes = foundQuestion.votes
+        const votes = foundQuestion.votes;
         if (upcount % 2 !== 0) {
-          let totalVote = votes +1;
+          const totalVote = votes + 1;
           foundQuestion.votes = totalVote;
-          
-          const upVote = '+1'
+
+          const upVote = '+1';
           const resDetail = {
             meetup: foundQuestion.meetup,
             title: foundQuestion.title,
             body: foundQuestion.body,
             votes,
             upVote,
-            totalVote
-          }
+            totalVote,
+          };
           upcount += 1;
           return res.status(200).json({
-            status:200,
+            status: 200,
             message: 'Upvote successful',
             data: resDetail,
-          })
-        } else {
-           return res.status(409).json({
-            status:409,
-            message: 'You can only upvote a question once',
-           })
+          });
         }
-      } else {
-        return res.status(404).json({
-          error: 'User or Question does not exist',
+        return res.status(409).json({
+          status: 409,
+          message: 'You can only upvote a question once',
         });
       }
-    } else {
-      return res.status(400).json({
-        errorMessages:validator.getErrors()
+      return res.status(404).json({
+        error: 'User or Question does not exist',
       });
     }
+    return res.status(400).json({
+      errorMessages: validator.getErrors(),
+    });
   }
 
-  static downVote (req, res) {
+  static downVote(req, res) {
     const { user } = req.body;
     const fields = {
-      user
-    }
+      user,
+    };
     const validator = new Validator();
     validator.validate(fields, 'required|string');
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(user => user.username === req.body.user);
+      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
       const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
-        let votes = foundQuestion.votes
+        const votes = foundQuestion.votes;
         if (downcount % 2 !== 0) {
-          let totalVote = votes -1;
+          const totalVote = votes - 1;
           foundQuestion.votes = totalVote;
-          
-          const downVote = '-1'
+
+          const downVote = '-1';
           const resDetail = {
             meetup: foundQuestion.meetup,
             title: foundQuestion.title,
             body: foundQuestion.body,
             votes,
             downVote,
-            totalVote
-          }
+            totalVote,
+          };
           downcount += 1;
           return res.status(200).json({
-            status:200,
+            status: 200,
             message: 'Downvote successful',
             data: resDetail,
-          })
-        } else {
-           return res.status(409).json({
-            status:409,
-            message: 'You can only downvote a question once',
-           })
+          });
         }
-      } else {
-        return res.status(404).json({
-          error: 'User or Question does not exist',
+        return res.status(409).json({
+          status: 409,
+          message: 'You can only downvote a question once',
         });
       }
-    } else {
-      return res.status(400).json({
-        errorMessages:validator.getErrors()
+      return res.status(404).json({
+        error: 'User or Question does not exist',
       });
     }
+    return res.status(400).json({
+      errorMessages: validator.getErrors(),
+    });
   }
 }
 
