@@ -54,11 +54,11 @@ var QuestionController = function () {
       validator.validate(fields, 'required|string');
 
       if (!validator.hasErrors) {
-        var foundUsername = _dummyUser2.default.find(function (user) {
-          return user.username === req.body.user;
+        var foundUsername = _dummyUser2.default.find(function (aUser) {
+          return aUser.username === req.body.user;
         });
-        var foundMeetup = _dummyMeetups2.default.find(function (meetup) {
-          return meetup.topic === req.body.meetup;
+        var foundMeetup = _dummyMeetups2.default.find(function (aMeetup) {
+          return aMeetup.topic === req.body.meetup;
         });
 
         if (foundUsername && foundMeetup) {
@@ -116,16 +116,14 @@ var QuestionController = function () {
             message: 'Question asked successfully',
             data: resDetails
           });
-        } else {
-          return res.status(404).json({
-            error: 'User or Meetup does not exist'
-          });
         }
-      } else {
-        return res.status(400).json({
-          errorMessages: validator.getErrors()
+        return res.status(404).json({
+          error: 'User or Meetup does not exist'
         });
       }
+      return res.status(400).json({
+        errorMessages: validator.getErrors()
+      });
     }
   }, {
     key: 'upVote',
@@ -138,8 +136,8 @@ var QuestionController = function () {
       var validator = new _post_validators2.default();
       validator.validate(fields, 'required|string');
       if (!validator.hasErrors) {
-        var foundUsername = _dummyUser2.default.find(function (user) {
-          return user.username === req.body.user;
+        var foundUsername = _dummyUser2.default.find(function (aUser) {
+          return aUser.username === req.body.user;
         });
         var questionId = parseInt(req.params.id, 10);
         var foundQuestion = _dummyQuestion2.default.find(function (question) {
@@ -166,22 +164,19 @@ var QuestionController = function () {
               message: 'Upvote successful',
               data: resDetail
             });
-          } else {
-            return res.status(409).json({
-              status: 409,
-              message: 'You can only upvote a question once'
-            });
           }
-        } else {
-          return res.status(404).json({
-            error: 'User or Question does not exist'
+          return res.status(409).json({
+            status: 409,
+            message: 'You can only upvote a question once'
           });
         }
-      } else {
-        return res.status(400).json({
-          errorMessages: validator.getErrors()
+        return res.status(404).json({
+          error: 'User or Question does not exist'
         });
       }
+      return res.status(400).json({
+        errorMessages: validator.getErrors()
+      });
     }
   }, {
     key: 'downVote',
@@ -194,8 +189,8 @@ var QuestionController = function () {
       var validator = new _post_validators2.default();
       validator.validate(fields, 'required|string');
       if (!validator.hasErrors) {
-        var foundUsername = _dummyUser2.default.find(function (user) {
-          return user.username === req.body.user;
+        var foundUsername = _dummyUser2.default.find(function (aUser) {
+          return aUser.username === req.body.user;
         });
         var questionId = parseInt(req.params.id, 10);
         var foundQuestion = _dummyQuestion2.default.find(function (question) {
@@ -222,22 +217,19 @@ var QuestionController = function () {
               message: 'Downvote successful',
               data: resDetail
             });
-          } else {
-            return res.status(409).json({
-              status: 409,
-              message: 'You can only downvote a question once'
-            });
           }
-        } else {
-          return res.status(404).json({
-            error: 'User or Question does not exist'
+          return res.status(409).json({
+            status: 409,
+            message: 'You can only downvote a question once'
           });
         }
-      } else {
-        return res.status(400).json({
-          errorMessages: validator.getErrors()
+        return res.status(404).json({
+          error: 'User or Question does not exist'
         });
       }
+      return res.status(400).json({
+        errorMessages: validator.getErrors()
+      });
     }
   }]);
 

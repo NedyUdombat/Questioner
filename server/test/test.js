@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import dummyMeetup from '../dummy/dummyModel/dummyMeetups';
-import { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails, mockUserDetails, mockEmptyUpcomingMeetups } from './mocks/mockData';
+import { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails } from './mocks/mockData';
 
 // config chai to use expect
 chai.use(chaiHttp);
@@ -13,7 +13,6 @@ const { validMeetup, emptyFieldMeetup, nonAdminMeetup } = mockMeetupDetails;
 const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion } = mockQuestionDetails;
 const { validRsvp, invalidRsvp } = mockRSVPDetails;
 const { validVoter, invalidVoter, invalidVoterDataType } = mockVoteDetails;
-const { adminUser, normalUser } = mockUserDetails;
 
 describe('Questioner Server', () => {
   describe('POST /', () => {

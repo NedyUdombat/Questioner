@@ -24,6 +24,10 @@ var port = process.env.PORT || 8000;
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
+app.get('/', function (req, res) {
+  res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of out api' });
+});
+
 app.use('/api/v1', _index2.default);
 
 app.listen(port, function () {

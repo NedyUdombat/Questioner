@@ -14,6 +14,16 @@ var mockMeetupDetails = {
     images: ['jpeg.png', 'nn.jpg']
 
   },
+  nonAdminMeetup: {
+    username: 'nedyy',
+    organizer: 'DevFest',
+    topic: 'Web Accessibility',
+    happeningOn: '12/12/12',
+    location: 'Uyo, Akwa Ibom State',
+    Tags: ['Tech', 'Edu'],
+    images: ['jpeg.png', 'nn.jpg']
+
+  },
   emptyFieldMeetup: {
     id: 1,
     organizer: 'DevFest',
@@ -23,23 +33,33 @@ var mockMeetupDetails = {
     Tags: ['Tech', 'Edu'],
     images: ['jpeg.png', 'nn.jpg'],
     createdOn: new Date()
-  },
-  createdMeetup: {
-    id: 7,
-    organizer: 'DevFest',
-    topic: 'Web Accessibility',
-    happeningOn: '12/12/12',
-    location: 'Uyo, Akwa Ibom State',
-    Tags: ['Tech', 'Edu'],
-    images: ['jpeg.png', 'nn.jpg'],
-    createdOn: new Date()
   }
 };
 
+var mockEmptyUpcomingMeetups = [];
+
 var mockQuestionDetails = {
   validQuestion: {
-    user: "nedyy",
-    meetup: "Web Accessibility",
+    user: 'nedyy',
+    meetup: 'Web Accessibility',
+    title: 'GFW not working?',
+    body: 'why is GFW not working when I insert TYF in the config file?'
+  },
+  invalidUserQuestion: {
+    user: 'nedyyy',
+    meetup: 'Web Accessibility',
+    title: 'GFW not working?',
+    body: 'why is GFW not working when I insert TYF in the config file?'
+  },
+  invalidFieldQuestion: {
+    user: '',
+    meetup: 'Web Accessibility',
+    title: 'GFW not working?',
+    body: 'why is GFW not working when I insert TYF in the config file?'
+  },
+  invalidMeetupQuestion: {
+    user: 'nedyy',
+    meetup: 'Web A',
     title: 'GFW not working?',
     body: 'why is GFW not working when I insert TYF in the config file?'
   }
@@ -48,39 +68,21 @@ var mockQuestionDetails = {
 var mockRSVPDetails = {
   validRsvp: {
     status: 'yes'
+  },
+  invalidRsvp: {
+    status: 'yess'
   }
 };
 
 var mockVoteDetails = {
   validVoter: {
     user: 'nedyy'
-  }
-};
-
-var mockUserDetails = {
-  adminUser: {
-    id: 1,
-    firstname: 'admin',
-    lastname: 'admin',
-    othername: 'admin',
-    email: 'admin@questioner.com',
-    phoneNumber: '08025137999',
-    username: 'admin',
-    password: 'admin',
-    registered: new Date(),
-    isAdmin: true
   },
-  normalUser: {
-    id: 2,
-    firstname: 'Nedy',
-    lastname: 'Udombat',
-    othername: 'Edidiong',
-    email: 'nedyudombat@gmail.com',
-    phoneNumber: '08025137999',
-    username: 'nedyy',
-    password: 'qwertyuiop',
-    registered: new Date(),
-    isAdmin: false
+  invalidVoter: {
+    user: 'nedyey'
+  },
+  invalidVoterDataType: {
+    user: 3
   }
 };
 
@@ -88,4 +90,4 @@ exports.mockMeetupDetails = mockMeetupDetails;
 exports.mockQuestionDetails = mockQuestionDetails;
 exports.mockRSVPDetails = mockRSVPDetails;
 exports.mockVoteDetails = mockVoteDetails;
-exports.mockUserDetails = mockUserDetails;
+exports.mockEmptyUpcomingMeetups = mockEmptyUpcomingMeetups;
