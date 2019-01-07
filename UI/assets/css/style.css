@@ -3,12 +3,18 @@
 }
 
 .content .auth .card,
-.content .auth-signup .card{
+.content .auth-signup .card,
+.content .auth-login .card{
   min-width: 400px;
   max-width: 650px;
   min-height: 250px;
   background-color: #FFFFFF;
   box-shadow:  1px 2px 4px #c4c4c4;
+  align-items: center;
+}
+
+.content .auth-login .card{
+  height: 325px;
 }
 
 .content .auth .card p,
