@@ -55,6 +55,136 @@
 }
 
 
+/*  */
+.products-list{
+  padding: 0 0%;
+
+}
+.products-list-main-container{
+  width: 100%;
+  display: flex;
+  flex-flow :row wrap;
+  padding: 0% 0%;
+  /* background: green */
+}
+.products-list-main-container div{
+  -webkit-flex: 1;  /* Safari 6.1+ */
+  -ms-flex: 1;  /* IE 10 */
+  flex: 1;
+}
+.products-list-main-container > .product-card {
+  background-color: #ffffff;
+  /* box-shadow:  1px 2px 4px #c4c4c4; */
+  /* box-shadow:0px 2px 2px rgba(0, 0, 0, 0.25); */
+  padding: 5px;
+  min-width: 325px;
+  width: 275px;
+  max-width: 325px;
+  height: 320px;
+  margin: 35px!important;
+  border-radius: 3px;
+  /* margin-bottom: 0!important; */
+}
+.products-list-main-container > .product-card:hover {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.25);
+  /* box-shadow:0px 2px 2px red; */
+}
+.products-list-main-container > .product-card:nth-child(3n+1) {
+  /* margin-left: 0px!important; */
+}
+.products-list-main-container .product-card .card-image-top{
+  height: 70%;
+  /* background: red; */
+}
+.products-list-main-container .product-card .product-image{
+  width: 100%;
+  height: 100%;
+}
+.full-image{
+  width: 90%;
+  height: 300px;
+  margin-top: 5%!important
+}
+.image-caption{
+  text-align: center;
+}
+.table-product-image{
+  width: 125px;
+  height:75px;
+}
+.product-card .product-card-details{
+  padding: 5px;
+}
+.product-card .product-card-details .d-flex{
+  margin-top: 10px;
+}
+/*  */
+.product-card .product-card-details .add-product-btn{
+  width: 100%;
+  height: 30px;
+  background-color: #3380FF;
+  border:1px solid #3380FF;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0px 2px 6px #c4c4c4;
+  justify-content: center;
+}
+.product-card .product-card-details .add-product-btn:hover{
+  background-color: #021FA0;
+  border:1px solid #021FA0;
+}
+.product-card .product-card-details .add-product-btn .fas{
+  padding-top: 3px!important;
+  margin-right: 5px!important;
+}
+/*  */
+/*  */
+.product-card .product-card-details .remove-product-btn{
+  width: 100%;
+  height: 30px;
+  background-color: #FF0000;
+  border:1px solid #FF0000;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0px 2px 6px #c4c4c4;
+  justify-content: center;
+}
+.product-card .product-card-details .remove-product-btn:hover{
+  background-color: #990000;
+  border:1px solid #990000;
+}
+.product-card .product-card-details .remove-product-btn .fas{
+  padding-top: 3px!important;
+  margin-right: 5px!important;
+}
+/*  */
+.product-card .product-card-details .amount{
+  margin: 10px 0px !important;
+}
+.product-card .product-card-details .total{
+  margin: 15px 0px !important;
+
+}
+
+.products-list-main-container .product-card-details .product-quantity{
+  margin: 10px 0px!important;
+}
+
+
+
+
+
+/*  */
+
+
 /* Single meetup */
 .single-meetup-div{
   margin-top: 20px;
