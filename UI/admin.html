@@ -26,7 +26,7 @@
     <div class="content d-flex justify-content-center">
       <div class="w-90">
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-blue create-meetup-btn" id="createMeetupBtn">Create Meetup</button>
+          <button type="button" class="btn btn-blue create-meetup-btn" onclick="launchModal('createMeetupModal');">Create Meetup</button>
         </div>
 
         <div class="table-div">
@@ -113,7 +113,7 @@
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
-          <span class="close" id="close-1">&times;</span>
+          <span class="close" onclick="closeModal('deleteMeetupModal')">&times;</span>
           <h2>&nbsp;</h2>
         </div>
         <div class="modal-body">
@@ -132,7 +132,7 @@
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
-          <span class="close"  id="close-2" >&times;</span>
+          <span class="close"  onclick="closeModal('addTagModal')">&times;</span>
           <h2>&nbsp;</h2>
         </div>
         <div class="modal-body">
@@ -155,7 +155,7 @@
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
-          <span class="close" id="close-3" >&times;</span>
+          <span class="close" onclick="closeModal('addImageModal')">&times;</span>
           <h2>&nbsp;</h2>
         </div>
         <div class="modal-body">
@@ -175,7 +175,7 @@
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-header">
-          <span class="close" id="close-4" >&times;</span>
+          <span class="close" onclick="closeModal('createMeetupModal')" >&times;</span>
           <h2>&nbsp;</h2>
         </div>
         <div class="modal-body">
