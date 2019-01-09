@@ -160,7 +160,7 @@ label{
 .sticky-nav nav ul li {
   height: 100%;
   float: left;
-  width: 25%;
+  width: 20%;
 }
 
 .sticky-nav nav ul li a {
@@ -184,10 +184,49 @@ label{
     color: white;
 }
 
-
-
-
-
+/*  */
+.top-feeds{
+  min-width: 55%;
+}
+.rsvp-meetup-filters .title{
+  margin-left: 30px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+.rsvp-meetup-filters .filter-meetup-ul{
+  list-style-type: none;
+  padding-left: 0px;
+  margin: 0px 30px;
+  background-color: white;
+  box-shadow:  1px 2px 4px #c4c4c4;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.rsvp-meetup-filters .filter-meetup-ul li{
+  height: 60px;
+  margin-bottom: 5px;
+  padding: 15px;
+  border-bottom: 2px solid #4CAF50;
+  /* background-color: grey; */
+}
+.rsvp-meetup-filters .filter-meetup-ul li.active{
+  border-bottom: 2px solid #4CAF50;
+}
+.rsvp-meetup-filters .filter-meetup-ul li:hover{
+  border-bottom: 2px solid #4CAF50;
+  cursor: pointer;
+}
+.rsvp-meetup-filters .filter-meetup-ul li p{
+  font-size: 16px;
+  margin-bottom: 2px!important;
+}
+.rsvp-meetup-filters .filter-meetup-ul li small{
+  font-size: 12px;
+  font-style: italic;
+}
+.w-22-5{
+  width: 22.5%;
+}
 
 
 
