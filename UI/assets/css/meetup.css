@@ -1,10 +1,4 @@
-.meetups-title-div{
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2%;
-  font-size: 18px;
-  color: #00AEFF;
-}
+/*
 .meetup-div{
   margin-top: 20px;
   min-height: 160px;
@@ -35,7 +29,7 @@
 }
 .meetup-div .main-content .details .tags{
   margin-top: auto;
-}
+} */
 .meetup-div .main-content .details .tags .tag,
 .single-meetup-card .card-header .tags .tag{
   margin: 0px 5px;
@@ -48,11 +42,11 @@
 .single-meetup-card .card-header .tags{
   margin-top:10px;
 }
-.meetup-div .meetup-image{
+/* .meetup-div .meetup-image{
   height: 120px;
   width: 150px;
   margin-top: 10px;;
-}
+} */
 
 #askQuestionModal .modal-body{
   padding: 15px 30px;
@@ -363,7 +357,7 @@
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
-  .meetups-title-div{
+  /* .meetups-title-div{
     display: block;
   }
   .meetups-title-div p{
@@ -392,12 +386,12 @@
   .meetup-div .main-content .details .top .right p:first-child{
     display: flex;
     margin-bottom: 5px;
-  }
+  } */
   .sm-hide{
     display: flex;
     margin-right: 10px;
   }
-  .meetup-div .main-content .image-div{
+  /* .meetup-div .main-content .image-div{
     display: flex;
     justify-content: center;
   }
@@ -410,7 +404,7 @@
   .meetup-div .main-content .details .tags{
     margin-top: auto;
     justify-content: space-between;
-  }
+  } */
   /*  */
   .single-meetup-card{
     margin-top: 10px;
@@ -434,12 +428,12 @@
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .meetup-div{
+  /* .meetup-div{
     margin-top: 20px;
     min-height: 320px!important;
     height: 100%;
     padding: 10px 30px 30px 10px;
-    /* box-shadow:  1px 2px 4px #c4c4c4; */
+    box-shadow:  1px 2px 4px #c4c4c4;
   }
   .meetup-div .main-content{
     display: block;
@@ -447,7 +441,7 @@
   .meetup-div .main-content .details .top{
     display: block;
     margin-bottom: 20px;
-    /* justify-content: space-between; */
+    justify-content: space-between;
   }
   .meetup-div .main-content .details .top .right{
     width: 100%;
@@ -475,7 +469,7 @@
   .meetup-div .main-content .details .tags{
     margin-top: auto;
     justify-content: space-between;
-  }
+  } */
   /*  */
   .single-meetup-card{
     margin-top: 10px;
@@ -497,13 +491,13 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .meetup-div{
+  /* .meetup-div{
     margin-top: 20px;
     min-height: 125px!important;
     height: 100%;
     padding: 10px 30px 30px 10px;
     /* box-shadow:  1px 2px 4px #c4c4c4; */
-  }
+  } */
   .sm-hide{
     display: none;
   }

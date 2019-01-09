@@ -15,24 +15,23 @@
   </head>
   <body>
 
-    <nav class="navbar d-flex justify-content-between align-items-center bg-blue">
-      <a href="index.html" class="f-24 navbar-brand">
-        <span class="f-32 font-bold">Q</span>uestioner
+    <div class="topnav" id="myTopnav">
+      <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="admin.html">Admin</a>
+      <a href="user-profile.html">User Profile</a>
+      <a href="meetups.html">Meetups</a>
+      <a href="login.html">Login</a>
+      <a href="sign-up.html">Sign up</a>
+      <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
+        <i class="fa fa-bars"></i>
       </a>
-      <div class="links d-flex">
-        <a href="sign-up.html" class="mx-3">Sign up</a>
-        <a href="login.html" class="mx-3">Login</a>
-        <a href="meetups.html" class="mx-3">Meetups</a>
-        <a href="user-profile.html" class="mx-3">User Profile</a>
-        <a href="admin.html" class="mx-3">Admin</a>
-      </div>
-    </nav>
+    </div>
 
     <div class="content auth-content d-flex justify-content-center align-items-center">
       <div class="auth auth-login">
         <div class="card d-flex justify-content-center">
           <div class="w-90">
-            <p class="f-36 text-center text-blue">Login</p>
+            <p class="f-32 text-center text-blue">Login</p>
             <form class="">
               <div class="input-div d-flex justify-content-center">
                 <input type="text" name="username" id="username" value="" placeholder="Username" class="w-100">
@@ -54,5 +53,9 @@
       </div>
     </div>
 
+    <footer>
+      <p>Made by Edidiong Udombat @ Andela Pre-felllowship Bootcamp</p>
+    </footer>
+    <script src="./assets/js/nav.js" charset="utf-8"></script>
   </body>
 </html>
