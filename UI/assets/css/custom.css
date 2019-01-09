@@ -201,7 +201,10 @@ select:hover{
   border: 2px solid #00AEFF;
   color: #00AEFF;
 }
-
+.tag.edu{
+  border: 2px solid #182825;
+  color: #182825;
+}
 
 .dropdown {
     position: relative;

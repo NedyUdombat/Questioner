@@ -37,15 +37,15 @@
   margin-top: auto;
 }
 .meetup-div .main-content .details .tags .tag,
-.single-meetup-card .card-body .tags .tag{
+.single-meetup-card .card-header .tags .tag{
   margin: 0px 5px;
 }
 .meetup-div .main-content .details .tags .questions,
-.single-meetup-card .card-body .tags .questions{
-  margin: 0px 5px;
+.single-meetup-card .card-body .questions{
+  margin: 10px 0px 0px 0px;
 }
 
-.single-meetup-card .card-body .tags{
+.single-meetup-card .card-header .tags{
   margin-top:10px;
 }
 .meetup-div .meetup-image{
@@ -54,6 +54,16 @@
   margin-top: 10px;;
 }
 
+#askQuestionModal .modal-body{
+  padding: 15px 30px;
+}
+
+#askQuestionModal .modal-footer{
+  padding: 15px 30px;
+}
+#askQuestionModal textarea{
+  resize: none;
+}
 
 /*  */
 .products-list{
@@ -211,24 +221,27 @@
 .single-meetup-card .card-header{
   /* width: 95.5%; */
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* background: red; */
-  padding: 20px;
+  padding: 20px 20px 0px 20px ;
 }
 .single-meetup-card .card-body{
   /* width: 100%; */
   padding: 20px!important;
 }
-.single-meetup-card .card-body .meetup-image{
-  width: 600px;
-  height: 400px;
-  margin-bottom: 20px;
+.single-meetup-card .card-header .meetup-image{
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.single-meetup-card .card-header .date{
+  margin-top: 10px;
 }
 .single-meetup-card .card-footer{
   /* width: 100%; */
-  height: 50px;
+  height: 60px;
   /* background: red; */
-  padding: 10px 20px 0px 20px ;
+  padding: 10px 20px 10px 20px ;
   border-top: 1px solid #C4C4C4;
 }
 .fa-question-circle {
@@ -252,11 +265,11 @@
   margin: 20px auto;
 }
 .question-card .card-header{
-  height: 50px;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px
+  padding: 20px
 }
 .question-card .card-header .profile-image{
   height: 40px;
@@ -265,18 +278,18 @@
   margin-right: 10px;
 }
 .question-card .card-body{
-  padding: 5px 60px;
+  padding: 15px 60px;
   height: 100%;
 }
 .question-card .card-footer{
   /* background: green; */
-  height: 40px;
+  height: 50px;
   border-bottom: 1px solid #C4C4C4;
   border-top: 1px solid #C4C4C4;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 60px;
+  padding: 0px 60px;
 }
 .question-card .card-footer .btn{
   height: 100%;
