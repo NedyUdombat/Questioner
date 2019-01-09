@@ -75,8 +75,11 @@ a{
 .btn-outline-blue{
   border: 1px solid #00AEFF;
 }
-.text-blue{
+/* .text-blue{
   color:#00AEFF;
+} */
+.text-blue{
+  color: #005074;
 }
 .text-white{
   color:#FFFFFF;

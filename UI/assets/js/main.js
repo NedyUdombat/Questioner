@@ -1,6 +1,5 @@
 const upVoteBtn = document.querySelector('.up-vote-btn');
 const downVoteBtn = document.querySelector('.down-vote-btn');
-const commentBtn = document.querySelector('.comment-btn');
 
 const rsvpIcon = document.querySelector('.fa-calendar-check');
 let upVoteAmount = document.querySelector('.up-vote-amount').innerHTML;
@@ -79,7 +78,7 @@ downVoteBtn.onclick = () => {
 };
 
 // toggle display of comment input form
-commentBtn.onclick = () => {
+const comment = () => {
   if (toggleState === 0) {
     commentContainer.classList.remove('d-none');
     commentContainer.classList.add('d-block');
