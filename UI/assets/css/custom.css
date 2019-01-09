@@ -304,8 +304,20 @@ select:hover{
 .pl-0{
   padding-left: 0px;
 }
-.pr-0{
-  padding-right: 0px;
+.pr-1{
+  padding-right: 1%;
+}
+.pr-2{
+  padding-right: 2%;
+}
+.pr-3{
+  padding-right: 3%;
+}
+.pr-4{
+  padding-right: 4%;
+}
+.pr-5{
+  padding-right: 5%;
 }
 
 
