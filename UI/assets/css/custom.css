@@ -38,7 +38,7 @@ a{
   background-color: #c4c4c4;
 }
 .btn-blue{
-  background-color: #00AEFF;
+  background-color: #000203;
   color:#ffffff;
 }
 .btn-blue:hover{
@@ -75,8 +75,11 @@ a{
 .btn-outline-blue{
   border: 1px solid #00AEFF;
 }
-.text-blue{
+/* .text-blue{
   color:#00AEFF;
+} */
+.text-blue{
+  color: #005074;
 }
 .text-white{
   color:#FFFFFF;
@@ -159,7 +162,7 @@ input{
   padding-left: 15px!important;
 }
 input:hover{
-  border:1px solid #00AEFF;
+  border:1px solid #000203;
 }
 input::placeholder{
   font-size: 16px;
@@ -179,7 +182,7 @@ select{
   background-color: #FFFFFF;
 }
 select:hover{
-  border:1px solid #00AEFF;
+  border:1px solid #000203;
 }
 
 /*  */
@@ -201,7 +204,10 @@ select:hover{
   border: 2px solid #00AEFF;
   color: #00AEFF;
 }
-
+.tag.edu{
+  border: 2px solid #182825;
+  color: #182825;
+}
 
 .dropdown {
     position: relative;
@@ -298,8 +304,20 @@ select:hover{
 .pl-0{
   padding-left: 0px;
 }
-.pr-0{
-  padding-right: 0px;
+.pr-1{
+  padding-right: 1%;
+}
+.pr-2{
+  padding-right: 2%;
+}
+.pr-3{
+  padding-right: 3%;
+}
+.pr-4{
+  padding-right: 4%;
+}
+.pr-5{
+  padding-right: 5%;
 }
 
 
