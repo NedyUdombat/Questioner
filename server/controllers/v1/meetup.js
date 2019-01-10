@@ -1,14 +1,14 @@
-import dummyMeetup from '../dummyModel/dummyMeetups';
-import dummyUser from '../dummyModel/dummyUser';
-import Validator from '../_helpers/post_validators';
+import meetups from '../../models/v1/meetups';
+import users from '../../models/v1/users';
+import Validator from '../../_helpers/post_validators';
 
 class MeetupController {
   static getAllMeetups(req, res) {
-    if (dummyMeetup.length > 0) {
+    if (meetups.length > 0) {
       return res.status(200).json({
         status: 200,
         message: 'Successfully retrieved all meetups',
-        data: dummyMeetup,
+        data: meetups,
       });
     }
     return res.status(404).json({
@@ -18,7 +18,7 @@ class MeetupController {
   }
 
   static getSingleMeetup(req, res) {
-    const foundMeetup = dummyMeetup.find(meetup => meetup.id === parseInt(req.params.id, 10));
+    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(req.params.id, 10));
 
     if (foundMeetup) {
       return res.status(200).json({
@@ -36,7 +36,7 @@ class MeetupController {
   static getUpcomingMeetups(req, res) {
     const currentDate = new Date();
     const upcomingMeetups = [];
-    for (const meetup of dummyMeetup) {
+    for (const meetup of meetups) {
       const happeningOn = new Date(meetup.happeningOn);
       if (happeningOn.getFullYear() === currentDate.getFullYear()) {
         if (happeningOn.getMonth() > currentDate.getMonth()) {
@@ -69,7 +69,7 @@ class MeetupController {
     const validator = new Validator();
     validator.validate(fields, 'required|string');
     if (!validator.hasErrors) {
-      const foundUser = dummyUser.find(user => user.username === req.body.username);
+      const foundUser = users.find(user => user.username === req.body.username);
       if (foundUser.isAdmin === false) {
         return res.status(401).json({
           status: 401,
@@ -77,15 +77,15 @@ class MeetupController {
         });
       }
       let isDuplicate = false;
-      for (const event of dummyMeetup) {
+      for (const event of meetups) {
         isDuplicate = event.topic === fields.topic && event.location === fields.location;
       }
       if (isDuplicate) {
         return res.status(409).json({ status: 409, error: `This event '${fields.topic}' cannot be created twice` });
       }
-      const id = dummyMeetup.length + 1;
+      const id = meetups.length + 1;
       const meetupDetail = { id, organizer, topic, happeningOn, location, tags, images, createdOn: new Date() };
-      dummyMeetup.push(meetupDetail);
+      meetups.push(meetupDetail);
       return res.status(201).json({
         status: 201,
         message: 'Meetup successfully created',
@@ -99,7 +99,7 @@ class MeetupController {
     let { status } = req.body;
     status = status.toLowerCase();
     const rsvpStatus = status === 'yes' || status === 'no' || status === 'maybe';
-    const foundMeetup = dummyMeetup.find(meetup => meetup.id === parseInt(req.params.id, 10));
+    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(req.params.id, 10));
     if (foundMeetup) {
       if (rsvpStatus) {
         const rsvpDetail = {

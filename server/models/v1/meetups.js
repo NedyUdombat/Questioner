@@ -1,4 +1,4 @@
-const dummyMeetup = [
+const meetups = [
   {
     id: 1,
     organizer: 'DevFest',
@@ -61,4 +61,4 @@ const dummyMeetup = [
   },
 ];
 
-export default dummyMeetup;
+export default meetups;

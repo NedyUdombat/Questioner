@@ -1,4 +1,4 @@
-const dummyQuestion = [
+const questions = [
   {
     id: 1,
     createdOn: new Date(),
@@ -19,4 +19,4 @@ const dummyQuestion = [
   },
 ];
 
-export default dummyQuestion;
+export default questions;

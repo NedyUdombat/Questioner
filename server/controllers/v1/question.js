@@ -1,7 +1,7 @@
-import dummyQuestion from '../dummyModel/dummyQuestion';
-import dummyMeetup from '../dummyModel/dummyMeetups';
-import dummyUser from '../dummyModel/dummyUser';
-import Validator from '../_helpers/post_validators';
+import questions from '../../models/v1/questions';
+import meetups from '../../models/v1/meetups';
+import users from '../../models/v1/users';
+import Validator from '../../_helpers/post_validators';
 
 let upcount = 1;
 let downcount = 1;
@@ -20,15 +20,15 @@ class QuestionController {
     validator.validate(fields, 'required|string');
 
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
-      const foundMeetup = dummyMeetup.find(aMeetup => aMeetup.topic === req.body.meetup);
+      const foundUsername = users.find(aUser => aUser.username === req.body.user);
+      const foundMeetup = meetups.find(aMeetup => aMeetup.topic === req.body.meetup);
 
       if (foundUsername && foundMeetup) {
-        const id = dummyQuestion.length + 1;
+        const id = questions.length + 1;
         const userId = foundUsername.id;
         const meetupId = foundMeetup.id;
         let isDuplicate = false;
-        for (const question of dummyQuestion) {
+        for (const question of questions) {
           isDuplicate = question.meetup === fields.meetup && question.title === fields.title && question.body === fields.body;
         }
         if (isDuplicate) {
@@ -44,7 +44,7 @@ class QuestionController {
           votes,
           createdOn: new Date(),
         };
-        dummyQuestion.push(questionDetail);
+        questions.push(questionDetail);
         const resDetails = {
           userId,
           meetupId,
@@ -74,9 +74,9 @@ class QuestionController {
     const validator = new Validator();
     validator.validate(fields, 'required|string');
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
+      const foundUsername = users.find(aUser => aUser.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
-      const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
+      const foundQuestion = questions.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
         const votes = foundQuestion.votes;
         if (upcount % 2 !== 0) {
@@ -121,9 +121,9 @@ class QuestionController {
     const validator = new Validator();
     validator.validate(fields, 'required|string');
     if (!validator.hasErrors) {
-      const foundUsername = dummyUser.find(aUser => aUser.username === req.body.user);
+      const foundUsername = users.find(aUser => aUser.username === req.body.user);
       const questionId = parseInt(req.params.id, 10);
-      const foundQuestion = dummyQuestion.find(question => question.id === questionId, 10);
+      const foundQuestion = questions.find(question => question.id === questionId, 10);
       if (foundUsername && foundQuestion) {
         const votes = foundQuestion.votes;
         if (downcount % 2 !== 0) {

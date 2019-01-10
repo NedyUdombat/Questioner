@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import dummyMeetup from '../dummy/dummyModel/dummyMeetups';
+import meetups from '../models/v1/meetups';
 import { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails } from './mocks/mockData';
 
 // config chai to use expect
@@ -327,7 +327,7 @@ describe('Questioner Server', () => {
     });
 
     it('/api/v1/meetups should respond with status code 404 when there are no meetups', (done) => {
-      dummyMeetup.splice(0, 7);
+      meetups.splice(0, 7);
       chai.request(app)
         .get('/api/v1/meetups')
         .set('Accept', 'application/json')

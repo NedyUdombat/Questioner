@@ -1,4 +1,4 @@
-const dummyUser = [
+const users = [
   {
     id: 1,
     firstname: 'admin',
@@ -73,4 +73,4 @@ const dummyUser = [
   },
 ];
 
-export default dummyUser;
+export default users;

@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/NedyUdombat/Questioner#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4"
   },
   "devDependencies": {
