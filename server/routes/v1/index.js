@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import MeetupController from '../dummy/dummyController/meetup';
-import QuestionController from '../dummy/dummyController/question';
+import MeetupController from '../../controllers/v1/meetup';
+import QuestionController from '../../controllers/v1/question';
 
 // deconstructure controllers
 const { getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, rsvpMeetup } = MeetupController;
