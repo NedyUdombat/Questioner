@@ -17,24 +17,23 @@
   </head>
   <body>
 
-    <nav class="navbar justify-content-between align-items-center bg-blue">
-      <a href="index.html" class="f-24 navbar-brand">
-        <span class="f-32 font-bold">Q</span>uestioner
+    <div class="topnav" id="myTopnav">
+      <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="admin.html">Admin</a>
+      <a href="user-profile.html">User Profile</a>
+      <a href="meetups.html">Meetups</a>
+      <a href="login.html">Login</a>
+      <a href="sign-up.html">Sign up</a>
+      <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
+        <i class="fa fa-bars"></i>
       </a>
-      <div class="links d-flex">
-        <a href="sign-up.html" class="mx-3">Sign up</a>
-        <a href="login.html" class="mx-3">Login</a>
-        <a href="meetups.html" class="mx-3">Meetups</a>
-        <a href="user-profile.html" class="mx-3">User Profile</a>
-        <a href="admin.html" class="mx-3">Admin</a>
-      </div>
-    </nav>
+    </div>
 
     <div class="sticky-nav d-flex justify-content-center">
       <nav>
         <ul>
           <li><a href="user-profile.html">My Profile</a></li>
-          <li><a href="top-feeds.html"  class="active">Top Feeds</a></li>
+          <li><a href="top-feeds.html" class="active">Top Feeds</a></li>
           <li><a href="my-questions.html">My Questions (2)</a></li>
           <li><a href="my-comments.html">My Comments (4)</a></li>
           <li><a href="rsvp.html">RSVP (3)</a></li>
@@ -46,56 +45,13 @@
       <div class="empty w-22-5">
 
       </div>
-      <div class="content h-100 top-feeds ">
-        <div class="question-card">
-          <div class="card-header details">
-            <div class="d-flex">
-              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-              <div class="">
-                <p>Nedy Udombat</p>
-                <p class="f-14 text-grey">@nedy</p>
-                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
-              </div>
+      <div class="contnt h-100 top-feeds ">
+        <div class="d-flex sm justify-content-center">
+          <div class="title-tag">
+            <p>Top Feeds</p>
+            <div class="d-flex justify-content-center">
+              <div class="dash"> </div>
             </div>
-            <div class="">
-              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
-            </div>
-          </div>
-          <div class="card-body question">
-            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
-          </div>
-          <div class="card-footer actions">
-            <div class="w-45  h-100 d-flex justify-content-between align-items-center">
-              <div class="d-flex  w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
-                </button>
-                <span class="up-vote-amount">120</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                </button>
-                <span class="down-vote-amount">12</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 comment-btn">
-                  <i class="fas fa-comment f-24"></i>
-                </button>
-                <span class="amount">8</span>
-              </div>
-
-            </div>
-          </div>
-          <div class="bg-white d-none comment-div">
-            <form>
-              <div class="d-flex justify-content-center ">
-                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-blue">comment</button>
-              </div>
-            </form>
           </div>
         </div>
         <div class="question-card">
@@ -116,58 +72,7 @@
             <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
           </div>
           <div class="card-footer actions">
-            <div class="w-45  h-100 d-flex justify-content-between align-items-center">
-              <div class="d-flex  w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
-                </button>
-                <span class="up-vote-amount">109</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                </button>
-                <span class="down-vote-amount">23</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 comment-btn">
-                  <i class="fas fa-comment f-24"></i>
-                </button>
-                <span class="amount">8</span>
-              </div>
-
-            </div>
-          </div>
-          <div class="bg-white d-none comment-div">
-            <form>
-              <div class="d-flex justify-content-center ">
-                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-blue">comment</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="question-card">
-          <div class="card-header details">
-            <div class="d-flex">
-              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-              <div class="">
-                <p>Nedy Udombat</p>
-                <p class="f-14 text-grey">@nedy</p>
-                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
-              </div>
-            </div>
-            <div class="">
-              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
-            </div>
-          </div>
-          <div class="card-body question">
-            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
-          </div>
-          <div class="card-footer actions">
-            <div class="w-45  h-100 d-flex justify-content-between align-items-center">
+            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
               <div class="d-flex  w-100 justify-content-center ">
                 <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
                   <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
@@ -181,7 +86,7 @@
                 <span class="down-vote-amount">4</span>
               </div>
               <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 comment-btn">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
                   <i class="fas fa-comment f-24"></i>
                 </button>
                 <span class="amount">8</span>
@@ -218,21 +123,123 @@
             <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
           </div>
           <div class="card-footer actions">
-            <div class="w-45  h-100 d-flex justify-content-between align-items-center">
+            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
               <div class="d-flex  w-100 justify-content-center ">
                 <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
                   <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
                 </button>
-                <span class="up-vote-amount">23</span>
+                <span class="up-vote-amount">60</span>
               </div>
               <div class="d-flex w-100 justify-content-center ">
                 <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
                   <i class="fas fa-caret-down text-red f-28 mr-3"></i>
                 </button>
-                <span class="down-vote-amount">2</span>
+                <span class="down-vote-amount">4</span>
               </div>
               <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 comment-btn">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
+                  <i class="fas fa-comment f-24"></i>
+                </button>
+                <span class="amount">8</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="bg-white d-none comment-div">
+            <form>
+              <div class="d-flex justify-content-center ">
+                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-blue">comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="card-header details">
+            <div class="d-flex">
+              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
+              <div class="">
+                <p>Nedy Udombat</p>
+                <p class="f-14 text-grey">@nedy</p>
+                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
+              </div>
+            </div>
+            <div class="">
+              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
+            </div>
+          </div>
+          <div class="card-body question">
+            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
+          </div>
+          <div class="card-footer actions">
+            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
+              <div class="d-flex  w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
+                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
+                </button>
+                <span class="up-vote-amount">60</span>
+              </div>
+              <div class="d-flex w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
+                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
+                </button>
+                <span class="down-vote-amount">4</span>
+              </div>
+              <div class="d-flex w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
+                  <i class="fas fa-comment f-24"></i>
+                </button>
+                <span class="amount">8</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="bg-white d-none comment-div">
+            <form>
+              <div class="d-flex justify-content-center ">
+                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-blue">comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="question-card">
+          <div class="card-header details">
+            <div class="d-flex">
+              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
+              <div class="">
+                <p>Nedy Udombat</p>
+                <p class="f-14 text-grey">@nedy</p>
+                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
+              </div>
+            </div>
+            <div class="">
+              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
+            </div>
+          </div>
+          <div class="card-body question">
+            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
+          </div>
+          <div class="card-footer actions">
+            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
+              <div class="d-flex  w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
+                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
+                </button>
+                <span class="up-vote-amount">60</span>
+              </div>
+              <div class="d-flex w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
+                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
+                </button>
+                <span class="down-vote-amount">4</span>
+              </div>
+              <div class="d-flex w-100 justify-content-center ">
+                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
                   <i class="fas fa-comment f-24"></i>
                 </button>
                 <span class="amount">8</span>
@@ -293,9 +300,18 @@
         </ul>
       </div>
     </div>
-
-
-    <script src="assets/js/main.js" charset="utf-8"></script>
+    <div class=" d-flex justify-content-center" id="footer">
+        <nav>
+          <ul>
+            <li><a href="user-profile.html"><i class="fas fa-user fa-lg fa-fw"></i></a></li>
+            <li><a href="top-feeds.html" class="active"><i class="fas fa-rss-square fa-lg fa-fw"></i></a></li>
+            <li><a href="my-questions.html"><i class="fas fa-question fa-lg fa-fw"></i>(2)</a></li>
+            <li><a href="my-comments.html"><i class="fas fa-comment fa-lg fa-fw"></i>(4)</a></li>
+            <li><a href="rsvp.html"><i class="fas fa-calendar fa-lg fa-fw"></i>(3)</a></li>
+          </ul>
+        </nav>
+    </div>
+    <script src="./assets/js/nav.js" charset="utf-8"></script>
 
   </body>
 </html>
