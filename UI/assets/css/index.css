@@ -1,0 +1,87 @@
+.jumbo{
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url("../images/questioner.jfif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.jumbo .topnav{
+  background: transparent;
+}
+.hero-image {
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-text {
+  text-align: center;
+  color: white;
+}
+.hero-text h1{
+  font-size: 72px;
+}
+.hero-text p{
+  font-size: 18px;
+  margin-top: 20px;
+}
+.hero-text button{
+  margin-top: 20px;
+  border-radius: 2%;
+  padding: 2% 15%;
+  background: transparent;
+  border: 2px solid #00AEFF;
+  color: #00AEFF;
+}
+.hero-text button:hover{
+  background: #00AEFF;
+  color: #FFFFFF;
+}
+.hero-text button:focus{
+  border: 3px solid #00AEFF;
+  color: #FFFFFF;
+}
+
+.tags-div{
+
+}
+
+.w-95{
+  width: 90%;
+  background-color: red;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .hero-text h1{
+    font-size: 42px;
+  }
+  .hero-text {
+    padding: 0px 10px;
+  }
+  .hero-text button{
+    width: 80%;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

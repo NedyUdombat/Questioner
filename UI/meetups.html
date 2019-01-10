@@ -16,28 +16,117 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   </head>
   <body>
-
-    <nav class="navbar justify-content-between align-items-center bg-blue">
+    <div class="topnav" id="myTopnav">
+      <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="admin.html">Admin</a>
+      <a href="user-profile.html">User Profile</a>
+      <a href="meetups.html">Meetups</a>
+      <a href="login.html">Login</a>
+      <a href="sign-up.html">Sign up</a>
+      <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <!-- <nav class="navbar justify-content-between align-items-center bg-blue">
       <a href="index.html" class="f-24 navbar-brand">
         <span class="f-32 font-bold">Q</span>uestioner
       </a>
       <div class="links d-flex">
-        <a href="index.html" class="mx-3">Sign up</a>
+        <a href="sign-up.html" class="mx-3">Sign up</a>
         <a href="login.html" class="mx-3">Login</a>
         <a href="meetups.html" class="mx-3">Meetups</a>
         <a href="user-profile.html" class="mx-3">User Profile</a>
         <a href="admin.html" class="mx-3">Admin</a>
       </div>
-    </nav>
+    </nav> -->
 
     <div class="content d-flex justify-content-center">
       <div class="w-90">
 
         <div class="table-div">
-          <div class="meetups-title-div">
-            <p>All Meetups</p>
+          <div class="d-flex justify-content-center">
+            <div class="title-tag">
+              <p>All Meetups</p>
+              <div class="d-flex justify-content-center">
+                <div class="dash"> </div>
+              </div>
+            </div>
           </div>
-          <div class="products-list row d-flex justify-content-center">
+          <div class="section group">
+          	<div class="col span_1_of_3">
+              <div class="d-flex justify-content-center">
+                <div class="product-card">
+                  <a href="single-meetup.html">
+                    <div class="card-image-top">
+                      <img src="assets/images/ty.jfif" alt="empty cart" class="product-image">
+                    </div>
+                    <div class="product-card-details">
+                      <p class="f-20 "> <b>Making The Web Accessible For Everyone</b> </p>
+                      <div class="d-flex justify-content-between mt-1">
+                        <small class="f-12"><i>DevFestSS Uyo</i></small>
+                        <p class="text-blue">12/12/12</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+          	</div>
+          	<div class="col span_1_of_3">
+              <div class="d-flex justify-content-center">
+                <div class="product-card">
+                  <a href="single-meetup.html">
+                    <div class="card-image-top">
+                      <img src="assets/images/stars.jfif" alt="empty cart" class="product-image">
+                    </div>
+                    <div class="product-card-details">
+                      <p class="f-20 "> <b>Becoming A GDE</b> </p>
+                      <div class="d-flex justify-content-between mt-1">
+                        <small class="f-12"><i>DevFestSS Uyo</i></small>
+                        <p class="text-blue">12/12/12</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+          	</div>
+          	<div class="col span_1_of_3">
+              <div class="d-flex justify-content-center">
+                <div class="product-card">
+                  <a href="single-meetup.html">
+                    <div class="card-image-top">
+                      <img src="assets/images/qw.jfif" alt="empty cart" class="product-image">
+                    </div>
+                    <div class="product-card-details">
+                      <p class="f-20 "> <b>Making The Web Accessible For Everyone</b> </p>
+                      <div class="d-flex justify-content-between mt-1">
+                        <small class="f-12"><i>DevFestSS Uyo</i></small>
+                        <p class="text-blue">12/12/12</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+          	</div>
+            <div class="col span_1_of_3">
+              <div class="d-flex justify-content-center">
+                <div class="product-card">
+                  <a href="single-meetup.html">
+                    <div class="card-image-top">
+                      <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
+                    </div>
+                    <div class="product-card-details">
+                      <p class="f-20 "> <b>Developer Advocacy</b> </p>
+                      <div class="d-flex justify-content-between mt-1">
+                        <small class="f-12"><i>DevFestSS Uyo</i></small>
+                        <p class="text-blue">12/12/12</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+          	</div>
+          </div>
+          <!-- <div class="products-list row d-flex justify-content-center">
             <div class="products-list-main-container">
               <div class="product-card">
                 <a href="single-meetup.html">
@@ -152,12 +241,15 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
 
-
+    <footer>
+      <p>Made by Edidiong Udombat @ Andela Pre-felllowship Bootcamp</p>
+    </footer>
+    <script src="./assets/js/nav.js" charset="utf-8"></script>
 
   </body>
 </html>
