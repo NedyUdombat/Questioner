@@ -112,7 +112,7 @@ var QuestionController = function () {
       });
       if (foundUsername && foundQuestion) {
         var downvotes = foundQuestion.downvotes;
-        var totalVote = downvotes - 1;
+        var totalVote = downvotes + 1;
         foundQuestion.downvotes = totalVote;
 
         var resDetail = {
@@ -120,7 +120,7 @@ var QuestionController = function () {
           title: foundQuestion.title,
           body: foundQuestion.body,
           downvotes: downvotes,
-          downVote: '-1',
+          downVote: '+1',
           totalVote: totalVote
         };
         return res.status(200).json({
