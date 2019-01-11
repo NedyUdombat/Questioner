@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Validator from '../_helpers/post_validators';
 
 class CreateMeetupValidator {
@@ -13,6 +14,11 @@ class CreateMeetupValidator {
     if (validator.hasErrors) {
       return res.status(400).json({
         errorMessages: validator.getErrors(),
+      });
+    }else if (moment(happeningOn).isBefore(Date.now())) {
+      return res.status(400).json({
+        status: 400,
+        message: 'You cannot create meetup in the past'
       });
     }
     return next();

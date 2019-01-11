@@ -13,7 +13,7 @@ class QuestionController {
     if (foundUsername && foundMeetup) {
       const id = questions.length + 1;
       const questionDetail = {
-        id, user, meetup, title, body, upvotes: '0', downvotes: '0', createdOn: new Date(),
+        id, createdBy: user, meetup, title, body, upvotes: '0', downvotes: '0', createdOn: new Date(),
       };
       questions.push(questionDetail);
       const resDetails = {

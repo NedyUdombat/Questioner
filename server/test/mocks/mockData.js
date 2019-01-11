@@ -3,6 +3,16 @@ const mockMeetupDetails = {
     isAdmin: true,
     organizer: 'DevFest',
     topic: 'Web Accessibility',
+    happeningOn: '12/12/19',
+    location: 'Uyo, Akwa Ibom State',
+    tags: ['Tech', 'Edu'],
+    images: 'jpeg.png',
+
+  },
+  invalidPastMeetup: {
+    isAdmin: true,
+    organizer: 'DevFest',
+    topic: 'Web Accessibility',
     happeningOn: '12/12/12',
     location: 'Uyo, Akwa Ibom State',
     tags: ['Tech', 'Edu'],
