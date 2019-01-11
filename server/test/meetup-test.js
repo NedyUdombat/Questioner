@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 // deconstructure all mock data
-const { validMeetup, emptyFieldMeetup, nonAdminMeetup } = mockMeetupDetails;
+const { validMeetup, invalidPastMeetup, emptyFieldMeetup, nonAdminMeetup } = mockMeetupDetails;
 const { validRsvp, invalidRsvp } = mockRSVPDetails;
 
 describe('Questioner Server', () => {
@@ -25,6 +25,18 @@ describe('Questioner Server', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.eql('Meetup successfully created');
+          done();
+        });
+    });
+
+    it('/api/v1/meetups should respond with status code 400 and create a meetup', (done) => {
+      chai.request(app)
+        .post('/api/v1/meetups')
+        .set('Accept', 'application/json')
+        .send(invalidPastMeetup)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.eql('You cannot create meetup in the past');
           done();
         });
     });
