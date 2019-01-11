@@ -1,5 +1,6 @@
+import moment from 'moment';
 import meetups from '../../models/v1/meetups';
-import users from '../../models/v1/users';
+// import users from '../../models/v1/users';
 import Validator from '../../_helpers/post_validators';
 
 class MeetupController {
@@ -18,7 +19,8 @@ class MeetupController {
   }
 
   static getSingleMeetup(req, res) {
-    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(req.params.id, 10));
+    const { meetupId } = req.params;
+    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(meetupId, 10));
 
     if (foundMeetup) {
       return res.status(200).json({
@@ -34,22 +36,7 @@ class MeetupController {
   }
 
   static getUpcomingMeetups(req, res) {
-    const currentDate = new Date();
-    const upcomingMeetups = [];
-    for (const meetup of meetups) {
-      const happeningOn = new Date(meetup.happeningOn);
-      if (happeningOn.getFullYear() === currentDate.getFullYear()) {
-        if (happeningOn.getMonth() > currentDate.getMonth()) {
-          upcomingMeetups.push(meetup);
-        } else if (happeningOn.getMonth() === currentDate.getMonth()) {
-          if (happeningOn.getDate() > currentDate.getDate()) {
-            upcomingMeetups.push(meetup);
-          }
-        }
-      } else if (happeningOn.getFullYear() > currentDate.getFullYear()) {
-        upcomingMeetups.push(meetup);
-      }
-    }
+    const upcomingMeetups = meetups.filter(meetup => moment(meetup.happeningOn).isAfter(Date.now()));
     if (upcomingMeetups.length === 0) {
       return res.status(404).json({
         status: 404,
@@ -64,58 +51,34 @@ class MeetupController {
   }
 
   static createMeetup(req, res) {
-    const { organizer, topic, happeningOn, location, tags, images, username } = req.body;
-    const fields = { organizer, topic, happeningOn, location, username };
-    const validator = new Validator();
-    validator.validate(fields, 'required|string');
-    if (!validator.hasErrors) {
-      const foundUser = users.find(user => user.username === req.body.username);
-      if (foundUser.isAdmin === false) {
-        return res.status(401).json({
-          status: 401,
-          error: 'Only an Admin can create meetups',
-        });
-      }
-      let isDuplicate = false;
-      for (const event of meetups) {
-        isDuplicate = event.topic === fields.topic && event.location === fields.location;
-      }
-      if (isDuplicate) {
-        return res.status(409).json({ status: 409, error: `This event '${fields.topic}' cannot be created twice` });
-      }
-      const id = meetups.length + 1;
-      const meetupDetail = { id, organizer, topic, happeningOn, location, tags, images, createdOn: new Date() };
-      meetups.push(meetupDetail);
-      return res.status(201).json({
-        status: 201,
-        message: 'Meetup successfully created',
-        data: meetupDetail,
-      });
-    }
-    return res.status(400).json({ errorMessages: validator.getErrors() });
+    const { organizer, topic, happeningOn, location, tags, images } = req.body;
+    const id = meetups.length + 1;
+    const meetupDetail = {
+      id, organizer, topic, happeningOn, location, tags, images, createdOn: new Date(),
+    };
+    meetups.push(meetupDetail);
+    return res.status(201).json({
+      status: 201,
+      message: 'Meetup successfully created',
+      data: meetupDetail,
+    });
   }
 
   static rsvpMeetup(req, res) {
-    let { status } = req.body;
-    status = status.toLowerCase();
-    const rsvpStatus = status === 'yes' || status === 'no' || status === 'maybe';
-    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(req.params.id, 10));
+    const { status } = req.body;
+    const { meetupId } = req.params;
+    const foundMeetup = meetups.find(meetup => meetup.id === parseInt(meetupId, 10));
     if (foundMeetup) {
-      if (rsvpStatus) {
-        const rsvpDetail = {
-          meetupId: foundMeetup.id,
-          topic: foundMeetup.topic,
-          location: foundMeetup.location,
-          status,
-        };
-        return res.status(201).json({
-          status: 201,
-          message: 'Rsvp meetup successful',
-          data: rsvpDetail,
-        });
-      }
-      return res.status(400).json({
-        error: 'Rsvp should be yes, no, or maybe',
+      const rsvpDetail = {
+        meetupId: foundMeetup.id,
+        topic: foundMeetup.topic,
+        location: foundMeetup.location,
+        status,
+      };
+      return res.status(201).json({
+        status: 201,
+        message: 'Rsvp meetup successful',
+        data: rsvpDetail,
       });
     }
     return res.status(404).json({

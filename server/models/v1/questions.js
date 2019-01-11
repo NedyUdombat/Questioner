@@ -6,7 +6,8 @@ const questions = [
     meetup: 2,
     title: 'GFW not working?',
     body: 'why is GFW not working when I insert TYF in the config file?',
-    votes: 25,
+    upvotes: 25,
+    downvotes: 6,
   },
   {
     id: 2,
@@ -15,7 +16,8 @@ const questions = [
     meetup: 1,
     title: 'laravel paystack by prosper?',
     body: 'why doesnt paystack support unicodeveloper laravel package for paystack?',
-    votes: 125,
+    upvotes: 64,
+    downvotes: 36,
   },
 ];
 

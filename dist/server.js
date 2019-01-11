@@ -12,7 +12,7 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _index = require('./routes/index');
+var _index = require('./routes/v1/index');
 
 var _index2 = _interopRequireDefault(_index);
 
