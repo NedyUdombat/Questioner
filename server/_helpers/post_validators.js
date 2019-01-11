@@ -1,7 +1,7 @@
 
 class Validator {
   constructor() {
-    this._errors = [];
+    this.errors = [];
     this.hasErrors = false;
   }
 
@@ -27,30 +27,19 @@ class Validator {
   string(value, key) {
     if (typeof value !== 'string') {
       this.hasErrors = true;
-      this._errors.push({ error: `This field:${key} must be a string` });
+      this.errors.push({ error: `This field:${key} must be a string` });
     }
   }
 
   required(value, key) {
-  	if (value === '' || value === null || typeof value === 'undefined') {
-  		this.hasErrors = true;
-  		this._errors.push({ error: `This field:${key} cannot be empty` });
-  	}
-  }
-
-  integer(value, key) {
-    if (typeof value !== 'number') {
+    if (value === '' || value === null || typeof value === 'undefined') {
       this.hasErrors = true;
-      this._errors.push({ error: `This field:${key} must be a number` });
+      this.errors.push({ error: `This field:${key} cannot be empty` });
     }
   }
 
-  notDuplicate(value, key) {
-    // if (value )
-  }
-
   getErrors() {
-    return this._errors;
+    return this.errors;
   }
 }
 
