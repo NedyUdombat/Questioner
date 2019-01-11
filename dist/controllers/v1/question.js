@@ -49,7 +49,7 @@ var QuestionController = function () {
       if (foundUsername && foundMeetup) {
         var id = _questions2.default.length + 1;
         var questionDetail = {
-          id: id, user: user, meetup: meetup, title: title, body: body, upvotes: '0', downvotes: '0', createdOn: new Date()
+          id: id, createdBy: user, meetup: meetup, title: title, body: body, upvotes: '0', downvotes: '0', createdOn: new Date()
         };
         _questions2.default.push(questionDetail);
         var resDetails = {

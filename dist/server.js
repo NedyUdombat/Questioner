@@ -30,6 +30,13 @@ app.get('/', function (req, res) {
 
 app.use('/api/v1', _index2.default);
 
+app.get('*', function (req, res) {
+  return res.status(404).json({
+    status: 404,
+    message: 'The page you are looking for does not exist'
+  });
+});
+
 app.listen(port, function () {
   console.log('Questioner app is live at http://127.0.0.1:' + port);
 });
