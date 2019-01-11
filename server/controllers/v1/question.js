@@ -64,7 +64,7 @@ class QuestionController {
     const foundQuestion = questions.find(question => question.id === parseInt(questionId, 10));
     if (foundUsername && foundQuestion) {
       const downvotes = foundQuestion.downvotes;
-      const totalVote = downvotes - 1;
+      const totalVote = downvotes + 1;
       foundQuestion.downvotes = totalVote;
 
       const resDetail = {
@@ -72,7 +72,7 @@ class QuestionController {
         title: foundQuestion.title,
         body: foundQuestion.body,
         downvotes,
-        downVote: '-1',
+        downVote: '+1',
         totalVote,
       };
       return res.status(200).json({
