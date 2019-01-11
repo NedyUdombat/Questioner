@@ -27,6 +27,7 @@ var expect = _chai2.default.expect;
 // deconstructure all mock data
 
 var validMeetup = _mockData.mockMeetupDetails.validMeetup,
+    invalidPastMeetup = _mockData.mockMeetupDetails.invalidPastMeetup,
     emptyFieldMeetup = _mockData.mockMeetupDetails.emptyFieldMeetup,
     nonAdminMeetup = _mockData.mockMeetupDetails.nonAdminMeetup;
 var validRsvp = _mockData.mockRSVPDetails.validRsvp,
@@ -42,6 +43,14 @@ describe('Questioner Server', function () {
       _chai2.default.request(_server2.default).post('/api/v1/meetups').set('Accept', 'application/json').send(validMeetup).end(function (err, res) {
         expect(res.status).to.equal(201);
         expect(res.body.message).to.eql('Meetup successfully created');
+        done();
+      });
+    });
+
+    it('/api/v1/meetups should respond with status code 400 and create a meetup', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/meetups').set('Accept', 'application/json').send(invalidPastMeetup).end(function (err, res) {
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.eql('You cannot create meetup in the past');
         done();
       });
     });

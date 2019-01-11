@@ -118,22 +118,4 @@ describe('Questioner Server', function () {
       });
     });
   });
-
-  describe('GET /', function () {
-    it('should respond with status code 200', function (done) {
-      _chai2.default.request(_server2.default).get('/').set('Accept', 'application/json').end(function (err, res) {
-        expect(res.status).to.equal(200);
-        expect(res.body.message).to.eql('Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of out api');
-        done();
-      });
-    });
-
-    it('should respond with status code 200 at /api/v1', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1').set('Accept', 'application/json').end(function (err, res) {
-        expect(res.status).to.equal(200);
-        expect(res.body.message).to.eql('Hi there! Welcome to our Questioner api!');
-        done();
-      });
-    });
-  });
 });
