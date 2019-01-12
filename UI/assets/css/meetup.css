@@ -96,7 +96,7 @@
   /* background: red; */
 }
 .choose-image-label{
-  margin-top: 17px;
+  margin-top: 0px!important;
   margin-left: 10px;
   margin-right: 10px!important;
   width: 100%;
@@ -322,7 +322,7 @@
   height: 100%;
   background-color: #FFFFFF;
   box-shadow:  1px 2px 4px #c4c4c4;
-  margin: 20px auto;
+  margin: 0px auto 20px auto;
 }
 .question-card .card-header{
   height: 65px;
@@ -367,11 +367,7 @@
   width: 55%;
   box-shadow:  1px 2px 4px #c4c4c4;
 }
-.ask-question-div textarea{
-  resize: none;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
+
 .question-div{
   margin-bottom: 100px!important;
 }
@@ -381,12 +377,15 @@
 .comment-div{
   padding: 10px 10px 10px 60px;
 }
+textarea{
+  padding: 10px;
+  border: 2px solid black;
+}
 .comment-div textarea{
   resize: none;
   border-radius: 50px;
   margin-bottom: 10px;
   padding: 5px 30px;
-  border: 2px solid black;
 }
 textarea:focus{
   border-radius: 50px;

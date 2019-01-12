@@ -255,11 +255,12 @@ label{
 /*  */
 .top-feeds{
   min-width: 55%;
+  padding-top: 27px;
 }
 .rsvp-meetup-filters .title{
   margin-left: 30px;
   font-weight: bold;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 .rsvp-meetup-filters .filter-meetup-ul{
   list-style-type: none;
@@ -268,7 +269,7 @@ label{
   background-color: white;
   box-shadow:  1px 2px 4px #c4c4c4;
   border-radius: 5px;
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 .rsvp-meetup-filters .filter-meetup-ul li{
   height: 60px;
@@ -296,7 +297,6 @@ label{
 .w-22-5{
   width: 22.5%;
 }
-
 
 
 /* Extra small devices (portrait phones, less than 576px) */
@@ -409,6 +409,16 @@ label{
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
+  .empty{
+    display: none;
+  }
+  .rsvp-meetup-filters{
+    width: 30%;
+  }
+  .top-feeds{
+    width: 70%;
+    padding-left: 15%;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
