@@ -81,6 +81,9 @@ a{
 .text-blue{
   color: #005074;
 }
+.rsvp-blue{
+  color: #00AEFF;
+}
 .text-white{
   color:#FFFFFF;
 }
@@ -132,11 +135,17 @@ a{
 .w-45{
   width: 45%;
 }
+.w-40{
+  width: 40%;
+}
 .w-50{
   width: 50%;
 }
 .w-55{
   width: 55%;
+}
+.w-60{
+  width: 60%;
 }
 .w-65{
   width: 65%;
@@ -153,16 +162,21 @@ a{
 
 
 input{
-  height:40px;
-  border:1px solid #c4c4c4;
+  height:100%;
+  /* border:1px solid #c4c4c4; */
   border-radius: 0px;
   font-size: 16px;
   line-height: 20px;
   color: #828282;
   padding-left: 15px!important;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
 }
 input:hover{
   border:1px solid #000203;
+}
+input:focus{
+  border:1px solid #000203!important;
 }
 input::placeholder{
   font-size: 16px;

@@ -15,12 +15,12 @@ let downVoteCount = 1;
 const rsvp = () => {
   if (toggleState === 0) {
     rsvpIcon.classList.remove('text-grey');
-    rsvpIcon.classList.add('text-blue');
+    rsvpIcon.classList.add('rsvp-blue');
     document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to cancel';
     toggleState = 1;
   } else {
     rsvpIcon.classList.add('text-grey');
-    rsvpIcon.classList.remove('text-blue');
+    rsvpIcon.classList.remove('rsvp-blue');
     document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to rsvp';
     toggleState = 0;
   }
@@ -29,17 +29,15 @@ const rsvp = () => {
 // upvote funtion
 function upVote() {
   upVoteAmount = Number(upVoteAmount);
-  voteCheck = upVoteAmount + 1;
+  voteCheck += 1;
   if (voteCheck % 2 !== 0) {
     upVoteAmount += 1;
     const newUpVoteAmount = document.querySelector('.up-vote-amount');
     newUpVoteAmount.textContent = upVoteAmount;
-    upVoteBtn.classList.add('text-blue');
   } else if (voteCheck % 2 === 0) {
     upVoteAmount -= 1;
     const newUpVoteAmount = document.querySelector('.up-vote-amount');
     newUpVoteAmount.textContent = upVoteAmount;
-    upVoteBtn.classList.remove('text-blue');
   }
 }
 upVoteBtn.onclick = () => {
@@ -55,17 +53,15 @@ upVoteBtn.onclick = () => {
 // downvote funtion
 function downVote() {
   downVoteAmount = Number(downVoteAmount);
-  voteCheck = downVoteAmount + 1;
+  voteCheck += 1;
   if (voteCheck % 2 !== 0) {
     downVoteAmount += 1;
     const newDownVoteAmount = document.querySelector('.down-vote-amount');
     newDownVoteAmount.textContent = downVoteAmount;
-    downVoteBtn.classList.add('text-red');
   } else if (voteCheck % 2 === 0) {
     downVoteAmount -= 1;
     const newDownVoteAmount = document.querySelector('.down-vote-amount');
     newDownVoteAmount.textContent = downVoteAmount;
-    downVoteBtn.classList.remove('text-red');
   }
 }
 downVoteBtn.onclick = () => {
