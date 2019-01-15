@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import router from './routes/index';
+import router from './routes/v1/index';
 
 
 const app = express();
@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', router);
+
+app.get('*', (req, res) => res.status(404).json({
+  status: 404,
+  message: 'The page you are looking for does not exist',
+}));
 
 app.listen(port, () => {
   console.log(`Questioner app is live at http://127.0.0.1:${port}`);

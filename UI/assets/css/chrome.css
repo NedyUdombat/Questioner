@@ -110,7 +110,7 @@
 /*  */
 
 footer{
-  height: 10vh;
+  height: 5vh;
   text-align: center;
   background: #000203;
   color: #f2f2f2;
@@ -121,6 +121,10 @@ footer{
   position: fixed;
   bottom: 0;
   width: 100%;
+  /* margin-top: 300px!important; */
+}
+#non-fixed-footer{
+  position: relative;
   /* margin-top: 300px!important; */
 }
 /*  */

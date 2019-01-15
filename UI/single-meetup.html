@@ -19,7 +19,6 @@
 
     <div class="topnav" id="myTopnav">
       <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
-      <a href="admin.html">Admin</a>
       <a href="user-profile.html">User Profile</a>
       <a href="meetups.html">Meetups</a>
       <a href="login.html">Login</a>
@@ -57,9 +56,6 @@
               <p class="d-flex"> <span class="text-blue">Location: </span>&nbsp;&nbsp;</p>
               <p>Plot 3, lane E, 3rd Avenue, Eliminigwe Estate phase II, Elelenwo, Port Harcourt, Rivers State, Nigeria</p>
             </div>
-            <div class="questions ">
-              <p class="text-red">Questions: 22</p>
-            </div>
           </div>
           <div class="card-footer ">
             <button type="button" class="btn bg-transparent pl-0 tooltip question-btn" onclick="launchModal('askQuestionModal')">
@@ -76,7 +72,7 @@
       </div>
     </div>
 
-    <p class="text-center text-grey">---------- Questions ----------</p>
+    <p class="text-center text-grey">---------- Questions(22) ----------</p>
     <div class="question-div d-flex justify-content-center ">
       <div class="content h-100 ">
         <div class="question-card">
@@ -99,9 +95,9 @@
             <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
               <div class="d-flex  w-100 justify-content-center ">
                 <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
+                  <i class="fas fa-caret-up rsvp-blue f-28 mr-3"></i>
                 </button>
-                <span class="up-vote-amount">60</span>
+                <span class="up-vote-amount">61</span>
               </div>
               <div class="d-flex w-100 justify-content-center ">
                 <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
@@ -121,7 +117,7 @@
           <div class="bg-white d-none comment-div">
             <form>
               <div class="d-flex justify-content-center ">
-                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
+                <textarea class="w-100" rows="5" maxlength="300" name="question" placeholder="Type your comment here (300 characters max)"></textarea>
               </div>
               <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-blue">comment</button>
@@ -158,7 +154,7 @@
       </div>
 
     </div>
-    <footer>
+    <footer id="non-fixed-footer">
       <p>Made by Edidiong Udombat @ Andela Pre-felllowship Bootcamp</p>
     </footer>
     <script src="./assets/js/nav.js" charset="utf-8"></script>

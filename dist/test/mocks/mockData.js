@@ -5,34 +5,43 @@ Object.defineProperty(exports, "__esModule", {
 });
 var mockMeetupDetails = {
   validMeetup: {
-    username: 'admin',
+    isAdmin: true,
+    organizer: 'DevFest',
+    topic: 'Web Accessibility',
+    happeningOn: '12/12/19',
+    location: 'Uyo, Akwa Ibom State',
+    tags: ['Tech', 'Edu'],
+    images: 'jpeg.png'
+
+  },
+  invalidPastMeetup: {
+    isAdmin: true,
     organizer: 'DevFest',
     topic: 'Web Accessibility',
     happeningOn: '12/12/12',
     location: 'Uyo, Akwa Ibom State',
-    Tags: ['Tech', 'Edu'],
-    images: ['jpeg.png', 'nn.jpg']
+    tags: ['Tech', 'Edu'],
+    images: 'jpeg.png'
 
   },
   nonAdminMeetup: {
-    username: 'nedyy',
+    isAdmin: false,
     organizer: 'DevFest',
     topic: 'Web Accessibility',
     happeningOn: '12/12/12',
     location: 'Uyo, Akwa Ibom State',
-    Tags: ['Tech', 'Edu'],
-    images: ['jpeg.png', 'nn.jpg']
+    tags: ['Tech', 'Edu'],
+    images: 'jpeg.png'
 
   },
   emptyFieldMeetup: {
-    id: 1,
-    organizer: 'DevFest',
-    topic: '',
+    isAdmin: true,
+    organizer: '',
+    topic: 'Web Accessibility',
     happeningOn: '12/12/12',
     location: 'Uyo, Akwa Ibom State',
-    Tags: ['Tech', 'Edu'],
-    images: ['jpeg.png', 'nn.jpg'],
-    createdOn: new Date()
+    tags: ['Tech', 'Edu'],
+    images: 'jpeg.png'
   }
 };
 

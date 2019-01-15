@@ -12,9 +12,9 @@ var _server = require('../server');
 
 var _server2 = _interopRequireDefault(_server);
 
-var _dummyMeetups = require('../dummy/dummyModel/dummyMeetups');
+var _meetups = require('../models/v1/meetups');
 
-var _dummyMeetups2 = _interopRequireDefault(_dummyMeetups);
+var _meetups2 = _interopRequireDefault(_meetups);
 
 var _mockData = require('./mocks/mockData');
 
@@ -53,16 +53,9 @@ describe('Questioner Server', function () {
       });
     });
 
-    it('/api/v1/meetups should respond with status code 409 if meetup already exists', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/meetups').set('Accept', 'application/json').send(validMeetup).end(function (err, res) {
-        expect(res.status).to.equal(409);
-        done();
-      });
-    });
-
     it('/api/v1/meetups should respond with status code 401 if user is not an admin', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/meetups').set('Accept', 'application/json').send(nonAdminMeetup).end(function (err, res) {
-        expect(res.status).to.equal(401);
+        expect(res.status).to.equal(403);
         done();
       });
     });
@@ -82,13 +75,6 @@ describe('Questioner Server', function () {
       _chai2.default.request(_server2.default).post('/api/v1/questions').set('Accept', 'application/json').send(validQuestion).end(function (err, res) {
         expect(res.status).to.equal(201);
         expect(res.body.message).to.eql('Question asked successfully');
-        done();
-      });
-    });
-
-    it('/api/v1/questions should respond with status code 409 if question already exists', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/questions').set('Accept', 'application/json').send(validQuestion).end(function (err, res) {
-        expect(res.status).to.equal(409);
         done();
       });
     });
@@ -153,13 +139,6 @@ describe('Questioner Server', function () {
       });
     });
 
-    it('/api/v1/question/<question-id>/upvote should respond with status code 409 if you have already upvoted a question', function (done) {
-      _chai2.default.request(_server2.default).patch('/api/v1/questions/1/upvote').set('Accept', 'application/json').send(validVoter).end(function (err, res) {
-        expect(res.status).to.equal(409);
-        done();
-      });
-    });
-
     it('/api/v1/question/<question-id>/upvote should respond with status code 404 if the user doesnt exist(logged in or signed up)', function (done) {
       _chai2.default.request(_server2.default).patch('/api/v1/questions/1/upvote').set('Accept', 'application/json').send(invalidVoter).end(function (err, res) {
         expect(res.status).to.equal(404);
@@ -180,13 +159,6 @@ describe('Questioner Server', function () {
     it('/api/v1/question/<question-id>/downvote should respond with status code 200 and downvote a question', function (done) {
       _chai2.default.request(_server2.default).patch('/api/v1/questions/2/downvote').set('Accept', 'application/json').send(validVoter).end(function (err, res) {
         expect(res.status).to.equal(200);
-        done();
-      });
-    });
-
-    it('/api/v1/question/<question-id>/downvote should respond with status code 409 if you have already downvoted a question', function (done) {
-      _chai2.default.request(_server2.default).patch('/api/v1/questions/2/downvote').set('Accept', 'application/json').send(validVoter).end(function (err, res) {
-        expect(res.status).to.equal(409);
         done();
       });
     });
@@ -246,7 +218,14 @@ describe('Questioner Server', function () {
       });
     });
 
-    it('/api/v1/meetups/upcoming should respond with status code 20 and retrieve all upcoming meetup', function (done) {
+    it('/api/v1/meetups/<meetup-id> should respond with status code 400 when Id is not a number', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetup/u').set('Accept', 'application/json').end(function (err, res) {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+
+    it('/api/v1/meetups/upcoming should respond with status code 200 and retrieve all upcoming meetup', function (done) {
       _chai2.default.request(_server2.default).get('/api/v1/meetups/upcoming').set('Accept', 'application/json').end(function (err, res) {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.eql('Successfully retrieved all upcoming meetups');
@@ -255,9 +234,17 @@ describe('Questioner Server', function () {
     });
 
     it('/api/v1/meetups should respond with status code 404 when there are no meetups', function (done) {
-      _dummyMeetups2.default.splice(0, 7);
+      _meetups2.default.splice(0, 7);
       _chai2.default.request(_server2.default).get('/api/v1/meetups').set('Accept', 'application/json').end(function (err, res) {
         expect(res.status).to.equal(404);
+        done();
+      });
+    });
+
+    it('/api/v1/meetups/upcoming should respond with status code 404 when there are no upcoming meetups', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/upcoming').set('Accept', 'application/json').end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.eql('There are no upcoming meetups');
         done();
       });
     });
