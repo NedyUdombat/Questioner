@@ -7,13 +7,13 @@
     "build": "babel server -d dist",
     "start:dev": "nodemon --exec babel-node --presets babel-preset-env ./server/server.js",
     "start": "node ./dist/server.js",
-    "test": "cross-env NODE_ENV=test nyc mocha server/test/**/*test.js --require babel-register --exit",
+    "test": "nyc mocha server/test/**/*test.js --require babel-register --exit",
     "babel-node": "babel-node server --presets=env",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "migrate:drop": "babel-node server/models/v1/drop-migrations.js",
     "test-migrate:drop": "cross-env NODE_ENV=test babel-node server/models/v1/drop-migrations.js",
-    "migrate": "babel-node server/models/v1/create-migrations.js",
+    "migrate": "npm run migrate:drop && babel-node server/models/v1/create-migrations.js",
     "test-migrate": "cross-env NODE_ENV=test npm run test-migrate:drop && babel-node server/models/v1/create-migrations.js"
   },
   "nyc": {
