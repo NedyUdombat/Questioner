@@ -1,6 +1,3 @@
-// import pool from './dbConfig';
-
-
 const dropTables = {
   votesTable: 'DROP TABLE IF EXISTS votes',
   commentsTable: 'DROP TABLE IF EXISTS comments',
@@ -11,9 +8,3 @@ const dropTables = {
 };
 
 export default dropTables;
-
-// pool.query('DROP TABLE IF EXISTS votes');
-// pool.query('DROP TABLE IF EXISTS comments');
-// pool.query('DROP TABLE IF EXISTS questions');
-// pool.query('DROP TABLE IF EXISTS users');
-// pool.query('DROP TABLE IF EXISTS meetups');

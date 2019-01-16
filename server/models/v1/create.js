@@ -1,10 +1,10 @@
 const createTables = {
   meetupsTable: `CREATE TABLE IF NOT EXISTS meetups(
       id SERIAL PRIMARY KEY,
+      organizer_name VARCHAR not null,
       topic VARCHAR not null,
-      organizer_name VARCHAR(100) not null,
       location VARCHAR not null,
-      happening_On DATE,
+      happening_On DATE not null,
       tags VARCHAR[],
       images VARCHAR[],
       created_on DATE DEFAULT NOW()
@@ -52,11 +52,12 @@ const createTables = {
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
     )`,
 
-  votesTable: `CREATE TABLE IF NOT EXISTS votes(
+  votesTable: `CREATE TYPE type AS ENUM ('upvote', 'downvote');
+      CREATE TABLE IF NOT EXISTS votes(
       id SERIAL PRIMARY KEY,
       user_id INT not null,
       question_id INT not null,
-      type VARCHAR[] not null,
+      vote_type type,
       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
     )`,

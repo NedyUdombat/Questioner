@@ -1,89 +1,113 @@
-import questions from '../../models/v1/questions';
-import meetups from '../../models/v1/meetups';
-import users from '../../models/v1/users';
-// import Validator from '../../_helpers/post_validators';
+import Questions from '../../models/v1/questions';
 
+const { getAllQuestions, askQuestion, voteQuestion } = Questions;
 
 class QuestionController {
-  static createQuestion(req, res) {
-    const { user, meetup, title, body } = req.body;
-    const foundUsername = users.find(aUser => aUser.username === req.body.user);
-    const foundMeetup = meetups.find(aMeetup => aMeetup.topic === req.body.meetup);
+  static getAllQuestions(req, res) {
+    getAllQuestions()
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            data: results.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
 
-    if (foundUsername && foundMeetup) {
-      const id = questions.length + 1;
-      const questionDetail = {
-        id, createdBy: user, meetup, title, body, upvotes: 0, downvotes: 0, createdOn: new Date(),
-      };
-      questions.push(questionDetail);
-      const resDetails = {
-        userId: foundUsername.id, meetupId: foundMeetup.id, title, body,
-      };
-      return res.status(201).json({
-        status: 201,
-        message: 'Question asked successfully',
-        data: resDetails,
-      });
-    }
-    return res.status(404).json({
-      error: 'User or Meetup does not exist',
-    });
+  static createQuestion(req, res) {
+    const meetupId = req.body.meetupId;
+    const userId = req.body.userId;
+    const question = {
+      meetupId,
+      userId,
+      title: req.body.title,
+      body: req.body.body,
+    };
+    askQuestion(question)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question asked successfully',
+            data: results.rows,
+          });
+        }
+        return res.json(400).json({
+          status: 400,
+          error: 'Question could not be asked',
+        });
+      })
+      .catch(error => res.status(500).json({
+        status: 500,
+        error,
+      }));
   }
 
   static upVote(req, res) {
-    const { questionId } = req.params;
-    const foundUsername = users.find(aUser => aUser.username === req.body.user);
-    const foundQuestion = questions.find(question => question.id === parseInt(questionId, 10));
-    if (foundUsername && foundQuestion) {
-      const upvotes = foundQuestion.upvotes;
-      const totalVote = upvotes + 1;
-      foundQuestion.votes = totalVote;
+    const userId = req.body.userId;
+    const questionId = req.params.questionId;
 
-      const resDetail = {
-        meetup: foundQuestion.meetup,
-        title: foundQuestion.title,
-        body: foundQuestion.body,
-        upvotes,
-        upVote: '+1',
-        totalVote,
-      };
-      return res.status(200).json({
-        status: 200,
-        message: 'Upvote successful',
-        data: resDetail,
-      });
-    }
-    return res.status(404).json({
-      error: 'User or Question does not exist',
-    });
+    const question = {
+      userId,
+      questionId,
+      voteType: 'upvote',
+    };
+    voteQuestion(question)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question upvote successful',
+            data: results.rows,
+          });
+        }
+        return res.status(400).json({
+          status: 400,
+          message: 'Question upvote unsuccessful',
+        });
+      })
+      .catch(error => res.status(500).json({
+        status: 500,
+        error,
+      }));
   }
 
   static downVote(req, res) {
-    const { questionId } = req.params;
-    const foundUsername = users.find(aUser => aUser.username === req.body.user);
-    const foundQuestion = questions.find(question => question.id === parseInt(questionId, 10));
-    if (foundUsername && foundQuestion) {
-      const downvotes = foundQuestion.downvotes;
-      const totalVote = downvotes + 1;
-      foundQuestion.downvotes = totalVote;
+    const userId = req.body.userId;
+    const questionId = req.params.questionId;
 
-      const resDetail = {
-        meetup: foundQuestion.meetup,
-        title: foundQuestion.title,
-        body: foundQuestion.body,
-        downvotes,
-        downVote: '+1',
-        totalVote,
-      };
-      return res.status(200).json({
-        status: 200,
-        message: 'Downvote successful',
-        data: resDetail,
-      });
-    }
-    return res.status(404).json({
-      error: 'User or Question does not exist',
-    });
+    const question = {
+      userId,
+      questionId,
+      voteType: 'downvote',
+    };
+    voteQuestion(question)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question downvote successful',
+            data: results.rows,
+          });
+        }
+        return res.status(400).json({
+          status: 400,
+          message: 'Question downvote unsuccessful',
+        });
+      })
+      .catch(error => res.status(500).json({
+        status: 500,
+        error,
+      }));
   }
 }
 

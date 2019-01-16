@@ -2,11 +2,9 @@ import Validator from '../_helpers/post_validators';
 
 class CreateQuestionValidator {
   static createQuestionValidator(req, res, next) {
-    const { user, meetup, title, body } = req.body;
+    const { title, body } = req.body;
 
     const fields = {
-      user,
-      meetup,
       title,
       body,
     };

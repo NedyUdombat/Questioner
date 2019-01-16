@@ -27,14 +27,14 @@ var CreateMeetupValidator = function () {
     key: 'createMeetupValidator',
     value: function createMeetupValidator(req, res, next) {
       var _req$body = req.body,
-          organizer = _req$body.organizer,
+          organizerName = _req$body.organizerName,
           topic = _req$body.topic,
           happeningOn = _req$body.happeningOn,
           location = _req$body.location;
 
 
       var fields = {
-        organizer: organizer, topic: topic, happeningOn: happeningOn, location: location
+        organizerName: organizerName, topic: topic, happeningOn: happeningOn, location: location
       };
       var validator = new _post_validators2.default();
       validator.validate(fields, 'required|string');

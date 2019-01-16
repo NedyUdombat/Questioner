@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var createTables = {
-    meetupsTable: "CREATE TABLE IF NOT EXISTS meetups(\n      id SERIAL PRIMARY KEY,\n      topic VARCHAR not null,\n      organizer_name VARCHAR(100) not null,\n      location VARCHAR not null,\n      happening_On DATE,\n      tags VARCHAR[],\n      images VARCHAR[],\n      created_on DATE DEFAULT NOW()\n    )",
+    meetupsTable: "CREATE TABLE IF NOT EXISTS meetups(\n      id SERIAL PRIMARY KEY,\n      organizer_name VARCHAR not null,\n      topic VARCHAR not null,\n      location VARCHAR not null,\n      happening_On DATE not null,\n      tags VARCHAR[],\n      images VARCHAR[],\n      created_on DATE DEFAULT NOW()\n    )",
 
     usersTable: "CREATE TABLE IF NOT EXISTS users(\n      id SERIAL PRIMARY KEY,\n      firstname VARCHAR(100) not null,\n      lastname VARCHAR(100) not null,\n      othername VARCHAR(100) not null,\n      username VARCHAR(100) UNIQUE not null,\n      email VARCHAR(100) not null,\n      password VARCHAR(100) not null,\n      phonenumber INT,\n      role VARCHAR(100) not null,\n      registered DATE DEFAULT NOW()\n    )",
 
@@ -14,7 +14,7 @@ var createTables = {
 
     commentsTable: "CREATE TABLE IF NOT EXISTS comments(\n      id SERIAL PRIMARY KEY,\n      user_id INT not null,\n      question_id INT not null,\n      comment VARCHAR not null,\n      FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,\n      FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE\n    )",
 
-    votesTable: "CREATE TABLE IF NOT EXISTS votes(\n      id SERIAL PRIMARY KEY,\n      user_id INT not null,\n      question_id INT not null,\n      type VARCHAR[] not null,\n      FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,\n      FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE\n    )"
+    votesTable: "CREATE TYPE type AS ENUM ('upvote', 'downvote');\n      CREATE TABLE IF NOT EXISTS votes(\n      id SERIAL PRIMARY KEY,\n      user_id INT not null,\n      question_id INT not null,\n      vote_type type,\n      FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,\n      FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE\n    )"
 };
 
 exports.default = createTables;

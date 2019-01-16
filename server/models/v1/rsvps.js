@@ -1,28 +1,21 @@
-const rsvps = [
-  {
-    id: 1,
-    meetup: 6,
-    user: 3,
-    response: 'yes',
-  },
-  {
-    id: 2,
-    meetup: 1,
-    user: 5,
-    response: 'yes',
-  },
-  {
-    id: 3,
-    meetup: 1,
-    user: 2,
-    response: 'yes',
-  },
-  {
-    id: 4,
-    meetup: 5,
-    user: 2,
-    response: 'yes',
-  },
-];
+import pool from './dbConfig';
 
-export default rsvps;
+class Rsvps {
+  static getAllRsvps(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${id}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static rsvpMeetup(rsvp, id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (${id}, ${rsvp.userId}, '${rsvp.status}')  returning *`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+}
+
+export default Rsvps;

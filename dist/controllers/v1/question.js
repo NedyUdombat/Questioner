@@ -10,20 +10,13 @@ var _questions = require('../../models/v1/questions');
 
 var _questions2 = _interopRequireDefault(_questions);
 
-var _meetups = require('../../models/v1/meetups');
-
-var _meetups2 = _interopRequireDefault(_meetups);
-
-var _users = require('../../models/v1/users');
-
-var _users2 = _interopRequireDefault(_users);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import Validator from '../../_helpers/post_validators';
-
+var _getAllQuestions = _questions2.default.getAllQuestions,
+    askQuestion = _questions2.default.askQuestion,
+    voteQuestion = _questions2.default.voteQuestion;
 
 var QuestionController = function () {
   function QuestionController() {
@@ -31,106 +24,114 @@ var QuestionController = function () {
   }
 
   _createClass(QuestionController, null, [{
+    key: 'getAllQuestions',
+    value: function getAllQuestions(req, res) {
+      _getAllQuestions().then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            data: results.rows
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
     key: 'createQuestion',
     value: function createQuestion(req, res) {
-      var _req$body = req.body,
-          user = _req$body.user,
-          meetup = _req$body.meetup,
-          title = _req$body.title,
-          body = _req$body.body;
-
-      var foundUsername = _users2.default.find(function (aUser) {
-        return aUser.username === req.body.user;
-      });
-      var foundMeetup = _meetups2.default.find(function (aMeetup) {
-        return aMeetup.topic === req.body.meetup;
-      });
-
-      if (foundUsername && foundMeetup) {
-        var id = _questions2.default.length + 1;
-        var questionDetail = {
-          id: id, createdBy: user, meetup: meetup, title: title, body: body, upvotes: 0, downvotes: 0, createdOn: new Date()
-        };
-        _questions2.default.push(questionDetail);
-        var resDetails = {
-          userId: foundUsername.id, meetupId: foundMeetup.id, title: title, body: body
-        };
-        return res.status(201).json({
-          status: 201,
-          message: 'Question asked successfully',
-          data: resDetails
+      var meetupId = req.body.meetupId;
+      var userId = req.body.userId;
+      var question = {
+        meetupId: meetupId,
+        userId: userId,
+        title: req.body.title,
+        body: req.body.body
+      };
+      askQuestion(question).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question asked successfully',
+            data: results.rows
+          });
+        }
+        return res.json(400).json({
+          status: 400,
+          error: 'Question could not be asked'
         });
-      }
-      return res.status(404).json({
-        error: 'User or Meetup does not exist'
+      }).catch(function (error) {
+        return res.status(500).json({
+          status: 500,
+          error: error
+        });
       });
     }
   }, {
     key: 'upVote',
     value: function upVote(req, res) {
+      var userId = req.body.userId;
       var questionId = req.params.questionId;
 
-      var foundUsername = _users2.default.find(function (aUser) {
-        return aUser.username === req.body.user;
-      });
-      var foundQuestion = _questions2.default.find(function (question) {
-        return question.id === parseInt(questionId, 10);
-      });
-      if (foundUsername && foundQuestion) {
-        var upvotes = foundQuestion.upvotes;
-        var totalVote = upvotes + 1;
-        foundQuestion.votes = totalVote;
-
-        var resDetail = {
-          meetup: foundQuestion.meetup,
-          title: foundQuestion.title,
-          body: foundQuestion.body,
-          upvotes: upvotes,
-          upVote: '+1',
-          totalVote: totalVote
-        };
-        return res.status(200).json({
-          status: 200,
-          message: 'Upvote successful',
-          data: resDetail
+      var question = {
+        userId: userId,
+        questionId: questionId,
+        voteType: 'upvote'
+      };
+      voteQuestion(question).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question upvote successful',
+            data: results.rows
+          });
+        }
+        return res.status(400).json({
+          status: 400,
+          message: 'Question upvote unsuccessful'
         });
-      }
-      return res.status(404).json({
-        error: 'User or Question does not exist'
+      }).catch(function (error) {
+        return res.status(500).json({
+          status: 500,
+          error: error
+        });
       });
     }
   }, {
     key: 'downVote',
     value: function downVote(req, res) {
+      var userId = req.body.userId;
       var questionId = req.params.questionId;
 
-      var foundUsername = _users2.default.find(function (aUser) {
-        return aUser.username === req.body.user;
-      });
-      var foundQuestion = _questions2.default.find(function (question) {
-        return question.id === parseInt(questionId, 10);
-      });
-      if (foundUsername && foundQuestion) {
-        var downvotes = foundQuestion.downvotes;
-        var totalVote = downvotes + 1;
-        foundQuestion.downvotes = totalVote;
-
-        var resDetail = {
-          meetup: foundQuestion.meetup,
-          title: foundQuestion.title,
-          body: foundQuestion.body,
-          downvotes: downvotes,
-          downVote: '+1',
-          totalVote: totalVote
-        };
-        return res.status(200).json({
-          status: 200,
-          message: 'Downvote successful',
-          data: resDetail
+      var question = {
+        userId: userId,
+        questionId: questionId,
+        voteType: 'downvote'
+      };
+      voteQuestion(question).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Question downvote successful',
+            data: results.rows
+          });
+        }
+        return res.status(400).json({
+          status: 400,
+          message: 'Question downvote unsuccessful'
         });
-      }
-      return res.status(404).json({
-        error: 'User or Question does not exist'
+      }).catch(function (error) {
+        return res.status(500).json({
+          status: 500,
+          error: error
+        });
       });
     }
   }]);

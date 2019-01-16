@@ -1,64 +1,65 @@
-const meetups = [
-  {
-    id: 1,
-    organizer: 'DevFest',
-    topic: 'Web Accessibility',
-    happeningOn: '3/4/19',
-    location: 'Uyo, Akwa Ibom State',
-    Tags: ['Tech', 'Edu'],
-    images: 'nn.jpg',
-    createdOn: new Date(),
-  },
-  {
-    id: 2,
-    organizer: 'Dev C',
-    topic: 'Developer Advocacy',
-    happeningOn: '11/11/18',
-    location: 'Civic Center, Lekki, Lagos',
-    Tags: ['Tech', 'Social'],
-    images: 'mark.png',
-    createdOn: new Date(),
-  },
-  {
-    id: 3,
-    organizer: 'Dev Center',
-    topic: 'Getting a Remote job',
-    happeningOn: '2/12/20',
-    location: 'Yaba, Lagos',
-    Tags: ['Tech'],
-    images: 'chamlice.jpg',
-    createdOn: new Date(),
-  },
-  {
-    id: 4,
-    organizer: 'Forloop',
-    topic: 'The art of self care as a developer',
-    happeningOn: '7/27/19',
-    location: 'Gwagwalada, Abuja',
-    Tags: ['Tech', 'Health'],
-    images: 'unic.svg',
-    createdOn: new Date(),
-  },
-  {
-    id: 5,
-    organizer: 'FrontStack',
-    topic: 'UI pixel perfection',
-    happeningOn: '1/3/18',
-    location: 'EPIC Tower, Illupeju',
-    Tags: ['Tech', 'Epic'],
-    images: 'shalvah.png',
-    createdOn: new Date(),
-  },
-  {
-    id: 6,
-    organizer: 'GDG',
-    topic: 'Becoming a GDE',
-    happeningOn: '11/11/19',
-    location: 'Tech Zone Park, Lagos',
-    Tags: ['Tech', 'Expert', 'google'],
-    images: 'sundar.jpg',
-    createdOn: new Date(),
-  },
-];
+import moment from 'moment';
+import pool from './dbConfig';
 
-export default meetups;
+
+class Meetups {
+  static getAll() {
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM meetups')
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getSpecific(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM meetups WHERE id = ${id}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getUpcoming() {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM meetups WHERE happening_on > to_date('${moment().format('YYYY-MM-DD')}', 'YYYY MM DD')`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static create(details) {
+    const newHappeningOn = moment(details.happeningOn).format('YYYY-MM-DD');
+    const meetupDetails = {
+      organizer_name: details.organizerName,
+      topic: details.topic,
+      location: details.location,
+      happeningOn: newHappeningOn,
+      tags: details.tags ? details.tags : '{}',
+      images: details.images ? details.images : '{}',
+      createdOn: moment().format(),
+    };
+    return new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO meetups ( organizer_name, topic, location, happening_On, tags, images, created_on) VALUES ('${meetupDetails.organizer_name}', '${meetupDetails.topic}','${meetupDetails.location}', '${meetupDetails.happeningOn}', '${meetupDetails.tags}', '${meetupDetails.images}', '${meetupDetails.createdOn}') returning *`)
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static deleteAll() {
+    return new Promise((resolve, reject) => {
+      pool.query('DELETE * FROM meetups')
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static deleteSpecific(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`DELETE * FROM TABLE WHERE id = ${id}`)
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+}
+
+export default Meetups;
