@@ -5,6 +5,9 @@ node_js:
 services:
   - postgresql
 
+env:
+  - NODE_ENV=test
+
 install:
  - npm install
 
