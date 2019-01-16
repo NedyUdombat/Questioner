@@ -23,6 +23,9 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .send(validMeetup)
         .end((err, res) => {
+          if (err) {
+            console.log(err);
+          }
           expect(res.status).to.equal(201);
           expect(res.body.message).to.eql('Meetup creation successful');
           done();
@@ -46,6 +49,7 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .send(emptyFieldMeetup)
         .end((err, res) => {
+
           expect(res.status).to.equal(400);
           done();
         });

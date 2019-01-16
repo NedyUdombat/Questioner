@@ -14,9 +14,9 @@ const createTables = {
       id SERIAL PRIMARY KEY,
       firstname VARCHAR(100) not null,
       lastname VARCHAR(100) not null,
-      othername VARCHAR(100) not null,
-      username VARCHAR(100) UNIQUE not null,
-      email VARCHAR(100) not null,
+      othername VARCHAR(100),
+      username VARCHAR(100) not null,
+      email VARCHAR(100) UNIQUE not null,
       password VARCHAR(100) not null,
       phonenumber INT,
       role VARCHAR(100) not null,
@@ -52,7 +52,7 @@ const createTables = {
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
     )`,
 
-  votesTable: `CREATE TYPE type AS ENUM ('upvote', 'downvote');
+  votesTable: `
       CREATE TABLE IF NOT EXISTS votes(
       id SERIAL PRIMARY KEY,
       user_id INT not null,
