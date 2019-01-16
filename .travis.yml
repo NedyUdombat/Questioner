@@ -13,7 +13,7 @@ cache:
     - "node_modules"
 
 before_script:
-  - psql -c 'create database \"Qustioner-test\";' -U postgres
+  - psql -c "create database \"Questioner-test\";" -U postgres
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
