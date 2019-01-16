@@ -16,9 +16,6 @@ describe('Questioner Server', () => {
     /*
     ** Testing Question Creation
     */
-    // before(async () => {
-    //   await.
-    // })
 
     it('/api/v1/questions should respond with status code 201 and ask a question', (done) => {
       chai.request(app)

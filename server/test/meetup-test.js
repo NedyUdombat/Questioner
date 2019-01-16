@@ -104,7 +104,7 @@ describe('Questioner Server', () => {
 
     it('/api/v1/meetups/<meetup-id> should respond with status code 200 and retrieve specific meetup', (done) => {
       chai.request(app)
-        .get('/api/v1/meetup/2')
+        .get('/api/v1/meetup/1')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(200);
