@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-let connectionString;
+let connectionString = process.env.NODE_ENV || 'development';
 if (process.env.NODE_ENV === 'test') {
   connectionString = process.env.DB_TEST_URL;
 } else {
