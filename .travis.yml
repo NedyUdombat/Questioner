@@ -16,7 +16,7 @@ cache:
     - "node_modules"
 
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database Questioner-test;' -U postgres
   - npm run migrate
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
