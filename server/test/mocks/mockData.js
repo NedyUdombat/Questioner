@@ -6,8 +6,7 @@ const mockMeetupDetails = {
     location: 'Uyo, Akwa Ibom State',
   },
   invalidPastMeetup: {
-    isAdmin: true,
-    organizer: 'DevFest',
+    organizerName: 'DevFest',
     topic: 'Web Accessibility',
     happeningOn: '2018-12-12',
     location: 'Uyo, Akwa Ibom State',

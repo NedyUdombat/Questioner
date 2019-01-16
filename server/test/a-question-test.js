@@ -2,7 +2,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import { mockQuestionDetails, mockVoteDetails } from './mocks/mockData';
-
 // config chai to use expect
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -24,7 +23,6 @@ describe('Questioner Server', () => {
         .send(validQuestion)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Question asked successfully');
           done();
         });
     });
@@ -36,6 +34,23 @@ describe('Questioner Server', () => {
         .send(invalidFieldQuestion)
         .end((err, res) => {
           expect(res.status).to.equal(400);
+          done();
+        });
+    });
+  });
+
+  describe('GET /', () => {
+    /*
+    ** Testing Question Retrieval
+    */
+
+    it('/api/v1/questions should respond with status code 200 and retieve all questions', (done) => {
+      chai.request(app)
+        .get('/api/v1/questions')
+        .set('Accept', 'application/json')
+        .send(validUpvote)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
           done();
         });
     });
@@ -53,7 +68,7 @@ describe('Questioner Server', () => {
         .send(validUpvote)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Question upvote successful');
+          expect(res.body.message).to.eql('Upvote successful');
           done();
         });
     });
