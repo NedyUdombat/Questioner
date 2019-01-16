@@ -52,7 +52,7 @@ const createTables = {
       FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
     )`,
 
-  votesTable: `
+  votesTable: `CREATE TYPE type AS ENUM ('upvote', 'downvote');
       CREATE TABLE IF NOT EXISTS votes(
       id SERIAL PRIMARY KEY,
       user_id INT not null,
