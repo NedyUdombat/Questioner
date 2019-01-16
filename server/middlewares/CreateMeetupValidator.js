@@ -3,10 +3,10 @@ import Validator from '../_helpers/post_validators';
 
 class CreateMeetupValidator {
   static createMeetupValidator(req, res, next) {
-    const { organizer, topic, happeningOn, location } = req.body;
+    const { organizerName, topic, happeningOn, location } = req.body;
 
     const fields = {
-      organizer, topic, happeningOn, location,
+      organizerName, topic, happeningOn, location,
     };
     const validator = new Validator();
     validator.validate(fields, 'required|string');

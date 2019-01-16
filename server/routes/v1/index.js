@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import expressJoi from 'express-joi-validator';
 import MeetupController from '../../controllers/v1/meetup';
 import QuestionController from '../../controllers/v1/question';
+import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
-import createMeetupSchema from '../../middlewares/CreateMeetupSchema';
 import MeetupValidator from '../../middlewares/MeetupValidator';
 import UserValidator from '../../middlewares/UserValidator';
 import CreateQuestionValidator from '../../middlewares/CreateQuestionValidator';
@@ -12,10 +11,10 @@ import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
 
 // deconstructure controllers
 const {
-  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, rsvpMeetup,
+  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup,
 } = MeetupController;
-const { createQuestion, upVote, downVote } = QuestionController;
-
+const { getAllQuestions, createQuestion, upVote, downVote } = QuestionController;
+const { rsvpMeetup, getAllRsvps } = RsvpController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
@@ -25,6 +24,7 @@ const { userValidator } = UserValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
 const { createMeetupValidator } = CreateMeetupValidator;
 
+
 const router = Router();
 
 // general route
@@ -33,16 +33,22 @@ router.get('/', (req, res) => {
 });
 
 // meetup endpoints
-router.get('/meetups', getAllMeetups);
-router.get('/meetup/:meetupId', idValidator, getSingleMeetup);
-router.get('/meetups/upcoming', getUpcomingMeetups);
+router.get('/meetups', getAllMeetups);//
+router.get('/meetup/:meetupId', idValidator, getSingleMeetup);//
+router.get('/meetups/upcoming', getUpcomingMeetups);//
 
-router.post('/meetups', isAdmin, createMeetupValidator, createMeetup);
-router.post('/meetups/:meetupId/rsvps', idValidator, statusValidator, rsvpMeetup);
+router.post('/meetups', isAdmin, createMeetupValidator, createMeetup);//
+
+// Rsvp endpoints
+router.get('/:meetupId/rsvps', idValidator, getAllRsvps);//
+
+router.post('/meetups/:meetupId/rsvp', idValidator, statusValidator, rsvpMeetup);//
 
 // question endpoints
-router.post('/questions', createQuestionValidator, createQuestion);
-router.patch('/questions/:questionId/upvote', idValidator, userValidator, upVote);
-router.patch('/questions/:questionId/downvote', idValidator, userValidator, downVote);
+router.get('/questions', getAllQuestions);//
+
+router.post('/questions', createQuestionValidator, createQuestion);//
+router.patch('/questions/:questionId/upvote', idValidator, upVote);//
+router.patch('/questions/:questionId/downvote', idValidator, downVote);//
 
 export default router;
