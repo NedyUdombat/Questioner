@@ -1,15 +1,10 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import { mockQuestionDetails, mockVoteDetails } from './mocks/mockData';
 
 // config chai to use expect
 chai.use(chaiHttp);
 const { expect } = chai;
-
-// deconstructure all mock data
-const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion } = mockQuestionDetails;
-const { validVoter, invalidVoter, invalidVoterDataType } = mockVoteDetails;
 
 describe('Questioner Server', () => {
   describe('POST /', () => {
@@ -63,77 +58,73 @@ describe('Questioner Server', () => {
     });
   });
 
-  describe('PATCH /', () => {
+  describe('GET /', () => {
     /*
-    ** Testing question upvote
+    ** Testing Question Retrieval
     */
 
-    it('/api/v1/question/<question-id>/upvote should respond with status code 200 and upvote a question', (done) => {
+    it('/api/v1/questions should respond with status code 200 and retieve all questions', (done) => {
       chai.request(app)
-        .patch('/api/v1/questions/1/upvote')
+        .get('/api/v1/questions')
         .set('Accept', 'application/json')
-        .send(validVoter)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.message).to.eql('Upvote successful');
+          expect(res.body.message).to.eql('Successfully retrieved all questions');
           done();
         });
     });
 
-    it('/api/v1/question/<question-id>/upvote should respond with status code 404 if the user doesnt exist(logged in or signed up)', (done) => {
+    it('/api/v1/questions should respond with status code 404 if no questions are available', (done) => {
       chai.request(app)
-        .patch('/api/v1/questions/1/upvote')
+        .get('/api/v1/questions')
         .set('Accept', 'application/json')
-        .send(invalidVoter)
         .end((err, res) => {
           expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('No questions have been asked yet');
           done();
         });
     });
 
-    it('/api/v1/question/<question-id>/upvote should respond with status code 400 if the input is of the wrong data type', (done) => {
+    it('/api/v1/questions/<meetup-id> should respond with status code 200 and retrieve all questions for that meetup', (done) => {
       chai.request(app)
-        .patch('/api/v1/questions/1/upvote')
+        .get('/api/v1/questions/1')
         .set('Accept', 'application/json')
-        .send(invalidVoterDataType)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          done();
-        });
-    });
-
-    /*
-    ** Testing Question Downvote
-    */
-    it('/api/v1/question/<question-id>/downvote should respond with status code 200 and downvote a question', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/2/downvote')
-        .set('Accept', 'application/json')
-        .send(validVoter)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-
-    it('/api/v1/question/<question-id>/downvote should respond with status code 404 if the user doesnt exist(logged in or signed up)', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/2/downvote')
-        .set('Accept', 'application/json')
-        .send(invalidVoter)
         .end((err, res) => {
           expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('No questions have been asked yet');
           done();
         });
     });
 
-    it('/api/v1/question/<question-id>/downvote should respond with status code 400 if the input is of the wrong data type', (done) => {
+    it('/api/v1/questions/<meetup-id> should respond with status code 404 if no question has been asked for that particular meetup', (done) => {
       chai.request(app)
-        .patch('/api/v1/questions/2/downvote')
+        .get('/api/v1/questions/1')
         .set('Accept', 'application/json')
-        .send(invalidVoterDataType)
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('No questions have been asked yet');
+          done();
+        });
+    });
+
+    it('/api/v1/questions/<user-id> should respond with status code 200 and retrieve all questions asked by that user', (done) => {
+      chai.request(app)
+        .get('/api/v1/questions/1')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('No questions have been asked yet');
+          done();
+        });
+    });
+
+    it('/api/v1/questions/<user-id> should respond with status code 404 if no question has been asked by that user', (done) => {
+      chai.request(app)
+        .get('/api/v1/questions/1')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('No questions have been asked yet');
           done();
         });
     });

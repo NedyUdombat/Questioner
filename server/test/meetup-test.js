@@ -2,15 +2,10 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import meetups from '../models/v1/meetups';
-import { mockMeetupDetails, mockRSVPDetails } from './mocks/mockData';
 
 // config chai to use expect
 chai.use(chaiHttp);
 const { expect } = chai;
-
-// deconstructure all mock data
-const { validMeetup, invalidPastMeetup, emptyFieldMeetup, nonAdminMeetup } = mockMeetupDetails;
-const { validRsvp, invalidRsvp } = mockRSVPDetails;
 
 describe('Questioner Server', () => {
   describe('POST /', () => {
@@ -29,7 +24,7 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('/api/v1/meetups should respond with status code 400 and create a meetup', (done) => {
+    it('/api/v1/meetups should respond with status code 400 if meetup date is in the past', (done) => {
       chai.request(app)
         .post('/api/v1/meetups')
         .set('Accept', 'application/json')
@@ -59,44 +54,6 @@ describe('Questioner Server', () => {
         .send(emptyFieldMeetup)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          done();
-        });
-    });
-
-    /*
-    ** Testing Meetup rsvp
-    */
-
-    it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 200 and rsvp for an upcoming meetup', (done) => {
-      chai.request(app)
-        .post('/api/v1/meetups/1/rsvps')
-        .set('Accept', 'application/json')
-        .send(validRsvp)
-        .end((err, res) => {
-          expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Rsvp meetup successful');
-          done();
-        });
-    });
-
-    it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 400 if status is not yes, no or maybe', (done) => {
-      chai.request(app)
-        .post('/api/v1/meetups/1/rsvps')
-        .set('Accept', 'application/json')
-        .send(invalidRsvp)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          done();
-        });
-    });
-
-    it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 404 if meetup does not exist', (done) => {
-      chai.request(app)
-        .post('/api/v1/meetups/18/rsvps')
-        .set('Accept', 'application/json')
-        .send(validRsvp)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
           done();
         });
     });
