@@ -10,7 +10,9 @@
     "test": "nyc mocha server/test/**/*test.js --require babel-register --exit",
     "babel-node": "babel-node server --presets=env",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "migrate:drop": "babel-node server/models/v1/drop-migrations.js",
+    "migrate": "npm run migrate:drop && babel-node server/models/v1/create-migrations.js"
   },
   "nyc": {
     "exclude": [
@@ -36,10 +38,12 @@
   "homepage": "https://github.com/NedyUdombat/Questioner#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-joi-validator": "^2.0.0",
     "joi": "^14.3.1",
-    "moment": "^2.23.0"
+    "moment": "^2.23.0",
+    "pg": "^7.8.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
