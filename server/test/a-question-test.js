@@ -2,7 +2,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import { mockQuestionDetails, mockVoteDetails } from './mocks/mockData';
-import droppTables from '../models.v1.drop-migrations'
 
 // config chai to use expect
 chai.use(chaiHttp);
