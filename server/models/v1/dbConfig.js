@@ -5,9 +5,12 @@ dotenv.config();
 
 let connectionString;
 if (process.env.NODE_ENV === 'test') {
+  console.log(">>>>>>>>>>>>>", process.env.NODE_ENV);
   connectionString = process.env.DB_TEST_URL;
-} else {
+} else if (process.env.NODE_ENV === 'development') {
   connectionString = process.env.DB_URL;
+} else {
+  connectionString = process.env.DATABASE_URL;
 }
 
 console.log("###################", connectionString);
