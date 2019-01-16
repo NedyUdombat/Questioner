@@ -3,26 +3,47 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var rsvps = [{
-  id: 1,
-  meetup: 6,
-  user: 3,
-  response: 'yes'
-}, {
-  id: 2,
-  meetup: 1,
-  user: 5,
-  response: 'yes'
-}, {
-  id: 3,
-  meetup: 1,
-  user: 2,
-  response: 'yes'
-}, {
-  id: 4,
-  meetup: 5,
-  user: 2,
-  response: 'yes'
-}];
 
-exports.default = rsvps;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dbConfig = require('./dbConfig');
+
+var _dbConfig2 = _interopRequireDefault(_dbConfig);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Rsvps = function () {
+  function Rsvps() {
+    _classCallCheck(this, Rsvps);
+  }
+
+  _createClass(Rsvps, null, [{
+    key: 'getAllRsvps',
+    value: function getAllRsvps(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'rsvpMeetup',
+    value: function rsvpMeetup(rsvp, id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (' + id + ', ' + rsvp.userId + ', \'' + rsvp.status + '\')  returning *').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }]);
+
+  return Rsvps;
+}();
+
+exports.default = Rsvps;

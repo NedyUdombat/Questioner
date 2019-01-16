@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require('express');
 
-var _expressJoiValidator = require('express-joi-validator');
-
-var _expressJoiValidator2 = _interopRequireDefault(_expressJoiValidator);
-
 var _meetup = require('../../controllers/v1/meetup');
 
 var _meetup2 = _interopRequireDefault(_meetup);
@@ -18,6 +14,10 @@ var _question = require('../../controllers/v1/question');
 
 var _question2 = _interopRequireDefault(_question);
 
+var _rsvp = require('../../controllers/v1/rsvp');
+
+var _rsvp2 = _interopRequireDefault(_rsvp);
+
 var _ParamsValidator = require('../../middlewares/ParamsValidator');
 
 var _ParamsValidator2 = _interopRequireDefault(_ParamsValidator);
@@ -25,10 +25,6 @@ var _ParamsValidator2 = _interopRequireDefault(_ParamsValidator);
 var _VerifyAdmin = require('../../middlewares/VerifyAdmin');
 
 var _VerifyAdmin2 = _interopRequireDefault(_VerifyAdmin);
-
-var _CreateMeetupSchema = require('../../middlewares/CreateMeetupSchema');
-
-var _CreateMeetupSchema2 = _interopRequireDefault(_CreateMeetupSchema);
 
 var _MeetupValidator = require('../../middlewares/MeetupValidator');
 
@@ -52,11 +48,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getAllMeetups = _meetup2.default.getAllMeetups,
     getSingleMeetup = _meetup2.default.getSingleMeetup,
     getUpcomingMeetups = _meetup2.default.getUpcomingMeetups,
-    createMeetup = _meetup2.default.createMeetup,
-    rsvpMeetup = _meetup2.default.rsvpMeetup;
-var createQuestion = _question2.default.createQuestion,
+    createMeetup = _meetup2.default.createMeetup;
+var getAllQuestions = _question2.default.getAllQuestions,
+    createQuestion = _question2.default.createQuestion,
     upVote = _question2.default.upVote,
     downVote = _question2.default.downVote;
+var rsvpMeetup = _rsvp2.default.rsvpMeetup,
+    getAllRsvps = _rsvp2.default.getAllRsvps;
 
 // deconstructure middlewares
 
@@ -76,16 +74,22 @@ router.get('/', function (req, res) {
 });
 
 // meetup endpoints
-router.get('/meetups', getAllMeetups);
-router.get('/meetup/:meetupId', idValidator, getSingleMeetup);
-router.get('/meetups/upcoming', getUpcomingMeetups);
+router.get('/meetups', getAllMeetups); //
+router.get('/meetup/:meetupId', idValidator, getSingleMeetup); //
+router.get('/meetups/upcoming', getUpcomingMeetups); //
 
-router.post('/meetups', isAdmin, createMeetupValidator, createMeetup);
-router.post('/meetups/:meetupId/rsvps', idValidator, statusValidator, rsvpMeetup);
+router.post('/meetups', isAdmin, createMeetupValidator, createMeetup); //
+
+// Rsvp endpoints
+router.get('/:meetupId/rsvps', idValidator, getAllRsvps); //
+
+router.post('/meetups/:meetupId/rsvp', idValidator, statusValidator, rsvpMeetup); //
 
 // question endpoints
-router.post('/questions', createQuestionValidator, createQuestion);
-router.patch('/questions/:questionId/upvote', idValidator, userValidator, upVote);
-router.patch('/questions/:questionId/downvote', idValidator, userValidator, downVote);
+router.get('/questions', getAllQuestions); //
+
+router.post('/questions', createQuestionValidator, createQuestion); //
+router.patch('/questions/:questionId/upvote', idValidator, upVote); //
+router.patch('/questions/:questionId/downvote', idValidator, downVote); //
 
 exports.default = router;

@@ -3,9 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-// import pool from './dbConfig';
-
-
 var dropTables = {
   votesTable: 'DROP TABLE IF EXISTS votes',
   commentsTable: 'DROP TABLE IF EXISTS comments',
@@ -16,9 +13,3 @@ var dropTables = {
 };
 
 exports.default = dropTables;
-
-// pool.query('DROP TABLE IF EXISTS votes');
-// pool.query('DROP TABLE IF EXISTS comments');
-// pool.query('DROP TABLE IF EXISTS questions');
-// pool.query('DROP TABLE IF EXISTS users');
-// pool.query('DROP TABLE IF EXISTS meetups');

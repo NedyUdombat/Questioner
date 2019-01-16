@@ -23,15 +23,11 @@ var CreateQuestionValidator = function () {
     key: 'createQuestionValidator',
     value: function createQuestionValidator(req, res, next) {
       var _req$body = req.body,
-          user = _req$body.user,
-          meetup = _req$body.meetup,
           title = _req$body.title,
           body = _req$body.body;
 
 
       var fields = {
-        user: user,
-        meetup: meetup,
         title: title,
         body: body
       };
