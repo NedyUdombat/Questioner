@@ -13,7 +13,7 @@
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "migrate:drop": "babel-node server/models/v1/drop-migrations.js",
     "test-migrate:drop": "cross-env NODE_ENV=test babel-node server/models/v1/drop-migrations.js",
-    "migrate": "npm run migrate:drop && babel-node server/models/v1/create-migrations.js",
+    "migrate": "babel-node server/models/v1/create-migrations.js",
     "test-migrate": "cross-env NODE_ENV=test npm run test-migrate:drop && babel-node server/models/v1/create-migrations.js"
   },
   "nyc": {
