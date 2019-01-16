@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 let connectionString;
+console.log(">>>>>>>>>>>>>", process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'test') {
-  console.log(">>>>>>>>>>>>>", process.env.NODE_ENV);
   connectionString = process.env.DB_TEST_URL;
 } else if (process.env.NODE_ENV === 'development') {
   connectionString = process.env.DB_URL;
