@@ -10,12 +10,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of out api' });
+  res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of our api' });
 });
 
 app.use('/api/v1', router);
 
-app.get('*', (req, res) => res.status(404).json({
+app.all('*', (req, res) => res.status(404).json({
   status: 404,
   message: 'The page you are looking for does not exist',
 }));
