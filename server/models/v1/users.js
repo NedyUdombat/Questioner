@@ -20,7 +20,7 @@ class Users {
 
   static createAccount(details) {
     return new Promise((resolve, reject) => {
-      pool.query(`INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES ('${details.firstname}', '${details.lastname}','${details.othername}', '${details.username}', '${details.email}', '${details.password}', '${details.phonenumber}', '${details.role}') returning *`)
+      pool.query(`INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES ('${details.firstname}', '${details.lastname}','${details.othername}', '${details.username}', '${details.email}', '${details.password}', '${details.phonenumber}', 'user') returning *`)
         .then(results => resolve(results))
         .catch(error => reject(error));
     });

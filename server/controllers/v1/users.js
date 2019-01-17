@@ -13,14 +13,12 @@ const { createAccount } = Users;
 class AuthController {
   static createAccount(req, res) {
     const {
-      firstname, lastname, othername, username, email, password, phonenumber, role,
+      firstname, lastname, othername, username, email, password, phonenumber,
     } = req.body;
     const hash = bcrypt.hashSync(password, 10);
     const userDetails = {
-      firstname, lastname, othername, username, email, password: hash, phonenumber, role,
+      firstname, lastname, othername, username, email, password: hash, phonenumber,
     };
-    const roles = ['admin', 'user'].includes(role);
-    if (!roles) return res.status(404).json({ message: 'This role does not exist' });
     pool.query(`SELECT email from users where email = '${email}'`)
       .then((found) => {
         if (found.rowCount === 0) {

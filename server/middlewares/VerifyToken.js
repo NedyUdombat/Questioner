@@ -13,7 +13,7 @@ class VerifyToken {
     if (!jwToken) {
       return res.status(401).json({
         auth: false,
-        message: 'Please provide JWT token',
+        message: 'Please provide a JWT token',
       });
     }
     jwt.verify(jwToken, secretHash, (err, authData) => {

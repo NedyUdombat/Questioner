@@ -1,4 +1,6 @@
 import moment from 'moment';
+import bcrypt from 'bcryptjs';
+
 
 const seedTables = {
   meetupsTable: `INSERT INTO meetups(organizer_name, topic, location, happening_on )
@@ -6,8 +8,8 @@ const seedTables = {
     ('Freecodecamp', 'DB management', 'Ikeja', to_date('${moment('2019-08-01').format('YYYY-MM-DD')}', 'YYYY MM DD'))
     `,
   usersTable: `INSERT INTO users(firstname, lastname, username, email, password, phonenumber, role)
-        VALUES ('nedy', 'udo', 'nedyy', 'nedyudombat@yahoo.com', '1234qwerty', 025137999, 'admin'),
-        ('Jermaine', 'Umanah', 'Jermain1', 'jm1@gmail.com', 'password', 084137999, 'user')
+        VALUES ('nedy', 'udombat', 'nedyy', 'nedyudombat@gmail.com', '${bcrypt.hashSync('Iamtheadmin', 10)}', 07018228593, 'admin'),
+        ('Jermaine', 'Umanah', 'Jermaine1', 'jm1@gmail.com', '${bcrypt.hashSync('Iamtheseededuser', 10)}', 08025137999, 'user')
         `,
 
   questionsTable: `INSERT INTO questions( meetup_id, user_id, title, body)

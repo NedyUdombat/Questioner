@@ -2,9 +2,9 @@ import Validator from '../_helpers/post_validators';
 
 class AccountValidator {
   static createAccountValidator(req, res, next) {
-    const { firstname, lastname, username, email, password, role } = req.body;
+    const { firstname, lastname, username, email, password } = req.body;
 
-    const fields = { firstname, lastname, username, email, password, role };
+    const fields = { firstname, lastname, username, email, password };
     const fields2 = {
       othername: req.body.othername,
       phonenumber: req.body.phonenumber,

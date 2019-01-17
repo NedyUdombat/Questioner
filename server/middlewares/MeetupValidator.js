@@ -1,6 +1,7 @@
 class MeetupValidator {
   static statusValidator(req, res, next) {
-    const { status } = req.body;
+    let { status } = req.body;
+    status = status.toLowerCase();
     const rsvpStatus = status === 'yes' || status === 'no' || status === 'maybe';
     if (!rsvpStatus) {
       return res.status(400).json({

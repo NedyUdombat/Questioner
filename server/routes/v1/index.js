@@ -39,8 +39,8 @@ router.get('/', (req, res) => {
 
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups);//
-router.get('/meetup/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 router.get('/meetups/upcoming', verifyToken, getUpcomingMeetups);//
+router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
 
