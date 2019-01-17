@@ -62,7 +62,6 @@ describe('Questioner Server', () => {
       chai.request(app)
         .get('/api/v1/questions')
         .set('x-access-token', authToken)
-        .send(validUpvote)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           done();

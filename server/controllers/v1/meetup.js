@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Meetup from '../../models/v1/meetups';
 
-const { getAll, getSpecific, getUpcoming, create } = Meetup;
+const { getAll, getSpecific, getUpcoming, create, deleteSpecific } = Meetup;
 
 class MeetupController {
   static getAllMeetups(req, res) {
@@ -82,6 +82,29 @@ class MeetupController {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static deleteSingleMeetup(req, res) {
+    const { meetupId } = req.params;
+    deleteSpecific(meetupId)
+      .then((results) => {
+        console.log(results)
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully deleted specific meetup',
+            data: results.rows[0],
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          error: 'Meetup Record not found',
         });
       })
       .catch(error => res.status(400).json({

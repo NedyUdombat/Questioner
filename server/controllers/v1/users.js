@@ -41,7 +41,10 @@ class AuthController {
               error: error.message,
             }));
         } else {
-          return res.status(409).json({ status: 409, message: `email is already in use, if ${email} belongs to you, kindly login`, error: true });
+          return res.status(409).json({
+            tatus: 409,
+            message: 'email is already in use, if that email belongs to you, kindly login',
+            error: true });
         }
       }).catch(err => (
         res.status(500).json(err)

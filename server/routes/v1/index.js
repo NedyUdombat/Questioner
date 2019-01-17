@@ -15,7 +15,7 @@ import VerifyToken from '../../middlewares/VerifyToken';
 
 // deconstructure controllers
 const {
-  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup,
+  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, deleteSingleMeetup,
 } = MeetupController;
 const { getAllQuestions, createQuestion, upVote, downVote } = QuestionController;
 const { rsvpMeetup, getAllRsvps } = RsvpController;
@@ -44,11 +44,13 @@ router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
 
+router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
+
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount);//
 router.post('/auth/login', loginAccountValidator, loginAccount);//
 
-router.get('/auth/logout', verifyToken, (req, res) => {
+router.get('/auth/logout', (req, res) => {
   res.status(200).send({ status: 200, auth: false, token: null });
 });
 
@@ -58,7 +60,7 @@ router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps);/
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
 
 // question endpoints
-router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
+router.get('/questions', verifyToken, getAllQuestions);//
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion);//
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
