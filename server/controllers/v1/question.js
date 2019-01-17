@@ -1,4 +1,10 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Questions from '../../models/v1/questions';
+
+dotenv.config();
+
+const secretHash = process.env.SECRET_KEY;
 
 const { getAllQuestions, askQuestion, voteQuestion } = Questions;
 
@@ -25,7 +31,12 @@ class QuestionController {
 
   static createQuestion(req, res) {
     const meetupId = req.body.meetupId;
-    const userId = req.body.userId;
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       meetupId,
       userId,
@@ -53,9 +64,13 @@ class QuestionController {
   }
 
   static upVote(req, res) {
-    const userId = req.body.userId;
     const questionId = req.params.questionId;
-
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       userId,
       questionId,
@@ -82,9 +97,13 @@ class QuestionController {
   }
 
   static downVote(req, res) {
-    const userId = req.body.userId;
     const questionId = req.params.questionId;
-
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       userId,
       questionId,

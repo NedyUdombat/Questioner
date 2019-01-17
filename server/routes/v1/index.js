@@ -48,23 +48,23 @@ router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetu
 router.post('/auth/signup', createAccountValidator, createAccount);//
 router.post('/auth/login', loginAccountValidator, loginAccount);//
 
-router.get('/auth/logout', (req, res) => {
+router.get('/auth/logout', verifyToken, (req, res) => {
   res.status(200).send({ status: 200, auth: false, token: null });
 });
 
 // Rsvp endpoints
-router.get('/:meetupId/rsvps', verifyToken, idValidator, getAllRsvps);//
+router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps);//
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
 
 // question endpoints
-router.get('/questions', verifyToken, getAllQuestions);//
+router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion);//
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
-router.get('/decode', verifyToken, (req, res) => {
+router.get('/decode', verifyToken, isAdmin, (req, res) => {
   const jwToken = req.headers['x-access-token'];
   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
