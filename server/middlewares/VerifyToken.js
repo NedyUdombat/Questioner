@@ -13,14 +13,14 @@ class VerifyToken {
     if (!jwToken) {
       return res.status(401).json({
         auth: false,
-        message: 'Please sign in',
+        message: 'Please provide JWT token',
       });
     }
     jwt.verify(jwToken, secretHash, (err, authData) => {
       if (err) {
         return res.status(401).json({
           auth: false,
-          message: 'Please sign in',
+          message: 'Please provide JWT token',
         });
       }
       req.authData = authData;

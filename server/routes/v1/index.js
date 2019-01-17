@@ -34,7 +34,7 @@ const router = Router();
 
 // general route
 router.get('/', (req, res) => {
-  res.json({ message: 'Hi there! Welcome to our Questioner api!' });
+  res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
 
 // meetup endpoints

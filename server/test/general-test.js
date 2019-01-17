@@ -15,7 +15,7 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.message).to.eql('Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of out api');
+          expect(res.body.message).to.eql('Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of our api');
           done();
         });
     });
@@ -26,7 +26,7 @@ describe('Questioner Server', () => {
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.message).to.eql('Hi there! Welcome to our Questioner api!');
+          expect(res.body.message).to.eql('Hi there! Welcome to version 1 of Questioner API!');
           done();
         });
     });
