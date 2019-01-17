@@ -91,4 +91,27 @@ const mockVoteDetails = {
   },
 };
 
-export { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails, mockEmptyUpcomingMeetups };
+const userAccounts = {
+  validUserAccount: {
+    firstname: 'u',
+    lastname: 'er',
+    othername: '',
+    username: 'ers',
+    email: 'u@umeil.com',
+    password: 'qwerfw',
+    phonenumber: '07025137999',
+    role: 'user',
+  },
+  validAdminAccount: {
+    firstname: 'Nedy',
+    lastname: 'Udo',
+    othername: 'uu',
+    username: 'nedyy',
+    email: 'nedyy@gmail.com',
+    password: 'qwerty',
+    phonenumber: '07025137999',
+    role: 'admin',
+  },
+};
+
+export { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails, mockEmptyUpcomingMeetups, userAccounts };

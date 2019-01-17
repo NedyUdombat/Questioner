@@ -1,13 +1,15 @@
 import { Router } from 'express';
 import MeetupController from '../../controllers/v1/meetup';
 import QuestionController from '../../controllers/v1/question';
+import AuthController from '../../controllers/v1/users';
 import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
 import MeetupValidator from '../../middlewares/MeetupValidator';
-import UserValidator from '../../middlewares/UserValidator';
 import CreateQuestionValidator from '../../middlewares/CreateQuestionValidator';
 import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
+import AccountValidator from '../../middlewares/AccountValidator';
+
 
 // deconstructure controllers
 const {
@@ -15,14 +17,15 @@ const {
 } = MeetupController;
 const { getAllQuestions, createQuestion, upVote, downVote } = QuestionController;
 const { rsvpMeetup, getAllRsvps } = RsvpController;
+const { createAccount, loginAccount } = AuthController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
 const { isAdmin } = VerifyAdmin;
 const { statusValidator } = MeetupValidator;
-const { userValidator } = UserValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
 const { createMeetupValidator } = CreateMeetupValidator;
+const { createAccountValidator, loginAccountValidator } = AccountValidator;
 
 
 const router = Router();
@@ -38,6 +41,11 @@ router.get('/meetup/:meetupId', idValidator, getSingleMeetup);//
 router.get('/meetups/upcoming', getUpcomingMeetups);//
 
 router.post('/meetups', isAdmin, createMeetupValidator, createMeetup);//
+
+// Authenticaton endpoints
+router.post('/auth/signup', createAccountValidator, createAccount);//
+router.post('/auth/login', loginAccountValidator, loginAccount);//
+
 
 // Rsvp endpoints
 router.get('/:meetupId/rsvps', idValidator, getAllRsvps);//

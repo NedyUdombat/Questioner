@@ -3,4 +3,6 @@ coverage
 .coveralls.yml
 .nyc_output
 .env
+/.idea
 .idea
+.idea/workspace.xml

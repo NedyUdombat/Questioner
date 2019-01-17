@@ -1,76 +1,46 @@
-const users = [
-  {
-    id: 1,
-    firstname: 'admin',
-    lastname: 'admin',
-    othername: 'admin',
-    email: 'admin@questioner.com',
-    phoneNumber: '08025137999',
-    username: 'admin',
-    password: 'admin',
-    registered: new Date(),
-    isAdmin: true,
-  },
-  {
-    id: 2,
-    firstname: 'Nedy',
-    lastname: 'Udombat',
-    othername: 'Edidiong',
-    email: 'nedyudombat@gmail.com',
-    phoneNumber: '08025137999',
-    username: 'nedyy',
-    password: 'qwertyuiop',
-    registered: new Date(),
-    isAdmin: false,
-  },
-  {
-    id: 3,
-    firstname: 'Mfoniso',
-    lastname: 'Atan',
-    othername: 'Strota',
-    email: 'mfonisoStrota@gmail.com',
-    phoneNumber: '08034601726',
-    username: 'strota',
-    password: 'qwertyuiopasdfghjkl',
-    registered: new Date(),
-    isAdmin: false,
-  },
-  {
-    id: 4,
-    firstname: 'Tresh',
-    lastname: 'Ubon',
-    othername: 'love',
-    email: 'tresh@gmail.com',
-    phoneNumber: '08030987726',
-    username: 't-girl',
-    password: 'zxcvbnmqwertyuiopasdfghjkl',
-    registered: new Date(),
-    isAdmin: false,
-  },
-  {
-    id: 5,
-    firstname: 'Imobong',
-    lastname: 'Udofot',
-    othername: 'Aubrey',
-    email: 'aubrey@gmail.com',
-    phoneNumber: '08012345678',
-    username: 'aubrey',
-    password: 'qwertyuioqazsxwedcpasdfghjkl',
-    registered: new Date(),
-    isAdmin: false,
-  },
-  {
-    id: 6,
-    firstname: 'Teawhy',
-    lastname: 'Yung',
-    othername: 'Edwin',
-    email: 'teawhy@gmail.com',
-    phoneNumber: '07098765432',
-    username: 'teawhy',
-    password: 'quiopasdfghjkl',
-    registered: new Date(),
-    isAdmin: false,
-  },
-];
+import pool from './dbConfig';
 
-export default users;
+
+class Users {
+  static getAllUsers() {
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM users')
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getSpecificUser(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM users WHERE id = ${id}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static createAccount(details) {
+    return new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES ('${details.firstname}', '${details.lastname}','${details.othername}', '${details.username}', '${details.email}', '${details.password}', '${details.phonenumber}', '${details.role}') returning *`)
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static deleteAll() {
+    return new Promise((resolve, reject) => {
+      pool.query('DELETE * FROM users')
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+  static deleteSpecific(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`DELETE * FROM users WHERE id = ${id}`)
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+}
+
+export default Users;
