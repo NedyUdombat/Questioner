@@ -1,8 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import { mockQuestionDetails, mockVoteDetails } from './mocks/mockData';
-import { userAccounts } from './mocks/mockData';
+import { mockQuestionDetails, mockVoteDetails, userAccounts } from './mocks/mockData';
 // config chai to use expect
 chai.use(chaiHttp);
 const { expect } = chai;

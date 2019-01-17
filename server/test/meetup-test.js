@@ -1,11 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import meetups from '../models/v1/meetups';
-import { mockMeetupDetails, mockRSVPDetails } from './mocks/mockData';
-import { userAccounts } from './mocks/mockData';
-
-
+import { mockMeetupDetails, mockRSVPDetails, userAccounts } from './mocks/mockData';
 
 // config chai to use expect
 chai.use(chaiHttp);
@@ -153,38 +149,5 @@ describe('Questioner Server', () => {
           done();
         });
     });
-
-    // it('/api/v1/me/etups/upcoming should respond with status code 200 and retrieve all upcoming meetup', (done) => {
-    //   chai.request(app)
-    //     .get('/api/v1/meetups/upcoming')
-    //     .set('Accept', 'application/json')
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(200);
-    //       expect(res.body.message).to.eql('Successfully retrieved all upcoming meetups');
-    //       done();
-    //     });
-    // });
-    //
-    // it('/api/v1/meetups should respond with status code 404 when there are no meetups', (done) => {
-    //   meetups.splice(0, 7);
-    //   chai.request(app)
-    //     .get('/api/v1/meetups')
-    //     .set('Accept', 'application/json')
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(404);
-    //       done();
-    //     });
-    // });
-    //
-    // it('/api/v1/meetups/upcoming should respond with status code 404 when there are no upcoming meetups', (done) => {
-    //   chai.request(app)
-    //     .get('/api/v1/meetups/upcoming')
-    //     .set('Accept', 'application/json')
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(404);
-    //       expect(res.body.message).to.eql('There are no upcoming meetups');
-    //       done();
-    //     });
-    // });
   });
 });
