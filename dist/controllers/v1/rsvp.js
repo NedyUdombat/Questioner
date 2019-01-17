@@ -35,11 +35,12 @@ var RsvpController = function () {
         if (results.rowCount > 0) {
           return res.status(201).json({
             status: 201,
+            message: 'Rsvp meetup successful',
             data: results.rows
           });
         }
         return res.status(400).json({
-          status: 404,
+          status: 400,
           error: 'Could not rsvp for meetup'
         });
       }).catch(function (error) {

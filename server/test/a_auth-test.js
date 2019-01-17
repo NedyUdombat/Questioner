@@ -76,7 +76,6 @@ describe('Questioner Server', () => {
         .send(validAdminAccount)
         .end((err, res) => {
           expect(res.body).to.be.a('object');
-          expect(res.body.message).eql('Successfully logged in');
           expect(res.body).to.have.property('jwToken');
           expect(res.status).to.equal(200);
           done();

@@ -3,72 +3,80 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var users = [{
-  id: 1,
-  firstname: 'admin',
-  lastname: 'admin',
-  othername: 'admin',
-  email: 'admin@questioner.com',
-  phoneNumber: '08025137999',
-  username: 'admin',
-  password: 'admin',
-  registered: new Date(),
-  isAdmin: true
-}, {
-  id: 2,
-  firstname: 'Nedy',
-  lastname: 'Udombat',
-  othername: 'Edidiong',
-  email: 'nedyudombat@gmail.com',
-  phoneNumber: '08025137999',
-  username: 'nedyy',
-  password: 'qwertyuiop',
-  registered: new Date(),
-  isAdmin: false
-}, {
-  id: 3,
-  firstname: 'Mfoniso',
-  lastname: 'Atan',
-  othername: 'Strota',
-  email: 'mfonisoStrota@gmail.com',
-  phoneNumber: '08034601726',
-  username: 'strota',
-  password: 'qwertyuiopasdfghjkl',
-  registered: new Date(),
-  isAdmin: false
-}, {
-  id: 4,
-  firstname: 'Tresh',
-  lastname: 'Ubon',
-  othername: 'love',
-  email: 'tresh@gmail.com',
-  phoneNumber: '08030987726',
-  username: 't-girl',
-  password: 'zxcvbnmqwertyuiopasdfghjkl',
-  registered: new Date(),
-  isAdmin: false
-}, {
-  id: 5,
-  firstname: 'Imobong',
-  lastname: 'Udofot',
-  othername: 'Aubrey',
-  email: 'aubrey@gmail.com',
-  phoneNumber: '08012345678',
-  username: 'aubrey',
-  password: 'qwertyuioqazsxwedcpasdfghjkl',
-  registered: new Date(),
-  isAdmin: false
-}, {
-  id: 6,
-  firstname: 'Teawhy',
-  lastname: 'Yung',
-  othername: 'Edwin',
-  email: 'teawhy@gmail.com',
-  phoneNumber: '07098765432',
-  username: 'teawhy',
-  password: 'quiopasdfghjkl',
-  registered: new Date(),
-  isAdmin: false
-}];
 
-exports.default = users;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dbConfig = require('./dbConfig');
+
+var _dbConfig2 = _interopRequireDefault(_dbConfig);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Users = function () {
+  function Users() {
+    _classCallCheck(this, Users);
+  }
+
+  _createClass(Users, null, [{
+    key: 'getAllUsers',
+    value: function getAllUsers() {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM users').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getSpecificUser',
+    value: function getSpecificUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM users WHERE id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'createAccount',
+    value: function createAccount(details) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES (\'' + details.firstname + '\', \'' + details.lastname + '\',\'' + details.othername + '\', \'' + details.username + '\', \'' + details.email + '\', \'' + details.password + '\', \'' + details.phonenumber + '\', \'' + details.role + '\') returning *').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'deleteAll',
+    value: function deleteAll() {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('DELETE * FROM users').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'deleteSpecific',
+    value: function deleteSpecific(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('DELETE * FROM users WHERE id = ' + id).then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }]);
+
+  return Users;
+}();
+
+exports.default = Users;
