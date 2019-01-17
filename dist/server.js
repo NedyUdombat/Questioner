@@ -37,8 +37,11 @@ app.get('*', function (req, res) {
   });
 });
 
-app.listen(port, function () {
-  console.log('Questioner app is live at http://127.0.0.1:' + port);
-});
-
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  app.listen(port, function () {
+    console.log('Questioner app is live at http://127.0.0.1:' + port);
+  });
+} else {
+  app.listen(port);
+}
 exports.default = app;

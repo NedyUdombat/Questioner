@@ -16,10 +16,10 @@ var VerifyAdmin = function () {
   _createClass(VerifyAdmin, null, [{
     key: 'isAdmin',
     value: function isAdmin(req, res, next) {
-      var isAdmin = req.body.isAdmin;
+      var role = req.authData.role;
 
 
-      if (isAdmin === false) {
+      if (role !== 'admin') {
         return res.status(403).json({
           message: 'You are not an Admin',
           error: true
