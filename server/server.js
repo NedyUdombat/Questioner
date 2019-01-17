@@ -20,8 +20,11 @@ app.get('*', (req, res) => res.status(404).json({
   message: 'The page you are looking for does not exist',
 }));
 
-app.listen(port, () => {
-  console.log(`Questioner app is live at http://127.0.0.1:${port}`);
-});
-
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  app.listen(port, () => {
+    console.log(`Questioner app is live at http://127.0.0.1:${port}`);
+  });
+} else {
+  app.listen(port);
+}
 export default app;
