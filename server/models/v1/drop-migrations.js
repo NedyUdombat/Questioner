@@ -4,6 +4,7 @@ import dropTables from './drop';
 const dropMigrations = async () => {
   try {
     await pool.query(dropTables.votesTable);
+    await pool.query(dropTables.type);
     await pool.query(dropTables.commentsTable);
     await pool.query(dropTables.rsvpsTable);
     await pool.query(dropTables.questionsTable);

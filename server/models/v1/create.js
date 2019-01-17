@@ -12,14 +12,14 @@ const createTables = {
 
   usersTable: `CREATE TABLE IF NOT EXISTS users(
       id SERIAL PRIMARY KEY,
-      firstname VARCHAR(100) not null,
-      lastname VARCHAR(100) not null,
-      othername VARCHAR(100),
-      username VARCHAR(100) not null,
-      email VARCHAR(100) UNIQUE not null,
-      password VARCHAR(100) not null,
-      phonenumber INT,
-      role VARCHAR(100) not null,
+      firstname VARCHAR not null,
+      lastname VARCHAR not null,
+      othername VARCHAR,
+      username VARCHAR not null,
+      email VARCHAR UNIQUE not null,
+      password VARCHAR not null,
+      phonenumber VARCHAR,
+      role VARCHAR not null,
       registered DATE DEFAULT NOW()
     )`,
 
@@ -64,23 +64,3 @@ const createTables = {
 };
 
 export default createTables;
-// migration.createMeetups()
-//   .then((results) => {
-//     return results;
-//   })
-//   .then((results) => {
-//     return migration.createUsers()
-//   })
-//   .then((results) => {
-//     return migration.createQuestion();
-//   })
-//   .then((results) => {
-//     return migration.createRsvp();
-//   })
-//   .then((results) => {
-//     return migration.createVote();
-//   })
-//   .then((results) => {
-//     console.log('got here...')
-//     return migration.createComment();
-//   })
