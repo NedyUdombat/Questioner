@@ -14,6 +14,7 @@
 
 .content .auth-login{
   padding: 0 20px;
+  width: 40%;
 }
 
 .content .auth-login .card{
@@ -29,6 +30,7 @@
 .login .illustration-div{
   padding-left: 5%;
   padding-top: 0vh;
+  width:60%;
 }
 .signup .auth-illustration{
   width: 600px;
@@ -359,7 +361,7 @@ label{
   .auth-login{
     width: 100%!important;
     position: relative;
-    margin-top: -48vh;
+    margin-top: -44vh;
 
   }
   .content .auth .card,
@@ -432,6 +434,27 @@ label{
   .empty{
     display: none;
   }
+
+  .auth-email{
+    position: relative;
+    margin-top: -48vh;
+    width: 100%!important;
+  }
+  .auth-signup{
+    position: absolute;
+    width: 100vw!important;
+  }
+  .login .illustration-div{
+    padding-left: 0%;
+    padding-top: 10%;
+  }
+  .login .auth-illustration{
+    width: 95%;
+  }
+  .login .auth-login{
+    position: absolute;
+  width: 100%;
+  }
 }
 
 
@@ -471,6 +494,28 @@ label{
   .rsvp-meetup-filters .filter-meetup-ul{
     margin: 0px 10px 0px 0px;
   }
+  .login .illustration-div{
+    padding-left: 0%;
+    padding-top: 10%;
+  }
+  .login .auth-illustration{
+    width: 95%;
+  }
+  .login .auth-login{
+    position: absolute;
+  width: 100%;
+  }
+  .auth-signup{
+    position: absolute;
+    width: 100vw!important;
+  }
+  .signup .illustration-div{
+    padding-left: 0%;
+    padding-top: 10%;
+  }
+  .signup .auth-illustration{
+    width: 95%;
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -485,10 +530,40 @@ label{
     width: 70%;
     padding-left: 15%;
   }
+  .login .illustration-div{
+    padding-left: 0%;
+    padding-top: 10%;
+    text-align: center;
+  }
+  .login .auth-illustration{
+    width: 80%;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+  .login .illustration-div{
+    padding-left: 5%;
+    padding-top: 10%;
+  }
+  .login .auth-illustration{
+    width: 85%;
+  }
+  .forgot-reset .illustration-div{
+    padding-left: 5%;
+    padding-top: 10%;
+    text-align: center;
+  }
+  .forgot-reset .auth-illustration{
+    width: 65%;
+  }
+  .forgot-reset .auth-email{
+    width:50%;
+  }
+
+  .auth-signup{
+    width: 100vw!important;
+  }
 }
 @media (min-width: 1400px) {
   table#profile-table{
@@ -505,13 +580,56 @@ label{
     padding-top: 0vh;
   }
   .signup .auth-illustration{
-    width: 70vw;
+    width: 50vw;
+    margin-top: 5vh;
   }
   .auth-illustration{
     width: 70vw;
   }
   .login .auth-illustration{
+    width: 80%;
+  }
+
+  .forgot-reset .illustration-div{
+    padding-left: 5%;
+    padding-top: 10%;
+    text-align: center;
+  }
+  .forgot-reset .auth-illustration{
+    width: 65%;
+  }
+  .forgot-reset .auth-email{
+    width:50%;
+  }
+}
+@media (min-width: 2500px) {
+  .forgot-reset .illustration-div,
+  .login .illustration-div{
+    padding-left: 5%;
+    padding-top: 0vh;
+    text-align: center;
+  }
+  .signup .auth-illustration{
+    width: 50vw;
+    margin-top: 5vh;
+  }
+  .auth-illustration{
     width: 70vw;
+  }
+  .forgot-reset .illustration-div,
+  .login .auth-illustration{
+    width: 45%;
+  }
+  .auth-signup{
+    width: 50%!important;
+  }
+  .signup .illustration-div{
+    padding-left: 0%;
+    padding-top: 0%;
+    text-align: center;
+  }
+  .signup .auth-illustration{
+    width: 50%;
   }
 
 }
