@@ -12,23 +12,15 @@ var _server = require('../server');
 
 var _server2 = _interopRequireDefault(_server);
 
-var _mockData = require('./mocks/mockData');
+var _meetups = require('../models/v1/meetups');
+
+var _meetups2 = _interopRequireDefault(_meetups);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // config chai to use expect
 _chai2.default.use(_chaiHttp2.default);
 var expect = _chai2.default.expect;
-
-// deconstructure all mock data
-
-var validQuestion = _mockData.mockQuestionDetails.validQuestion,
-    invalidUserQuestion = _mockData.mockQuestionDetails.invalidUserQuestion,
-    invalidMeetupQuestion = _mockData.mockQuestionDetails.invalidMeetupQuestion,
-    invalidFieldQuestion = _mockData.mockQuestionDetails.invalidFieldQuestion;
-var validVoter = _mockData.mockVoteDetails.validVoter,
-    invalidVoter = _mockData.mockVoteDetails.invalidVoter,
-    invalidVoterDataType = _mockData.mockVoteDetails.invalidVoterDataType;
 
 
 describe('Questioner Server', function () {

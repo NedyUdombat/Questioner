@@ -28,8 +28,8 @@ var QuestionController = function () {
     value: function getAllQuestions(req, res) {
       _getAllQuestions().then(function (results) {
         if (results.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
+          return res.status(201).json({
+            status: 201,
             data: results.rows
           });
         }
@@ -89,7 +89,7 @@ var QuestionController = function () {
         if (results.rowCount > 0) {
           return res.status(201).json({
             status: 201,
-            message: 'Question upvote successful',
+            message: 'Upvote successful',
             data: results.rows
           });
         }
