@@ -7,8 +7,8 @@ class QuestionController {
     getAllQuestions()
       .then((results) => {
         if (results.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
+          return res.status(201).json({
+            status: 201,
             data: results.rows,
           });
         }
@@ -66,7 +66,7 @@ class QuestionController {
         if (results.rowCount > 0) {
           return res.status(201).json({
             status: 201,
-            message: 'Question upvote successful',
+            message: 'Upvote successful',
             data: results.rows,
           });
         }

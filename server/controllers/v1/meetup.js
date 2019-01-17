@@ -10,6 +10,7 @@ class MeetupController {
         if (results.rowCount > 0) {
           return res.status(200).json({
             status: 200,
+            message: 'Successfully retrieved all meetups',
             data: results.rows,
           });
         }
@@ -31,11 +32,12 @@ class MeetupController {
         if (results.rowCount > 0) {
           return res.status(200).json({
             status: 200,
+            message: 'Successfully retrieved specific meetup',
             data: results.rows[0],
           });
         }
-        return res.status(200).json({
-          status: 200,
+        return res.status(404).json({
+          status: 404,
           error: 'Meetup Record not found',
         });
       })

@@ -1,15 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import { mockQuestionDetails, mockVoteDetails } from './mocks/mockData';
+import meetups from '../models/v1/meetups';
 
 // config chai to use expect
 chai.use(chaiHttp);
 const { expect } = chai;
-
-// deconstructure all mock data
-const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion } = mockQuestionDetails;
-const { validVoter, invalidVoter, invalidVoterDataType } = mockVoteDetails;
 
 describe('Questioner Server', () => {
   describe('GET /', () => {

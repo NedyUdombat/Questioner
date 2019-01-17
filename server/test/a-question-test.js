@@ -9,7 +9,7 @@ const { expect } = chai;
 
 // deconstructure all mock data
 const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion } = mockQuestionDetails;
-const { validVoter, invalidVoter, invalidVoterDataType } = mockVoteDetails;
+const { validUpvote, validDownvote, invalidVoteType, invalidUser } = mockVoteDetails;
 
 describe('Questioner Server', () => {
   describe('POST /', () => {
@@ -24,29 +24,6 @@ describe('Questioner Server', () => {
         .send(validQuestion)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Question asked successfully');
-          done();
-        });
-    });
-
-    it('/api/v1/questions should respond with status code 404 if user does not exist', (done) => {
-      chai.request(app)
-        .post('/api/v1/questions')
-        .set('Accept', 'application/json')
-        .send(invalidUserQuestion)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
-    });
-
-    it('/api/v1/questions should respond with status code 404 if meetup does not exist', (done) => {
-      chai.request(app)
-        .post('/api/v1/questions')
-        .set('Accept', 'application/json')
-        .send(invalidMeetupQuestion)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
           done();
         });
     });
@@ -63,6 +40,23 @@ describe('Questioner Server', () => {
     });
   });
 
+  describe('GET /', () => {
+    /*
+    ** Testing Question Retrieval
+    */
+
+    it('/api/v1/questions should respond with status code 200 and retieve all questions', (done) => {
+      chai.request(app)
+        .get('/api/v1/questions')
+        .set('Accept', 'application/json')
+        .send(validUpvote)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          done();
+        });
+    });
+  });
+
   describe('PATCH /', () => {
     /*
     ** Testing question upvote
@@ -72,32 +66,10 @@ describe('Questioner Server', () => {
       chai.request(app)
         .patch('/api/v1/questions/1/upvote')
         .set('Accept', 'application/json')
-        .send(validVoter)
+        .send(validUpvote)
         .end((err, res) => {
-          expect(res.status).to.equal(200);
+          expect(res.status).to.equal(201);
           expect(res.body.message).to.eql('Upvote successful');
-          done();
-        });
-    });
-
-    it('/api/v1/question/<question-id>/upvote should respond with status code 404 if the user doesnt exist(logged in or signed up)', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/1/upvote')
-        .set('Accept', 'application/json')
-        .send(invalidVoter)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
-    });
-
-    it('/api/v1/question/<question-id>/upvote should respond with status code 400 if the input is of the wrong data type', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/1/upvote')
-        .set('Accept', 'application/json')
-        .send(invalidVoterDataType)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
           done();
         });
     });
@@ -109,31 +81,9 @@ describe('Questioner Server', () => {
       chai.request(app)
         .patch('/api/v1/questions/2/downvote')
         .set('Accept', 'application/json')
-        .send(validVoter)
+        .send(validDownvote)
         .end((err, res) => {
-          expect(res.status).to.equal(200);
-          done();
-        });
-    });
-
-    it('/api/v1/question/<question-id>/downvote should respond with status code 404 if the user doesnt exist(logged in or signed up)', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/2/downvote')
-        .set('Accept', 'application/json')
-        .send(invalidVoter)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
-    });
-
-    it('/api/v1/question/<question-id>/downvote should respond with status code 400 if the input is of the wrong data type', (done) => {
-      chai.request(app)
-        .patch('/api/v1/questions/2/downvote')
-        .set('Accept', 'application/json')
-        .send(invalidVoterDataType)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(201);
           done();
         });
     });
