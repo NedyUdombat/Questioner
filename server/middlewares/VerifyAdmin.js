@@ -1,12 +1,14 @@
 class VerifyAdmin {
   static isAdmin(req, res, next) {
-    const { isAdmin } = req.body;
+    const { role } = req.authData;
 
-    if (isAdmin === false) {
-      return res.status(403).json({
-        message: 'You are not an Admin',
-        error: true,
-      });
+    if (role !== 'admin') {
+      return (
+        res.status(403).json({
+          message: 'You are not an Admin',
+          error: true,
+        })
+      );
     }
     return next();
   }

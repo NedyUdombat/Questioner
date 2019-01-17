@@ -112,6 +112,14 @@ const userAccounts = {
     phonenumber: '07025137999',
     role: 'admin',
   },
+  wrongPassword: {
+    email: 'nedyy@gmail.com',
+    password: 'qwerrfghjktyy',
+  },
+  nonExistentUser: {
+    email: 'nedyety@gmail.com',
+    password: 'qwertyy',
+  },
 };
 
 export { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails, mockEmptyUpcomingMeetups, userAccounts };
