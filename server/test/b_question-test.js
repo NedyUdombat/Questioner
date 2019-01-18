@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 // deconstructure all mock data
-const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion } = mockQuestionDetails;
+const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion, comment } = mockQuestionDetails;
 const { validUpvote, validDownvote, invalidVoteType, invalidUser } = mockVoteDetails;
 const { validUserAccount } = userAccounts;
 
@@ -51,6 +51,17 @@ describe('Questioner Server', () => {
           done();
         });
     });
+
+    it('/api/v1/1/comments should respond with status code 201 and comment on a question', (done) => {
+      chai.request(app)
+        .post('/api/v1/1/comments')
+        .set('x-access-token', authToken)
+        .send(comment)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          done();
+        });
+    });
   });
 
   describe('GET /', () => {
@@ -62,7 +73,6 @@ describe('Questioner Server', () => {
       chai.request(app)
         .get('/api/v1/questions')
         .set('x-access-token', authToken)
-        .send(validUpvote)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           done();

@@ -45,17 +45,9 @@ class Meetups {
     });
   }
 
-  static deleteAll() {
-    return new Promise((resolve, reject) => {
-      pool.query('DELETE * FROM meetups')
-        .then(results => resolve(results))
-        .catch(error => reject(error));
-    });
-  }
-
   static deleteSpecific(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`DELETE * FROM TABLE WHERE id = ${id}`)
+      pool.query(`DELETE FROM meetups WHERE id = ${id}`)
         .then(results => resolve(results))
         .catch(error => reject(error));
     });

@@ -1,11 +1,22 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Rsvps from '../../models/v1/rsvps';
+
+dotenv.config();
+
+const secretHash = process.env.SECRET_KEY;
 
 const { rsvpMeetup, getAllRsvps } = Rsvps;
 
 class RsvpController {
   static rsvpMeetup(req, res) {
     const id = req.params.meetupId;
-    const userId = req.body.userId;
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const rsvp = {
       userId,
       status: req.body.status,

@@ -1,6 +1,13 @@
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import pool from '../../models/v1/dbConfig';
 import Questions from '../../models/v1/questions';
 
-const { getAllQuestions, askQuestion, voteQuestion } = Questions;
+dotenv.config();
+
+const secretHash = process.env.SECRET_KEY;
+
+const { getAllQuestions, askQuestion, voteQuestion, commentQuestion } = Questions;
 
 class QuestionController {
   static getAllQuestions(req, res) {
@@ -25,7 +32,12 @@ class QuestionController {
 
   static createQuestion(req, res) {
     const meetupId = req.body.meetupId;
-    const userId = req.body.userId;
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       meetupId,
       userId,
@@ -53,9 +65,13 @@ class QuestionController {
   }
 
   static upVote(req, res) {
-    const userId = req.body.userId;
     const questionId = req.params.questionId;
-
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       userId,
       questionId,
@@ -82,9 +98,13 @@ class QuestionController {
   }
 
   static downVote(req, res) {
-    const userId = req.body.userId;
     const questionId = req.params.questionId;
-
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
     const question = {
       userId,
       questionId,
@@ -103,6 +123,56 @@ class QuestionController {
           status: 400,
           message: 'Question downvote unsuccessful',
         });
+      })
+      .catch(error => res.status(500).json({
+        status: 500,
+        error,
+      }));
+  }
+
+  static commentQuestion(req, res) {
+    const questionId = parseInt(req.params.questionId, 10);
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
+    const comment = {
+      questionId,
+      userId,
+      comment: req.body.body,
+    };
+    pool.query(`SELECT * FROM questions WHERE id = ${questionId}`)
+      .then((retreivedQuestion) => {
+        if (retreivedQuestion.rowCount > 0) {
+          console.log(retreivedQuestion.rows);
+          const newData = {
+            questionId,
+            userId,
+            title: retreivedQuestion.rows[0].title,
+            body: retreivedQuestion.rows[0].body,
+            comment: comment.comment,
+          };
+          commentQuestion(comment)
+            .then((results) => {
+              if (results.rowCount > 0) {
+                return res.status(201).json({
+                  status: 201,
+                  message: 'Successfully commented',
+                  data: newData,
+                });
+              }
+              return res.json(400).json({
+                status: 400,
+                error: 'could not comment',
+              });
+            })
+            .catch(error => res.status(500).json({
+              status: 500,
+              error,
+            }));
+        }
       })
       .catch(error => res.status(500).json({
         status: 500,

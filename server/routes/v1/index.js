@@ -15,9 +15,9 @@ import VerifyToken from '../../middlewares/VerifyToken';
 
 // deconstructure controllers
 const {
-  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup,
+  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, deleteSingleMeetup,
 } = MeetupController;
-const { getAllQuestions, createQuestion, upVote, downVote } = QuestionController;
+const { getAllQuestions, createQuestion, upVote, downVote, commentQuestion } = QuestionController;
 const { rsvpMeetup, getAllRsvps } = RsvpController;
 const { createAccount, loginAccount } = AuthController;
 
@@ -39,10 +39,12 @@ router.get('/', (req, res) => {
 
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups);//
-router.get('/meetup/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 router.get('/meetups/upcoming', verifyToken, getUpcomingMeetups);//
+router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
+
+router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount);//
@@ -53,7 +55,7 @@ router.get('/auth/logout', (req, res) => {
 });
 
 // Rsvp endpoints
-router.get('/:meetupId/rsvps', verifyToken, idValidator, getAllRsvps);//
+router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps);//
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
 
@@ -64,7 +66,10 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
-router.get('/decode', verifyToken, (req, res) => {
+
+router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
+
+router.get('/decode', verifyToken, isAdmin, (req, res) => {
   const jwToken = req.headers['x-access-token'];
   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
 

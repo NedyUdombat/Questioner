@@ -19,6 +19,14 @@ class Questions {
     });
   }
 
+  static commentQuestion(question) {
+    return new Promise((resolve, reject) => {
+      pool.query(`INSERT INTO comments ( question_id, user_id, comment) VALUES (${question.questionId}, ${question.userId}, '${question.comment}') returning *`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
   static voteQuestion(question) {
     return new Promise((resolve, reject) => {
       pool.query(`INSERT INTO votes (user_id, question_id, vote_type) VALUES (${question.userId}, ${question.questionId}, '${question.voteType}') returning *`)
