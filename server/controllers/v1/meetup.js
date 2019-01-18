@@ -94,7 +94,6 @@ class MeetupController {
     const { meetupId } = req.params;
     deleteSpecific(meetupId)
       .then((results) => {
-        console.log(results)
         if (results.rowCount > 0) {
           return res.status(200).json({
             status: 200,

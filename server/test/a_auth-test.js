@@ -61,7 +61,7 @@ describe('Questioner Server', () => {
       chai.request(app)
         .post('/api/v1/auth/login')
         .set('Accept', 'application/json')
-        .send(validAdminAccount)
+        .send(validUserAccount)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('object');

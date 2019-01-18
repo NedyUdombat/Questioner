@@ -17,7 +17,7 @@ import VerifyToken from '../../middlewares/VerifyToken';
 const {
   getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, deleteSingleMeetup,
 } = MeetupController;
-const { getAllQuestions, createQuestion, upVote, downVote } = QuestionController;
+const { getAllQuestions, createQuestion, upVote, downVote, commentQuestion } = QuestionController;
 const { rsvpMeetup, getAllRsvps } = RsvpController;
 const { createAccount, loginAccount } = AuthController;
 
@@ -65,6 +65,9 @@ router.get('/questions', verifyToken, getAllQuestions);//
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion);//
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
+
+
+router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 
 router.get('/decode', verifyToken, isAdmin, (req, res) => {
   const jwToken = req.headers['x-access-token'];
