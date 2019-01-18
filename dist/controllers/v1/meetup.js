@@ -21,7 +21,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var getAll = _meetups2.default.getAll,
     getSpecific = _meetups2.default.getSpecific,
     getUpcoming = _meetups2.default.getUpcoming,
-    create = _meetups2.default.create;
+    create = _meetups2.default.create,
+    deleteSpecific = _meetups2.default.deleteSpecific;
 
 var MeetupController = function () {
   function MeetupController() {
@@ -111,6 +112,30 @@ var MeetupController = function () {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'deleteSingleMeetup',
+    value: function deleteSingleMeetup(req, res) {
+      var meetupId = req.params.meetupId;
+
+      deleteSpecific(meetupId).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully deleted specific meetup',
+            data: results.rows[0]
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          error: 'Meetup Record not found'
         });
       }).catch(function (error) {
         return res.status(400).json({

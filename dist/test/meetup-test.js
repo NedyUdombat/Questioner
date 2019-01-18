@@ -105,8 +105,16 @@ describe('Questioner Server', function () {
       });
     });
 
+    it('/api/v1/me/etups/upcoming should respond with status code 200 and retrieve all upcoming meetup', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/upcoming').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(200);
+        expect(res.body.message).to.eql('Successfully retrieved all upcoming meetups');
+        done();
+      });
+    });
+
     it('/api/v1/meetups/<meetup-id> should respond with status code 200 and retrieve specific meetup', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/meetup/1').set('x-access-token', authToken).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/1').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.eql('Successfully retrieved specific meetup');
         done();
@@ -114,15 +122,24 @@ describe('Questioner Server', function () {
     });
 
     it('/api/v1/meetups/<meetup-id> should respond with status code 404 when meetup is not available', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/meetup/100').set('x-access-token', authToken).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/100').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(404);
         done();
       });
     });
 
     it('/api/v1/meetups/<meetup-id> should respond with status code 400 when Id is not a number', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/meetup/u').set('x-access-token', authToken).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/u').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(400);
+        done();
+      });
+    });
+  });
+
+  describe('DELETE /', function () {
+    it('/api/v1/meetups/1 should respond with status code 200 and delete that meetup', function (done) {
+      _chai2.default.request(_server2.default).delete('/api/v1/meetups/1').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(200);
         done();
       });
     });

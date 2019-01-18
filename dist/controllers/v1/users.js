@@ -51,15 +51,12 @@ var AuthController = function () {
           username = _req$body.username,
           email = _req$body.email,
           password = _req$body.password,
-          phonenumber = _req$body.phonenumber,
-          role = _req$body.role;
+          phonenumber = _req$body.phonenumber;
 
       var hash = _bcryptjs2.default.hashSync(password, 10);
       var userDetails = {
-        firstname: firstname, lastname: lastname, othername: othername, username: username, email: email, password: hash, phonenumber: phonenumber, role: role
+        firstname: firstname, lastname: lastname, othername: othername, username: username, email: email, password: hash, phonenumber: phonenumber
       };
-      var roles = ['admin', 'user'].includes(role);
-      if (!roles) return res.status(404).json({ message: 'This role does not exist' });
       _dbConfig2.default.query('SELECT email from users where email = \'' + email + '\'').then(function (found) {
         if (found.rowCount === 0) {
           _createAccount(userDetails).then(function (results) {
@@ -81,7 +78,10 @@ var AuthController = function () {
             });
           });
         } else {
-          return res.status(409).json({ status: 409, message: 'email is already in use taken', error: true });
+          return res.status(409).json({
+            tatus: 409,
+            message: 'email is already in use, if that email belongs to you, kindly login',
+            error: true });
         }
       }).catch(function (err) {
         return res.status(500).json(err);

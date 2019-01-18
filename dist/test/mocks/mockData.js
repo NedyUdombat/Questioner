@@ -63,6 +63,9 @@ var mockQuestionDetails = {
     meetupId: 200,
     title: 'GFW not working?',
     body: 'why is GFW nYF in the config file?'
+  },
+  comment: {
+    body: "hy"
   }
 };
 
@@ -108,13 +111,13 @@ var userAccounts = {
     role: 'user'
   },
   validAdminAccount: {
-    firstname: 'Nedy',
-    lastname: 'Udo',
-    othername: 'uu',
+    firstname: 'nedy',
+    lastname: 'udombat',
+    othername: '',
     username: 'nedyy',
-    email: 'nedyy@gmail.com',
-    password: 'qwerty',
-    phonenumber: '07025137999',
+    email: 'nedyudombat@gmail.com',
+    password: 'Iamtheadmin',
+    phonenumber: '0708228593',
     role: 'admin'
   },
   wrongPassword: {

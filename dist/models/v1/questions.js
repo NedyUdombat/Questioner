@@ -47,6 +47,17 @@ var Questions = function () {
       });
     }
   }, {
+    key: 'commentQuestion',
+    value: function commentQuestion(question) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('INSERT INTO comments ( question_id, user_id, comment) VALUES (' + question.questionId + ', ' + question.userId + ', \'' + question.comment + '\') returning *').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'voteQuestion',
     value: function voteQuestion(question) {
       return new Promise(function (resolve, reject) {

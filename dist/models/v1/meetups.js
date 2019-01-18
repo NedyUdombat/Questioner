@@ -78,21 +78,10 @@ var Meetups = function () {
       });
     }
   }, {
-    key: 'deleteAll',
-    value: function deleteAll() {
-      return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('DELETE * FROM meetups').then(function (results) {
-          return resolve(results);
-        }).catch(function (error) {
-          return reject(error);
-        });
-      });
-    }
-  }, {
     key: 'deleteSpecific',
     value: function deleteSpecific(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('DELETE * FROM TABLE WHERE id = ' + id).then(function (results) {
+        _dbConfig2.default.query('DELETE FROM meetups WHERE id = ' + id).then(function (results) {
           return resolve(results);
         }).catch(function (error) {
           return reject(error);
