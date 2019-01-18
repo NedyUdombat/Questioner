@@ -25,7 +25,8 @@ var expect = _chai2.default.expect;
 var validQuestion = _mockData.mockQuestionDetails.validQuestion,
     invalidUserQuestion = _mockData.mockQuestionDetails.invalidUserQuestion,
     invalidMeetupQuestion = _mockData.mockQuestionDetails.invalidMeetupQuestion,
-    invalidFieldQuestion = _mockData.mockQuestionDetails.invalidFieldQuestion;
+    invalidFieldQuestion = _mockData.mockQuestionDetails.invalidFieldQuestion,
+    comment = _mockData.mockQuestionDetails.comment;
 var validUpvote = _mockData.mockVoteDetails.validUpvote,
     validDownvote = _mockData.mockVoteDetails.validDownvote,
     invalidVoteType = _mockData.mockVoteDetails.invalidVoteType,
@@ -61,6 +62,13 @@ describe('Questioner Server', function () {
         done();
       });
     });
+
+    it('/api/v1/1/comments should respond with status code 201 and comment on a question', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/1/comments').set('x-access-token', authToken).send(comment).end(function (err, res) {
+        expect(res.status).to.equal(201);
+        done();
+      });
+    });
   });
 
   describe('GET /', function () {
@@ -69,7 +77,7 @@ describe('Questioner Server', function () {
     */
 
     it('/api/v1/questions should respond with status code 200 and retieve all questions', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/questions').set('x-access-token', authToken).send(validUpvote).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/questions').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(201);
         done();
       });

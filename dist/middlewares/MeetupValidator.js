@@ -18,6 +18,7 @@ var MeetupValidator = function () {
     value: function statusValidator(req, res, next) {
       var status = req.body.status;
 
+      status = status.toLowerCase();
       var rsvpStatus = status === 'yes' || status === 'no' || status === 'maybe';
       if (!rsvpStatus) {
         return res.status(400).json({

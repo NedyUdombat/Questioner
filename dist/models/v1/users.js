@@ -45,7 +45,7 @@ var Users = function () {
     key: 'createAccount',
     value: function createAccount(details) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES (\'' + details.firstname + '\', \'' + details.lastname + '\',\'' + details.othername + '\', \'' + details.username + '\', \'' + details.email + '\', \'' + details.password + '\', \'' + details.phonenumber + '\', \'' + details.role + '\') returning *').then(function (results) {
+        _dbConfig2.default.query('INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES (\'' + details.firstname + '\', \'' + details.lastname + '\',\'' + details.othername + '\', \'' + details.username + '\', \'' + details.email + '\', \'' + details.password + '\', \'' + details.phonenumber + '\', \'user\') returning *').then(function (results) {
           return resolve(results);
         }).catch(function (error) {
           return reject(error);

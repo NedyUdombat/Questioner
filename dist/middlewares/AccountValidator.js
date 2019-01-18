@@ -27,11 +27,10 @@ var AccountValidator = function () {
           lastname = _req$body.lastname,
           username = _req$body.username,
           email = _req$body.email,
-          password = _req$body.password,
-          role = _req$body.role;
+          password = _req$body.password;
 
 
-      var fields = { firstname: firstname, lastname: lastname, username: username, email: email, password: password, role: role };
+      var fields = { firstname: firstname, lastname: lastname, username: username, email: email, password: password };
       var fields2 = {
         othername: req.body.othername,
         phonenumber: req.body.phonenumber

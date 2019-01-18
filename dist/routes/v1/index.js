@@ -60,11 +60,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getAllMeetups = _meetup2.default.getAllMeetups,
     getSingleMeetup = _meetup2.default.getSingleMeetup,
     getUpcomingMeetups = _meetup2.default.getUpcomingMeetups,
-    createMeetup = _meetup2.default.createMeetup;
+    createMeetup = _meetup2.default.createMeetup,
+    deleteSingleMeetup = _meetup2.default.deleteSingleMeetup;
 var getAllQuestions = _question2.default.getAllQuestions,
     createQuestion = _question2.default.createQuestion,
     upVote = _question2.default.upVote,
-    downVote = _question2.default.downVote;
+    downVote = _question2.default.downVote,
+    commentQuestion = _question2.default.commentQuestion;
 var rsvpMeetup = _rsvp2.default.rsvpMeetup,
     getAllRsvps = _rsvp2.default.getAllRsvps;
 var createAccount = _users2.default.createAccount,
@@ -86,15 +88,17 @@ var router = (0, _express.Router)();
 
 // general route
 router.get('/', function (req, res) {
-  res.json({ message: 'Hi there! Welcome to our Questioner api!' });
+  res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
 
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups); //
-router.get('/meetup/:meetupId', verifyToken, idValidator, getSingleMeetup); //
 router.get('/meetups/upcoming', verifyToken, getUpcomingMeetups); //
+router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup); //
 
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup); //
+
+router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup); //
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount); //
@@ -105,7 +109,7 @@ router.get('/auth/logout', function (req, res) {
 });
 
 // Rsvp endpoints
-router.get('/:meetupId/rsvps', verifyToken, idValidator, getAllRsvps); //
+router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps); //
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup); //
 
@@ -116,7 +120,10 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote); //
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote); //
 
-router.get('/decode', verifyToken, function (req, res) {
+
+router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion); //
+
+router.get('/decode', verifyToken, isAdmin, function (req, res) {
   var jwToken = req.headers['x-access-token'];
   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
 

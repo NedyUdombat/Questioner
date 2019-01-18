@@ -6,6 +6,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _rsvps = require('../../models/v1/rsvps');
 
 var _rsvps2 = _interopRequireDefault(_rsvps);
@@ -13,6 +21,10 @@ var _rsvps2 = _interopRequireDefault(_rsvps);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+_dotenv2.default.config();
+
+var secretHash = process.env.SECRET_KEY;
 
 var _rsvpMeetup = _rsvps2.default.rsvpMeetup,
     _getAllRsvps = _rsvps2.default.getAllRsvps;
@@ -26,7 +38,12 @@ var RsvpController = function () {
     key: 'rsvpMeetup',
     value: function rsvpMeetup(req, res) {
       var id = req.params.meetupId;
-      var userId = req.body.userId;
+      var jwToken = req.headers['x-access-token'];
+      var userId = void 0;
+      _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, decoded) {
+        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        userId = decoded.id;
+      });
       var rsvp = {
         userId: userId,
         status: req.body.status

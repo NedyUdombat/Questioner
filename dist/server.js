@@ -25,12 +25,12 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
-  res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of out api' });
+  res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of our api' });
 });
 
 app.use('/api/v1', _index2.default);
 
-app.get('*', function (req, res) {
+app.all('*', function (req, res) {
   return res.status(404).json({
     status: 404,
     message: 'The page you are looking for does not exist'
