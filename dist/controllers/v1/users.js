@@ -61,10 +61,25 @@ var AuthController = function () {
         if (found.rowCount === 0) {
           _createAccount(userDetails).then(function (results) {
             if (results.rowCount > 0) {
+              var returnedUserDetails = results.rows[0];
+              var id = returnedUserDetails.id,
+                  role = returnedUserDetails.role;
+
+              var authDetail = { id: id, username: username, email: email, role: role };
+              var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '100hr' });
+
               return res.status(201).json({
                 status: 201,
                 message: 'Account created',
-                data: results.rows
+                data: {
+                  id: results.rows[0].id,
+                  fullname: results.rows[0].firstname + ' ' + results.rows[0].othername + ' ' + results.rows[0].lastname,
+                  username: results.rows[0].username,
+                  email: results.rows[0].email,
+                  phonenumber: results.rows[0].phonenumber,
+                  registered: results.rows[0].registered,
+                  jwToken: jwToken
+                }
               });
             }
             return res.status(500).json({
@@ -99,11 +114,10 @@ var AuthController = function () {
           var returnedUserDetails = user.rows[0];
           if (_bcryptjs2.default.compareSync(returnedUserDetails.password, password) === false) {
             var id = returnedUserDetails.id,
-                name = returnedUserDetails.name,
                 username = returnedUserDetails.username,
                 role = returnedUserDetails.role;
 
-            var authDetail = { id: id, name: name, username: username, email: email, role: role };
+            var authDetail = { id: id, username: username, email: email, role: role };
 
             var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '100hr' });
 

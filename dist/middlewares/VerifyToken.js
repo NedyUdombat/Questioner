@@ -31,7 +31,6 @@ var VerifyToken = function () {
     key: 'verifyToken',
     value: function verifyToken(req, res, next) {
       var jwToken = req.headers['x-access-token'];
-      // const jwToken = req.headers.Authorization;
 
       if (!jwToken) {
         return res.status(401).json({
