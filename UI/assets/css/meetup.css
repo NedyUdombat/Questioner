@@ -409,12 +409,12 @@ textarea{
 }
 .comment-div textarea{
   resize: none;
-  border-radius: 50px;
+  border-radius: 50px!important;
   margin-bottom: 10px;
   padding: 5px 30px;
 }
 textarea:focus{
-  border-radius: 50px;
+  border-radius: 0px;
   outline: none;
 }
 
