@@ -8,7 +8,6 @@ const secretHash = process.env.SECRET_KEY;
 class VerifyToken {
   static verifyToken(req, res, next) {
     const jwToken = req.headers['x-access-token'];
-    // const jwToken = req.headers.Authorization;
 
     if (!jwToken) {
       return res.status(401).json({

@@ -25,6 +25,11 @@ class AuthController {
           createAccount(userDetails)
             .then((results) => {
               if (results.rowCount > 0) {
+                const returnedUserDetails = results.rows[0];
+                const { id, role } = returnedUserDetails;
+                const authDetail = { id, username, email, role };
+                const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '100hr' });
+
                 return res.status(201).json({
                   status: 201,
                   message: 'Account created',
@@ -35,6 +40,7 @@ class AuthController {
                     email: results.rows[0].email,
                     phonenumber: results.rows[0].phonenumber,
                     registered: results.rows[0].registered,
+                    jwToken,
                   },
                 });
               }
@@ -65,8 +71,8 @@ class AuthController {
         if (user.rowCount > 0) {
           const returnedUserDetails = user.rows[0];
           if (bcrypt.compareSync(returnedUserDetails.password, password) === false) {
-            const { id, name, username, role } = returnedUserDetails;
-            const authDetail = { id, name, username, email, role };
+            const { id, username, role } = returnedUserDetails;
+            const authDetail = { id, username, email, role };
 
             const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '100hr' });
 
