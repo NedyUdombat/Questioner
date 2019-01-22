@@ -28,7 +28,14 @@ class AuthController {
                 return res.status(201).json({
                   status: 201,
                   message: 'Account created',
-                  data: results.rows,
+                  data: {
+                    id: results.rows[0].id,
+                    fullname: `${results.rows[0].firstname} ${results.rows[0].othername} ${results.rows[0].lastname}`,
+                    username: results.rows[0].username,
+                    email: results.rows[0].email,
+                    phonenumber: results.rows[0].phonenumber,
+                    registered: results.rows[0].registered,
+                  },
                 });
               }
               return res.status(500).json({
