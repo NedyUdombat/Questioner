@@ -1,5 +1,4 @@
 import Users from '../../models/v1/users';
-import pool from '../../models/v1/dbConfig';
 
 
 const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = Users;

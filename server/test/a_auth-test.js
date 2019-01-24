@@ -7,7 +7,11 @@ import { userAccounts } from './mocks/mockData';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-const { validUserAccount, validAdminAccount, nonExistentUser } = userAccounts;
+const {
+  validUserAccount, validAdminAccount,
+  nonExistentUser, invalidUserAccount,
+  wrongPassword, emptyLoginCredentials,
+} = userAccounts;
 
 
 describe('Questioner Server', () => {
@@ -39,6 +43,17 @@ describe('Questioner Server', () => {
         });
     });
 
+    it('/api/v1/auth/signup should respond with status code 400 if any fiels=ds is empty or off wromg data type', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/signup')
+        .set('Accept', 'application/json')
+        .send(invalidUserAccount)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
+
     /*
     ** Testing Account Login
     */
@@ -56,6 +71,18 @@ describe('Questioner Server', () => {
     //     });
     // });
 
+    it('/api/v1/auth/login should respond with status code 401 if password is incorrect', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .set('Accept', 'application/json')
+        .send(wrongPassword)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.eql('Wrong Password');
+          done();
+        });
+    });
+
     it('/api/v1/auth/login should respond with status code 200 and log a user in', (done) => {
       chai.request(app)
         .post('/api/v1/auth/login')
@@ -68,6 +95,16 @@ describe('Questioner Server', () => {
         });
     });
 
+    it('/api/v1/auth/login should respond with status code 400 if field is empty or incorrect', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .set('Accept', 'application/json')
+        .send(emptyLoginCredentials)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+    });
     /*
     ** Testing Account Logout
     */

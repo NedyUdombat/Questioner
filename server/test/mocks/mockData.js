@@ -32,7 +32,6 @@ const mockMeetupDetails = {
   },
 };
 
-const mockEmptyUpcomingMeetups = [];
 
 const mockQuestionDetails = {
   validQuestion: {
@@ -60,8 +59,8 @@ const mockQuestionDetails = {
     body: 'why is GFW nYF in the config file?',
   },
   comment: {
-    body: "hy",
-  }
+    body: 'hy',
+  },
 };
 
 const mockRSVPDetails = {
@@ -105,6 +104,16 @@ const userAccounts = {
     phonenumber: '07025137999',
     role: 'user',
   },
+  invalidUserAccount: {
+    firstname: '',
+    lastname: 'er',
+    othername: '',
+    username: 'ers',
+    email: 'u@umeil.com',
+    password: 'qwerfw',
+    phonenumber: '07025137999',
+    role: 'user',
+  },
   validAdminAccount: {
     firstname: 'nedy',
     lastname: 'udombat',
@@ -116,7 +125,11 @@ const userAccounts = {
     role: 'admin',
   },
   wrongPassword: {
-    email: 'nedyy@gmail.com',
+    email: 'nedyudombat@gmail.com',
+    password: 'qwerrfghjktyy',
+  },
+  emptyLoginCredentials: {
+    email: '',
     password: 'qwerrfghjktyy',
   },
   nonExistentUser: {
@@ -125,4 +138,7 @@ const userAccounts = {
   },
 };
 
-export { mockMeetupDetails, mockQuestionDetails, mockRSVPDetails, mockVoteDetails, mockEmptyUpcomingMeetups, userAccounts };
+export {
+  mockMeetupDetails, mockQuestionDetails, mockRSVPDetails,
+  mockVoteDetails, userAccounts,
+};

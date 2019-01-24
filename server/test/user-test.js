@@ -129,7 +129,6 @@ describe('Questioner Server', () => {
         .set('x-access-token', authTokenAdmin)
         .end((err, res) => {
           res.body.data = [];
-          console.log(res.body);
           expect(res.body.data).to.eql([]);
           // expect(res.body.status).to.eql(404);
           // expect(res.body.message).to.eql('No User is available');
