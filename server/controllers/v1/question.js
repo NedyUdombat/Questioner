@@ -146,7 +146,6 @@ class QuestionController {
     pool.query(`SELECT * FROM questions WHERE id = ${questionId}`)
       .then((retreivedQuestion) => {
         if (retreivedQuestion.rowCount > 0) {
-          console.log(retreivedQuestion.rows);
           const newData = {
             questionId,
             userId,

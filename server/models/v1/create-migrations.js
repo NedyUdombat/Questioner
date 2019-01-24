@@ -14,3 +14,5 @@ const createMigrations = async () => {
   }
 };
 createMigrations();
+
+export default createMigrations();

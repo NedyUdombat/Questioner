@@ -15,3 +15,5 @@ const seedMigrations = async () => {
 };
 
 seedMigrations();
+
+export default seedMigrations();

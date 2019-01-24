@@ -1,4 +1,6 @@
+import bcrypt from 'bcryptjs';
 import Validator from '../_helpers/post_validators';
+import pool from '../models/v1/dbConfig';
 
 class AccountValidator {
   static createAccountValidator(req, res, next) {
@@ -33,7 +35,17 @@ class AccountValidator {
         errorMessages: validator.getErrors(),
       });
     }
-
+    pool.query(`SELECT * FROM users Where email = '${email}' `)
+      .then((user) => {
+        if (bcrypt.compareSync(password, user.rows[0].password) === false) {
+          return res.status(401).json({
+            status: 401,
+            failed: 'Wrong Password',
+          });
+        }
+      }).catch(/* istanbul ignore next */ err => (
+        res.status(500).json(err)
+      ));
     return next();
   }
 }

@@ -8,6 +8,7 @@
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node --presets babel-preset-env ./server/server.js",
     "start": "node ./dist/server.js",
     "test": "cross-env NODE_ENV=test nyc mocha server/test/**/*test.js --require babel-register --exit",
+    "test:clear": "cross-env NODE_ENV=test npm run test-query && nyc mocha server/test/**/*test.js --require babel-register --exit",
     "babel-node": "babel-node server --presets=env",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
@@ -20,7 +21,9 @@
     "test-migrate": "cross-env NODE_ENV=test npm run test-migrate:drop && babel-node server/models/v1/create-migrations.js",
     "test-migrate-only": "cross-env NODE_ENV=test babel-node server/models/v1/create-migrations.js",
     "test-seed": "cross-env NODE_ENV=test babel-node server/models/v1/seed-migrations.js",
-    "test-migrate:seed": "npm run test-migrate && npm run test-seed"
+    "test-migrate:seed": "npm run test-migrate && npm run test-seed",
+    "query": "cross-env NODE_ENV=development babel-node server/models/v1/query.js",
+    "test-query": "cross-env NODE_ENV=test babel-node server/models/v1/query.js"
   },
   "nyc": {
     "exclude": [
