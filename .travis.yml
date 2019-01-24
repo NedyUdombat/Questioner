@@ -20,9 +20,7 @@ before_script:
   - ./cc-test-reporter before-build --debug
 
 script:
-  - npm run migrate:drop
-  - npm run migrate-only
-  - npm run seed
+  - npm run query
   - npm test
 
 after_success:

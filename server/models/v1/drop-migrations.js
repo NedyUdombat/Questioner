@@ -16,3 +16,5 @@ const dropMigrations = async () => {
 };
 
 dropMigrations();
+
+export default dropMigrations();

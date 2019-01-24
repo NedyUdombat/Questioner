@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import MeetupController from '../../controllers/v1/meetup';
+import AuthController from '../../controllers/v1/auth';
+import UserController from '../../controllers/v1/users';
 import QuestionController from '../../controllers/v1/question';
-import AuthController from '../../controllers/v1/users';
 import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
@@ -17,9 +18,10 @@ import VerifyToken from '../../middlewares/VerifyToken';
 const {
   getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, deleteSingleMeetup,
 } = MeetupController;
+const { createAccount, loginAccount } = AuthController;
+const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = UserController;
 const { getAllQuestions, createQuestion, upVote, downVote, commentQuestion } = QuestionController;
 const { rsvpMeetup, getAllRsvps } = RsvpController;
-const { createAccount, loginAccount } = AuthController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
@@ -53,6 +55,12 @@ router.post('/auth/login', loginAccountValidator, loginAccount);//
 router.get('/auth/logout', (req, res) => {
   res.status(200).send({ status: 200, auth: false, token: null });
 });
+
+// User endpoints
+router.get('/users', verifyToken, isAdmin, getAllUsers);
+router.get('/users/:userId', verifyToken, idValidator, getSpecificUser);
+router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
+router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 
 // Rsvp endpoints
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps);//

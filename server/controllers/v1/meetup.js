@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Meetup from '../../models/v1/meetups';
 
 const { getAll, getSpecific, getUpcoming, create, deleteSpecific } = Meetup;

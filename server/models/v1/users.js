@@ -26,17 +26,17 @@ class Users {
     });
   }
 
-  static deleteAll() {
+  static deleteAllUsers() {
     return new Promise((resolve, reject) => {
-      pool.query('DELETE * FROM users')
+      pool.query('DELETE FROM users')
         .then(results => resolve(results))
         .catch(error => reject(error));
     });
   }
 
-  static deleteSpecific(id) {
+  static deleteSpecificUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`DELETE * FROM users WHERE id = ${id}`)
+      pool.query(`DELETE FROM users WHERE id = ${id}`)
         .then(results => resolve(results))
         .catch(error => reject(error));
     });

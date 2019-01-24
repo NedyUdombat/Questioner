@@ -11,6 +11,7 @@ const { validMeetup, invalidPastMeetup, emptyFieldMeetup } = mockMeetupDetails;
 const { validRsvp, invalidRsvp } = mockRSVPDetails;
 const { validUserAccount, validAdminAccount, wrongPassword, nonExistentUser } = userAccounts;
 
+
 let authToken;
 let authTokenAdmin;
 
