@@ -6,6 +6,7 @@ class ParamsValidator {
     const validateParam = (param) => {
       if (!param.match(validId)) {
         return res.status(400).json({
+          status: 400,
           message: 'ID can only be a number',
           error: true,
         });

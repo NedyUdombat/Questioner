@@ -7,11 +7,19 @@ const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = Use
 class UserController {
   static getAllUsers(req, res) {
     getAllUsers()
-      .then(users => res.status(200).json({
-        status: 200,
-        message: 'Successfully retrieved all Users',
-        data: users.rows,
-      }))
+      .then((users) => {
+        if (users.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully retrieved all Users',
+            data: users.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          error: 'No User is available',
+        });
+      })
       .catch(error => res.status(400).json({
         status: 400,
         error: error.message,
@@ -31,7 +39,8 @@ class UserController {
         }
         return res.status(404).json({
           status: 404,
-          error: 'User not found',
+          message: 'User not found',
+          error: true,
         });
       })
       .catch(error => res.status(400).json({
@@ -69,11 +78,10 @@ class UserController {
           return res.status(200).json({
             status: 200,
             message: 'Successfully deleted user',
-            data: user.rows,
           });
         }
-        return res.status(409).json({
-          status: 409,
+        return res.status(404).json({
+          status: 404,
           message: 'User not found',
         });
       })
