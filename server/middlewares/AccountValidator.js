@@ -40,7 +40,7 @@ class AccountValidator {
         if (bcrypt.compareSync(password, user.rows[0].password) === false) {
           return res.status(401).json({
             status: 401,
-            failed: 'Wrong Password',
+            message: 'Wrong Password',
           });
         }
       }).catch(/* istanbul ignore next */ err => (

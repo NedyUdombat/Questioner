@@ -77,15 +77,15 @@ router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVo
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 
-router.get('/decode', verifyToken, isAdmin, (req, res) => {
-  const jwToken = req.headers['x-access-token'];
-  if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
-
-  jwt.verify(jwToken, 'iquodIkpaGHAntIm', (err, decoded) => {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-
-    res.status(200).send(decoded);
-  });
-});
+// router.get('/decode', verifyToken, isAdmin, (req, res) => {
+//   const jwToken = req.headers['x-access-token'];
+//   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
+//
+//   jwt.verify(jwToken, 'iquodIkpaGHAntIm', (err, decoded) => {
+//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+//
+//     res.status(200).send(decoded);
+//   });
+// });
 
 export default router;

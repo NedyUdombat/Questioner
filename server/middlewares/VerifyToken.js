@@ -16,12 +16,6 @@ class VerifyToken {
       });
     }
     jwt.verify(jwToken, secretHash, (err, authData) => {
-      if (err) {
-        return res.status(401).json({
-          auth: false,
-          message: 'Please provide JWT token',
-        });
-      }
       req.authData = authData;
       return next();
     });
