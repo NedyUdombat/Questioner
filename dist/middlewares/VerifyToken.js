@@ -39,12 +39,6 @@ var VerifyToken = function () {
         });
       }
       _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, authData) {
-        if (err) {
-          return res.status(401).json({
-            auth: false,
-            message: 'Please provide JWT token'
-          });
-        }
         req.authData = authData;
         return next();
       });

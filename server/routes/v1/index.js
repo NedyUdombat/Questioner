@@ -20,8 +20,12 @@ const {
 } = MeetupController;
 const { createAccount, loginAccount } = AuthController;
 const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = UserController;
-const { getAllQuestions, createQuestion, upVote, downVote, commentQuestion } = QuestionController;
-const { rsvpMeetup, getAllRsvps } = RsvpController;
+const {
+  getAllQuestions, createQuestion,
+  upVote, downVote, getAllUpvoteForQuestion,
+  getAllDownvoteForQuestion, commentQuestion,
+} = QuestionController;
+const { rsvpMeetup, getAllRsvps, getAllRsvpsForMeetup, getAllRsvpsByUser } = RsvpController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
@@ -63,12 +67,16 @@ router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
 router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 
 // Rsvp endpoints
-router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps);//
+router.get('/rsvps', verifyToken, isAdmin, getAllRsvps);//
+router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup);//
+router.get('/rsvps/:userId', verifyToken, idValidator, getAllRsvpsByUser);//
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
 
 // question endpoints
-router.get('/questions', verifyToken, getAllQuestions);//
+router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
+router.get('/:questionId/upvote', verifyToken, getAllUpvoteForQuestion);//
+router.get('/:questionId/downvote', verifyToken, getAllDownvoteForQuestion);//
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion);//
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//

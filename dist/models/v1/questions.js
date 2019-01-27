@@ -35,6 +35,28 @@ var Questions = function () {
       });
     }
   }, {
+    key: 'getAllQuestionsForMeetup',
+    value: function getAllQuestionsForMeetup(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM questions where meetup_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllQuestionsByUser',
+    value: function getAllQuestionsByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM questions where user_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'askQuestion',
     value: function askQuestion(question) {
       var createdOn = (0, _moment2.default)().format();
@@ -47,10 +69,54 @@ var Questions = function () {
       });
     }
   }, {
+    key: 'getAllComments',
+    value: function getAllComments() {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM comments').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllCommentsForQuestion',
+    value: function getAllCommentsForQuestion(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM comments where question_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllCommentsByUser',
+    value: function getAllCommentsByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM comments where user_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'commentQuestion',
     value: function commentQuestion(question) {
       return new Promise(function (resolve, reject) {
         _dbConfig2.default.query('INSERT INTO comments ( question_id, user_id, comment) VALUES (' + question.questionId + ', ' + question.userId + ', \'' + question.comment + '\') returning *').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllVotesByUser',
+    value: function getAllVotesByUser(voteType, id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM votes where vote_type = \'' + voteType + '\' AND user_id = ' + id.userId + ' AND question_id = ' + id.questionId).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);

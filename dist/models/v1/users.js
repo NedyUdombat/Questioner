@@ -53,10 +53,10 @@ var Users = function () {
       });
     }
   }, {
-    key: 'deleteAll',
-    value: function deleteAll() {
+    key: 'deleteAllUsers',
+    value: function deleteAllUsers() {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('DELETE * FROM users').then(function (results) {
+        _dbConfig2.default.query('DELETE FROM users').then(function (results) {
           return resolve(results);
         }).catch(function (error) {
           return reject(error);
@@ -64,10 +64,10 @@ var Users = function () {
       });
     }
   }, {
-    key: 'deleteSpecific',
-    value: function deleteSpecific(id) {
+    key: 'deleteSpecificUser',
+    value: function deleteSpecificUser(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('DELETE * FROM users WHERE id = ' + id).then(function (results) {
+        _dbConfig2.default.query('DELETE FROM users WHERE id = ' + id).then(function (results) {
           return resolve(results);
         }).catch(function (error) {
           return reject(error);

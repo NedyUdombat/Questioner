@@ -1,9 +1,25 @@
 import pool from './dbConfig';
 
 class Rsvps {
-  static getAllRsvps(id) {
+  static getAllRsvps() {
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM rsvps')
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getAllRsvpsForMeetup(id) {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${id}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getAllRsvpsByUser(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM rsvps WHERE user_id = ${id}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

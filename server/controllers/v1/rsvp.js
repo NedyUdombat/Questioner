@@ -6,7 +6,7 @@ dotenv.config();
 
 const secretHash = process.env.SECRET_KEY;
 
-const { rsvpMeetup, getAllRsvps } = Rsvps;
+const { rsvpMeetup, getAllRsvps, getAllRsvpsForMeetup, getAllRsvpsByUser } = Rsvps;
 
 class RsvpController {
   static rsvpMeetup(req, res) {
@@ -42,8 +42,51 @@ class RsvpController {
   }
 
   static getAllRsvps(req, res) {
+    getAllRsvps()
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully retrieved all rsvps',
+            data: results.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'no rsvp has been made',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static getAllRsvpsForMeetup(req, res) {
     const { meetupId } = req.params;
-    getAllRsvps(meetupId)
+    getAllRsvpsForMeetup(meetupId)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully retrieved all rsvps for this meetup',
+            data: results.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'no rsvp has been made for this meetup',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static getAllRsvpsByUser(req, res) {
+    const { userId } = req.params;
+    getAllRsvpsByUser(userId)
       .then((results) => {
         if (results.rowCount > 0) {
           return res.status(200).json({
@@ -53,7 +96,7 @@ class RsvpController {
         }
         return res.status(404).json({
           status: 404,
-          data: 'no rsvp has been made',
+          data: 'you have no rsvps',
         });
       })
       .catch(error => res.status(400).json({

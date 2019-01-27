@@ -166,7 +166,50 @@ describe('Questioner Server', () => {
     ** testing get routes for rsvp
     */
 
-    it('/api/v1/<meetup-id>/rsvps should respond with status code 200 and retrieve all rsvps', (done) => {
+    it('/api/v1/rsvps should respond with status code 200 and retrieve all rsvps', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.eql('Successfully retrieved all rsvps');
+          done();
+        });
+    });
+
+    it('/api/v1/rsvps should respond with status code 404 when there are no rsvps', (done) => {
+      chai.request(app)
+        .get('/api/v1/1/rsvps')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          res.body.data = [];
+          expect(res.body.data).to.eql([]);
+          done();
+        });
+    });
+
+    it('/api/v1/rsvps should respond with status code 401 id user is not logged-in', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          done();
+        });
+    });
+
+    it('/api/v1/rsvps should respond with status code 403 if user is not an admin', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 200 and retrieve all rsvps for a meetup', (done) => {
       chai.request(app)
         .get('/api/v1/1/rsvps')
         .set('x-access-token', authTokenAdmin)
@@ -176,13 +219,13 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('/api/v1/<meetup-id>/rsvps should respond with status code 404 when there are no rsvps', (done) => {
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 404 if there is no rsvp for that meetup', (done) => {
       chai.request(app)
-        .get('/api/v1/1/rsvps')
+        .get('/api/v1/100000/rsvps')
         .set('x-access-token', authTokenAdmin)
         .end((err, res) => {
-          console.log(res.data);
           res.body.data = [];
+          expect(res.status).to.eql(404);
           expect(res.body.data).to.eql([]);
           done();
         });
@@ -190,7 +233,7 @@ describe('Questioner Server', () => {
 
     it('/api/v1/<meetup-id>/rsvps should respond with status code 401 id user is not logged-in', (done) => {
       chai.request(app)
-        .get('/api/v1/1/rsvps')
+        .get('/api/v1/2/rsvps')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(401);
@@ -204,6 +247,39 @@ describe('Questioner Server', () => {
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 200 and retrieve all rsvps by a user', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps/2')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 404 if that user has no rsvps', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps/10000')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          res.body.data = [];
+          expect(res.status).to.eql(404);
+          expect(res.body.data).to.eql([]);
+          done();
+        });
+    });
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 401 id user is not logged-in', (done) => {
+      chai.request(app)
+        .get('/api/v1/rsvps/2')
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
           done();
         });
     });

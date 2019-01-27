@@ -24,7 +24,7 @@ var seedTables = {
 
   commentsTable: 'INSERT INTO comments(user_id, question_id, comment)\n        VALUES (2, 1, \'I am fine\'),\n        (2, 1, \'What a day\')\n        ',
 
-  votesTable: 'INSERT INTO votes(user_id, question_id, vote_type )\n      VALUES (1, 1, \'upvote\'),\n      (1, 2, \'downvote\')\n      '
+  votesTable: 'INSERT INTO votes(user_id, question_id, vote_type )\n      VALUES (1, 1, \'upvote\'),\n      (1, 2, \'downvote\'),\n      (1, 1, \'upvote\'),\n      (1, 2, \'downvote\'),\n      (1, 1, \'upvote\'),\n      (1, 2, \'downvote\'),\n      (1, 1, \'upvote\'),\n      (1, 2, \'downvote\')\n      '
 };
 
 exports.default = seedTables;

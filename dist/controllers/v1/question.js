@@ -33,6 +33,7 @@ var secretHash = process.env.SECRET_KEY;
 var _getAllQuestions = _questions2.default.getAllQuestions,
     askQuestion = _questions2.default.askQuestion,
     voteQuestion = _questions2.default.voteQuestion,
+    getAllVotesByUser = _questions2.default.getAllVotesByUser,
     _commentQuestion = _questions2.default.commentQuestion;
 
 var QuestionController = function () {
@@ -165,6 +166,54 @@ var QuestionController = function () {
       });
     }
   }, {
+    key: 'getAllUpvoteForQuestion',
+    value: function getAllUpvoteForQuestion(req, res) {
+      var questionId = req.params.questionId;
+      var jwToken = req.headers['x-access-token'];
+      var userId = void 0;
+      _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, decoded) {
+        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        userId = decoded.id;
+      });
+      var ids = { userId: userId, questionId: questionId };
+      var voteType = 'upvote';
+      getAllVotesByUser(voteType, ids).then(function (results) {
+        return res.status(200).json({
+          status: 200,
+          upvote: results.rowCount
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'getAllDownvoteForQuestion',
+    value: function getAllDownvoteForQuestion(req, res) {
+      var questionId = req.params.questionId;
+      var jwToken = req.headers['x-access-token'];
+      var userId = void 0;
+      _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, decoded) {
+        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        userId = decoded.id;
+      });
+      var ids = { userId: userId, questionId: questionId };
+      var voteType = 'downvote';
+      getAllVotesByUser(voteType, ids).then(function (results) {
+        return res.status(200).json({
+          status: 200,
+          downvote: results.rowCount
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
     key: 'commentQuestion',
     value: function commentQuestion(req, res) {
       var questionId = parseInt(req.params.questionId, 10);
@@ -181,7 +230,6 @@ var QuestionController = function () {
       };
       _dbConfig2.default.query('SELECT * FROM questions WHERE id = ' + questionId).then(function (retreivedQuestion) {
         if (retreivedQuestion.rowCount > 0) {
-          console.log(retreivedQuestion.rows);
           var newData = {
             questionId: questionId,
             userId: userId,
