@@ -21,10 +21,11 @@ _chai2.default.use(_chaiHttp2.default);
 var expect = _chai2.default.expect;
 var validUserAccount = _mockData.userAccounts.validUserAccount,
     validAdminAccount = _mockData.userAccounts.validAdminAccount,
-    nonExistentUser = _mockData.userAccounts.nonExistentUser;
+    nonExistentUser = _mockData.userAccounts.nonExistentUser,
+    invalidUserAccount = _mockData.userAccounts.invalidUserAccount,
+    wrongPassword = _mockData.userAccounts.wrongPassword,
+    emptyLoginCredentials = _mockData.userAccounts.emptyLoginCredentials;
 
-
-var authToken = void 0;
 
 describe('Questioner Server', function () {
   describe('POST /', function () {
@@ -47,15 +48,34 @@ describe('Questioner Server', function () {
       });
     });
 
+    it('/api/v1/auth/signup should respond with status code 400 if any fiels=ds is empty or off wromg data type', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/auth/signup').set('Accept', 'application/json').send(invalidUserAccount).end(function (err, res) {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+
     /*
     ** Testing Account Login
     */
 
-    it('/api/v1/auth/login should respond with status code 404 if user does not exist', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/auth/login').set('Accept', 'application/json').send(nonExistentUser).end(function (err, res) {
-        expect(res.status).to.equal(404);
-        expect(res.body).to.be.a('object');
-        expect(res.body.message).eql('User does not exist');
+    // it('/api/v1/auth/login should respond with status code 404 if user does not exist', (done) => {
+    //   chai.request(app)
+    //     .post('/api/v1/auth/login')
+    //     .set('Accept', 'application/json')
+    //     .send(nonExistentUser)
+    //     .end((err, res) => {
+    //       expect(res.status).to.equal(404);
+    //       expect(res.body).to.be.a('object');
+    //       expect(res.body.message).eql('User does not exist');
+    //       done();
+    //     });
+    // });
+
+    it('/api/v1/auth/login should respond with status code 401 if password is incorrect', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/auth/login').set('Accept', 'application/json').send(wrongPassword).end(function (err, res) {
+        expect(res.status).to.equal(401);
+        expect(res.body.message).to.eql('Wrong Password');
         done();
       });
     });
@@ -68,6 +88,12 @@ describe('Questioner Server', function () {
       });
     });
 
+    it('/api/v1/auth/login should respond with status code 400 if field is empty or incorrect', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/auth/login').set('Accept', 'application/json').send(emptyLoginCredentials).end(function (err, res) {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
     /*
     ** Testing Account Logout
     */

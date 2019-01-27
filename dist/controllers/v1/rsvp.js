@@ -27,7 +27,9 @@ _dotenv2.default.config();
 var secretHash = process.env.SECRET_KEY;
 
 var _rsvpMeetup = _rsvps2.default.rsvpMeetup,
-    _getAllRsvps = _rsvps2.default.getAllRsvps;
+    _getAllRsvps = _rsvps2.default.getAllRsvps,
+    _getAllRsvpsForMeetup = _rsvps2.default.getAllRsvpsForMeetup,
+    _getAllRsvpsByUser = _rsvps2.default.getAllRsvpsByUser;
 
 var RsvpController = function () {
   function RsvpController() {
@@ -70,9 +72,55 @@ var RsvpController = function () {
   }, {
     key: 'getAllRsvps',
     value: function getAllRsvps(req, res) {
+      _getAllRsvps().then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully retrieved all rsvps',
+            data: results.rows
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'no rsvp has been made'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'getAllRsvpsForMeetup',
+    value: function getAllRsvpsForMeetup(req, res) {
       var meetupId = req.params.meetupId;
 
-      _getAllRsvps(meetupId).then(function (results) {
+      _getAllRsvpsForMeetup(meetupId).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully retrieved all rsvps for this meetup',
+            data: results.rows
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'no rsvp has been made for this meetup'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'getAllRsvpsByUser',
+    value: function getAllRsvpsByUser(req, res) {
+      var userId = req.params.userId;
+
+      _getAllRsvpsByUser(userId).then(function (results) {
         if (results.rowCount > 0) {
           return res.status(200).json({
             status: 200,
@@ -81,7 +129,7 @@ var RsvpController = function () {
         }
         return res.status(404).json({
           status: 404,
-          data: 'no rsvp has been made'
+          data: 'you have no rsvps'
         });
       }).catch(function (error) {
         return res.status(400).json({

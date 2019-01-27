@@ -7,11 +7,62 @@ dotenv.config();
 
 const secretHash = process.env.SECRET_KEY;
 
-const { getAllQuestions, askQuestion, voteQuestion, commentQuestion } = Questions;
+const {
+  getAllQuestions, getAllQuestionsForMeetup, getAllQuestionsByUser,
+  askQuestion,
+  voteQuestion, getAllVotesByUser,
+  commentQuestion,
+} = Questions;
 
 class QuestionController {
   static getAllQuestions(req, res) {
     getAllQuestions()
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            data: results.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static getAllQuestionsForMeetup(req, res) {
+    const { meetupId } = req.params;
+    getAllQuestionsForMeetup(meetupId)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            data: results.rows,
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static getAllQuestionsByUser(req, res) {
+    let userId;
+    jwt.verify(req.headers['x-access-token'], secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
+    getAllQuestionsByUser(userId)
       .then((results) => {
         if (results.rowCount > 0) {
           return res.status(201).json({
@@ -127,6 +178,47 @@ class QuestionController {
       .catch(error => res.status(500).json({
         status: 500,
         error,
+      }));
+  }
+
+  static getAllUpvoteForQuestion(req, res) {
+    const questionId = req.params.questionId;
+    let userId;
+    jwt.verify(req.headers['x-access-token'], secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
+    const ids = { userId, questionId };
+    const voteType = 'upvote';
+    getAllVotesByUser(voteType, ids)
+      .then(results => res.status(200).json({
+        status: 200,
+        upvote: results.rowCount,
+      }))
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static getAllDownvoteForQuestion(req, res) {
+    const questionId = req.params.questionId;
+    const jwToken = req.headers['x-access-token'];
+    let userId;
+    jwt.verify(jwToken, secretHash, (err, decoded) => {
+      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+      userId = decoded.id;
+    });
+    const ids = { userId, questionId };
+    const voteType = 'downvote';
+    getAllVotesByUser(voteType, ids)
+      .then(results => res.status(200).json({
+        status: 200,
+        downvote: results.rowCount,
+      }))
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
       }));
   }
 

@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _meetups = require('../../models/v1/meetups');
 
 var _meetups2 = _interopRequireDefault(_meetups);
@@ -22,7 +18,8 @@ var getAll = _meetups2.default.getAll,
     getSpecific = _meetups2.default.getSpecific,
     getUpcoming = _meetups2.default.getUpcoming,
     create = _meetups2.default.create,
-    deleteSpecific = _meetups2.default.deleteSpecific;
+    deleteSpecific = _meetups2.default.deleteSpecific,
+    _deleteAllMeetups = _meetups2.default.deleteAllMeetups;
 
 var MeetupController = function () {
   function MeetupController() {
@@ -112,6 +109,28 @@ var MeetupController = function () {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'deleteAllMeetups',
+    value: function deleteAllMeetups(req, res) {
+      _deleteAllMeetups().then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully deleted all meetups',
+            data: results.rows[0]
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          error: 'Meetup Record not found'
         });
       }).catch(function (error) {
         return res.status(400).json({

@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _dbConfig = require('./dbConfig');
 
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
@@ -66,3 +70,5 @@ var seedMigrations = function () {
 }();
 
 seedMigrations();
+
+exports.default = seedMigrations();

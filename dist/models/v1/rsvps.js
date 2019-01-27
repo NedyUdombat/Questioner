@@ -21,9 +21,31 @@ var Rsvps = function () {
 
   _createClass(Rsvps, null, [{
     key: 'getAllRsvps',
-    value: function getAllRsvps(id) {
+    value: function getAllRsvps() {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllRsvpsForMeetup',
+    value: function getAllRsvpsForMeetup(id) {
       return new Promise(function (resolve, reject) {
         _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllRsvpsByUser',
+    value: function getAllRsvpsByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);

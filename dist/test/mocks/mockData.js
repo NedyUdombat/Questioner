@@ -37,8 +37,6 @@ var mockMeetupDetails = {
   }
 };
 
-var mockEmptyUpcomingMeetups = [];
-
 var mockQuestionDetails = {
   validQuestion: {
     userId: 1,
@@ -65,7 +63,7 @@ var mockQuestionDetails = {
     body: 'why is GFW nYF in the config file?'
   },
   comment: {
-    body: "hy"
+    body: 'hy'
   }
 };
 
@@ -110,6 +108,16 @@ var userAccounts = {
     phonenumber: '07025137999',
     role: 'user'
   },
+  invalidUserAccount: {
+    firstname: '',
+    lastname: 'er',
+    othername: '',
+    username: 'ers',
+    email: 'u@umeil.com',
+    password: 'qwerfw',
+    phonenumber: '07025137999',
+    role: 'user'
+  },
   validAdminAccount: {
     firstname: 'nedy',
     lastname: 'udombat',
@@ -121,12 +129,16 @@ var userAccounts = {
     role: 'admin'
   },
   wrongPassword: {
-    email: 'nedyy@gmail.com',
+    email: 'nedyudombat@gmail.com',
+    password: 'qwerrfghjktyy'
+  },
+  emptyLoginCredentials: {
+    email: '',
     password: 'qwerrfghjktyy'
   },
   nonExistentUser: {
     email: 'nedyety@gmail.com',
-    password: 'qwertyy'
+    password: 'Iamtheadmin'
   }
 };
 
@@ -134,5 +146,4 @@ exports.mockMeetupDetails = mockMeetupDetails;
 exports.mockQuestionDetails = mockQuestionDetails;
 exports.mockRSVPDetails = mockRSVPDetails;
 exports.mockVoteDetails = mockVoteDetails;
-exports.mockEmptyUpcomingMeetups = mockEmptyUpcomingMeetups;
 exports.userAccounts = userAccounts;

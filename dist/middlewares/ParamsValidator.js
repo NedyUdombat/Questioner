@@ -18,13 +18,15 @@ var ParamsValidator = function () {
     value: function idValidator(req, res, next) {
       var _req$params = req.params,
           meetupId = _req$params.meetupId,
-          questionId = _req$params.questionId;
+          questionId = _req$params.questionId,
+          userId = _req$params.userId;
 
       var validId = /^[0-9]+$/;
       // validate if id is valid
       var validateParam = function validateParam(param) {
         if (!param.match(validId)) {
           return res.status(400).json({
+            status: 400,
             message: 'ID can only be a number',
             error: true
           });
@@ -32,6 +34,7 @@ var ParamsValidator = function () {
         return next();
       };
       if (meetupId) validateParam(meetupId);
+      if (userId) validateParam(userId);
       if (questionId) validateParam(questionId);
     }
   }]);

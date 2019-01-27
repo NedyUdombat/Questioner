@@ -14,13 +14,17 @@ var _meetup = require('../../controllers/v1/meetup');
 
 var _meetup2 = _interopRequireDefault(_meetup);
 
-var _question = require('../../controllers/v1/question');
+var _auth = require('../../controllers/v1/auth');
 
-var _question2 = _interopRequireDefault(_question);
+var _auth2 = _interopRequireDefault(_auth);
 
 var _users = require('../../controllers/v1/users');
 
 var _users2 = _interopRequireDefault(_users);
+
+var _question = require('../../controllers/v1/question');
+
+var _question2 = _interopRequireDefault(_question);
 
 var _rsvp = require('../../controllers/v1/rsvp');
 
@@ -61,16 +65,27 @@ var getAllMeetups = _meetup2.default.getAllMeetups,
     getSingleMeetup = _meetup2.default.getSingleMeetup,
     getUpcomingMeetups = _meetup2.default.getUpcomingMeetups,
     createMeetup = _meetup2.default.createMeetup,
-    deleteSingleMeetup = _meetup2.default.deleteSingleMeetup;
+    deleteSingleMeetup = _meetup2.default.deleteSingleMeetup,
+    deleteAllMeetups = _meetup2.default.deleteAllMeetups;
+var createAccount = _auth2.default.createAccount,
+    loginAccount = _auth2.default.loginAccount;
+var getAllUsers = _users2.default.getAllUsers,
+    getSpecificUser = _users2.default.getSpecificUser,
+    deleteAllUsers = _users2.default.deleteAllUsers,
+    deleteSpecificUser = _users2.default.deleteSpecificUser;
 var getAllQuestions = _question2.default.getAllQuestions,
+    getAllQuestionsForMeetup = _question2.default.getAllQuestionsForMeetup,
+    getAllQuestionsByUser = _question2.default.getAllQuestionsByUser,
     createQuestion = _question2.default.createQuestion,
     upVote = _question2.default.upVote,
     downVote = _question2.default.downVote,
+    getAllUpvoteForQuestion = _question2.default.getAllUpvoteForQuestion,
+    getAllDownvoteForQuestion = _question2.default.getAllDownvoteForQuestion,
     commentQuestion = _question2.default.commentQuestion;
 var rsvpMeetup = _rsvp2.default.rsvpMeetup,
-    getAllRsvps = _rsvp2.default.getAllRsvps;
-var createAccount = _users2.default.createAccount,
-    loginAccount = _users2.default.loginAccount;
+    getAllRsvps = _rsvp2.default.getAllRsvps,
+    getAllRsvpsForMeetup = _rsvp2.default.getAllRsvpsForMeetup,
+    getAllRsvpsByUser = _rsvp2.default.getAllRsvpsByUser;
 
 // deconstructure middlewares
 
@@ -99,6 +114,7 @@ router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup); //
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup); //
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup); //
+router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups); //
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount); //
@@ -108,13 +124,25 @@ router.get('/auth/logout', function (req, res) {
   res.status(200).send({ status: 200, auth: false, token: null });
 });
 
+// User endpoints
+router.get('/users', verifyToken, isAdmin, getAllUsers);
+router.get('/users/:userId', verifyToken, idValidator, getSpecificUser);
+router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
+router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
+
 // Rsvp endpoints
-router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvps); //
+router.get('/rsvps', verifyToken, isAdmin, getAllRsvps); //
+router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup); //
+router.get('/rsvps/:userId', verifyToken, idValidator, getAllRsvpsByUser); //
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup); //
 
 // question endpoints
-router.get('/questions', verifyToken, getAllQuestions); //
+router.get('/questions', verifyToken, isAdmin, getAllQuestions); //
+router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup); //
+router.get('/questions/user', verifyToken, getAllQuestionsByUser); //
+router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion); //
+router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion); //
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion); //
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote); //
@@ -123,15 +151,15 @@ router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVo
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion); //
 
-router.get('/decode', verifyToken, isAdmin, function (req, res) {
-  var jwToken = req.headers['x-access-token'];
-  if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
-
-  _jsonwebtoken2.default.verify(jwToken, 'iquodIkpaGHAntIm', function (err, decoded) {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-
-    res.status(200).send(decoded);
-  });
-});
+// router.get('/decode', verifyToken, isAdmin, (req, res) => {
+//   const jwToken = req.headers['x-access-token'];
+//   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
+//
+//   jwt.verify(jwToken, 'iquodIkpaGHAntIm', (err, decoded) => {
+//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+//
+//     res.status(200).send(decoded);
+//   });
+// });
 
 exports.default = router;

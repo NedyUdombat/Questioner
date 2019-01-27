@@ -105,7 +105,7 @@ describe('Questioner Server', function () {
       });
     });
 
-    it('/api/v1/me/etups/upcoming should respond with status code 200 and retrieve all upcoming meetup', function (done) {
+    it('/api/v1/meetups/upcoming should respond with status code 200 and retrieve all upcoming meetup', function (done) {
       _chai2.default.request(_server2.default).get('/api/v1/meetups/upcoming').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.eql('Successfully retrieved all upcoming meetups');
@@ -134,12 +134,114 @@ describe('Questioner Server', function () {
         done();
       });
     });
+
+    /*
+    ** testing get routes for rsvp
+    */
+
+    it('/api/v1/rsvps should respond with status code 200 and retrieve all rsvps', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(200);
+        expect(res.body.message).to.eql('Successfully retrieved all rsvps');
+        done();
+      });
+    });
+
+    it('/api/v1/rsvps should respond with status code 404 when there are no rsvps', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/1/rsvps').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        res.body.data = [];
+        expect(res.body.data).to.eql([]);
+        done();
+      });
+    });
+
+    it('/api/v1/rsvps should respond with status code 401 id user is not logged-in', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps').set('Accept', 'application/json').end(function (err, res) {
+        expect(res.status).to.equal(401);
+        done();
+      });
+    });
+
+    it('/api/v1/rsvps should respond with status code 403 if user is not an admin', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(403);
+        done();
+      });
+    });
+
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 200 and retrieve all rsvps for a meetup', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/1/rsvps').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 404 if there is no rsvp for that meetup', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/100000/rsvps').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        res.body.data = [];
+        expect(res.status).to.eql(404);
+        expect(res.body.data).to.eql([]);
+        done();
+      });
+    });
+
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 401 id user is not logged-in', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/2/rsvps').set('Accept', 'application/json').end(function (err, res) {
+        expect(res.status).to.equal(401);
+        done();
+      });
+    });
+
+    it('/api/v1/<meetup-id>/rsvps should respond with status code 403 if user is not an admin', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/1/rsvps').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(403);
+        done();
+      });
+    });
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 200 and retrieve all rsvps by a user', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/2').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 404 if that user has no rsvps', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/10000').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        res.body.data = [];
+        expect(res.status).to.eql(404);
+        expect(res.body.data).to.eql([]);
+        done();
+      });
+    });
+
+    it('/api/v1/<user-id>/rsvps should respond with status code 401 id user is not logged-in', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/2').set('Accept', 'application/json').end(function (err, res) {
+        expect(res.status).to.equal(401);
+        done();
+      });
+    });
   });
 
   describe('DELETE /', function () {
     it('/api/v1/meetups/1 should respond with status code 200 and delete that meetup', function (done) {
       _chai2.default.request(_server2.default).delete('/api/v1/meetups/1').set('x-access-token', authTokenAdmin).end(function (err, res) {
         expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('/api/v1/meetups/1 should respond with status code 200 and delete all Meetups', function (done) {
+      _chai2.default.request(_server2.default).delete('/api/v1/meetups').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('/api/v1/meetups should respond with status code 404 if no meetup is available', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.data).to.eql('No meetups is available');
         done();
       });
     });

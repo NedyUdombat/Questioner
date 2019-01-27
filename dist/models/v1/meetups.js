@@ -88,6 +88,17 @@ var Meetups = function () {
         });
       });
     }
+  }, {
+    key: 'deleteAllMeetups',
+    value: function deleteAllMeetups() {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('DELETE FROM meetups').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
   }]);
 
   return Meetups;

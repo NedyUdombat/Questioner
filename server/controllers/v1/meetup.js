@@ -1,6 +1,6 @@
 import Meetup from '../../models/v1/meetups';
 
-const { getAll, getSpecific, getUpcoming, create, deleteSpecific } = Meetup;
+const { getAll, getSpecific, getUpcoming, create, deleteSpecific, deleteAllMeetups } = Meetup;
 
 class MeetupController {
   static getAllMeetups(req, res) {
@@ -81,6 +81,27 @@ class MeetupController {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static deleteAllMeetups(req, res) {
+    deleteAllMeetups()
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            message: 'Successfully deleted all meetups',
+            data: results.rows[0],
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          error: 'Meetup Record not found',
         });
       })
       .catch(error => res.status(400).json({
