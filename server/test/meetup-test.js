@@ -120,7 +120,7 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('/api/v1/me/etups/upcoming should respond with status code 200 and retrieve all upcoming meetup', (done) => {
+    it('/api/v1/meetups/upcoming should respond with status code 200 and retrieve all upcoming meetup', (done) => {
       chai.request(app)
         .get('/api/v1/meetups/upcoming')
         .set('x-access-token', authToken)
@@ -295,5 +295,27 @@ describe('Questioner Server', () => {
           done();
         });
     });
+
+    it('/api/v1/meetups/1 should respond with status code 200 and delete all Meetups', (done) => {
+      chai.request(app)
+        .delete('/api/v1/meetups')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('/api/v1/meetups should respond with status code 404 if no meetup is available', (done) => {
+      chai.request(app)
+        .get('/api/v1/meetups')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.data).to.eql('No meetups is available');
+          done();
+        });
+    });
+
   });
 });

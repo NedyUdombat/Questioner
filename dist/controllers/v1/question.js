@@ -31,6 +31,8 @@ _dotenv2.default.config();
 var secretHash = process.env.SECRET_KEY;
 
 var _getAllQuestions = _questions2.default.getAllQuestions,
+    _getAllQuestionsForMeetup = _questions2.default.getAllQuestionsForMeetup,
+    _getAllQuestionsByUser = _questions2.default.getAllQuestionsByUser,
     askQuestion = _questions2.default.askQuestion,
     voteQuestion = _questions2.default.voteQuestion,
     getAllVotesByUser = _questions2.default.getAllVotesByUser,
@@ -45,6 +47,55 @@ var QuestionController = function () {
     key: 'getAllQuestions',
     value: function getAllQuestions(req, res) {
       _getAllQuestions().then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            data: results.rows
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'getAllQuestionsForMeetup',
+    value: function getAllQuestionsForMeetup(req, res) {
+      var meetupId = req.params.meetupId;
+
+      _getAllQuestionsForMeetup(meetupId).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            data: results.rows
+          });
+        }
+        return res.status(404).json({
+          status: 404,
+          data: 'No question has been asked so far'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'getAllQuestionsByUser',
+    value: function getAllQuestionsByUser(req, res) {
+      var userId = void 0;
+      _jsonwebtoken2.default.verify(req.headers['x-access-token'], secretHash, function (err, decoded) {
+        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        userId = decoded.id;
+      });
+      _getAllQuestionsByUser(userId).then(function (results) {
         if (results.rowCount > 0) {
           return res.status(201).json({
             status: 201,
@@ -169,9 +220,8 @@ var QuestionController = function () {
     key: 'getAllUpvoteForQuestion',
     value: function getAllUpvoteForQuestion(req, res) {
       var questionId = req.params.questionId;
-      var jwToken = req.headers['x-access-token'];
       var userId = void 0;
-      _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, decoded) {
+      _jsonwebtoken2.default.verify(req.headers['x-access-token'], secretHash, function (err, decoded) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
         userId = decoded.id;
       });

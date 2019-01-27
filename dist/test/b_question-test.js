@@ -31,15 +31,20 @@ var validUpvote = _mockData.mockVoteDetails.validUpvote,
     validDownvote = _mockData.mockVoteDetails.validDownvote,
     invalidVoteType = _mockData.mockVoteDetails.invalidVoteType,
     invalidUser = _mockData.mockVoteDetails.invalidUser;
-var validUserAccount = _mockData.userAccounts.validUserAccount;
+var validUserAccount = _mockData.userAccounts.validUserAccount,
+    validAdminAccount = _mockData.userAccounts.validAdminAccount;
 
 
 var authToken = void 0;
+var authTokenAdmin = void 0;
 
 describe('Questioner Server', function () {
   before(function (done) {
     _chai2.default.request(_server2.default).post('/api/v1/auth/login').send(validUserAccount).end(function (err, res) {
       authToken = res.body.jwToken;
+    });
+    _chai2.default.request(_server2.default).post('/api/v1/auth/login').send(validAdminAccount).end(function (err, res) {
+      authTokenAdmin = res.body.jwToken;
       done();
     });
   });
@@ -77,7 +82,7 @@ describe('Questioner Server', function () {
     */
 
     it('/api/v1/questions should respond with status code 200 and retieve all questions', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/questions').set('x-access-token', authToken).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/questions').set('x-access-token', authTokenAdmin).end(function (err, res) {
         expect(res.status).to.equal(201);
         done();
       });

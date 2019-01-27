@@ -9,9 +9,10 @@ const { expect } = chai;
 // deconstructure all mock data
 const { validQuestion, invalidUserQuestion, invalidMeetupQuestion, invalidFieldQuestion, comment } = mockQuestionDetails;
 const { validUpvote, validDownvote, invalidVoteType, invalidUser } = mockVoteDetails;
-const { validUserAccount } = userAccounts;
+const { validUserAccount, validAdminAccount } = userAccounts;
 
 let authToken;
+let authTokenAdmin;
 
 
 describe('Questioner Server', () => {
@@ -21,6 +22,12 @@ describe('Questioner Server', () => {
       .send(validUserAccount)
       .end((err, res) => {
         authToken = res.body.jwToken;
+      });
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(validAdminAccount)
+      .end((err, res) => {
+        authTokenAdmin = res.body.jwToken;
         done();
       });
   });
@@ -72,7 +79,7 @@ describe('Questioner Server', () => {
     it('/api/v1/questions should respond with status code 200 and retieve all questions', (done) => {
       chai.request(app)
         .get('/api/v1/questions')
-        .set('x-access-token', authToken)
+        .set('x-access-token', authTokenAdmin)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           done();

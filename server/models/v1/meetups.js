@@ -52,6 +52,14 @@ class Meetups {
         .catch(error => reject(error));
     });
   }
+
+  static deleteAllMeetups() {
+    return new Promise((resolve, reject) => {
+      pool.query('DELETE FROM meetups')
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
 }
 
 export default Meetups;

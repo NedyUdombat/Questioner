@@ -16,12 +16,15 @@ import VerifyToken from '../../middlewares/VerifyToken';
 
 // deconstructure controllers
 const {
-  getAllMeetups, getSingleMeetup, getUpcomingMeetups, createMeetup, deleteSingleMeetup,
+  getAllMeetups, getSingleMeetup,
+  getUpcomingMeetups, createMeetup,
+  deleteSingleMeetup, deleteAllMeetups,
 } = MeetupController;
 const { createAccount, loginAccount } = AuthController;
 const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = UserController;
 const {
-  getAllQuestions, createQuestion,
+  getAllQuestions, getAllQuestionsForMeetup, getAllQuestionsByUser,
+  createQuestion,
   upVote, downVote, getAllUpvoteForQuestion,
   getAllDownvoteForQuestion, commentQuestion,
 } = QuestionController;
@@ -51,6 +54,7 @@ router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
+router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount);//
@@ -75,8 +79,10 @@ router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator
 
 // question endpoints
 router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
-router.get('/:questionId/upvote', verifyToken, getAllUpvoteForQuestion);//
-router.get('/:questionId/downvote', verifyToken, getAllDownvoteForQuestion);//
+router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup);//
+router.get('/questions/user', verifyToken, getAllQuestionsByUser);//
+router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion);//
+router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion);//
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion);//
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//

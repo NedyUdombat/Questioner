@@ -65,7 +65,8 @@ var getAllMeetups = _meetup2.default.getAllMeetups,
     getSingleMeetup = _meetup2.default.getSingleMeetup,
     getUpcomingMeetups = _meetup2.default.getUpcomingMeetups,
     createMeetup = _meetup2.default.createMeetup,
-    deleteSingleMeetup = _meetup2.default.deleteSingleMeetup;
+    deleteSingleMeetup = _meetup2.default.deleteSingleMeetup,
+    deleteAllMeetups = _meetup2.default.deleteAllMeetups;
 var createAccount = _auth2.default.createAccount,
     loginAccount = _auth2.default.loginAccount;
 var getAllUsers = _users2.default.getAllUsers,
@@ -73,6 +74,8 @@ var getAllUsers = _users2.default.getAllUsers,
     deleteAllUsers = _users2.default.deleteAllUsers,
     deleteSpecificUser = _users2.default.deleteSpecificUser;
 var getAllQuestions = _question2.default.getAllQuestions,
+    getAllQuestionsForMeetup = _question2.default.getAllQuestionsForMeetup,
+    getAllQuestionsByUser = _question2.default.getAllQuestionsByUser,
     createQuestion = _question2.default.createQuestion,
     upVote = _question2.default.upVote,
     downVote = _question2.default.downVote,
@@ -111,6 +114,7 @@ router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup); //
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup); //
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup); //
+router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups); //
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount); //
@@ -135,8 +139,10 @@ router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator
 
 // question endpoints
 router.get('/questions', verifyToken, isAdmin, getAllQuestions); //
-router.get('/:questionId/upvote', verifyToken, getAllUpvoteForQuestion); //
-router.get('/:questionId/downvote', verifyToken, getAllDownvoteForQuestion); //
+router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup); //
+router.get('/questions/user', verifyToken, getAllQuestionsByUser); //
+router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion); //
+router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion); //
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion); //
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote); //
