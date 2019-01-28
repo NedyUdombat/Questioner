@@ -4,6 +4,8 @@ import MeetupController from '../../controllers/v1/meetup';
 import AuthController from '../../controllers/v1/auth';
 import UserController from '../../controllers/v1/users';
 import QuestionController from '../../controllers/v1/question';
+import CommentController from '../../controllers/v1/comment';
+import VoteController from '../../controllers/v1/vote';
 import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
@@ -20,15 +22,32 @@ const {
   getUpcomingMeetups, createMeetup,
   deleteSingleMeetup, deleteAllMeetups,
 } = MeetupController;
-const { createAccount, loginAccount } = AuthController;
-const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = UserController;
+
+const { createAccount, login, logout } = AuthController;
+
 const {
-  getAllQuestions, getAllQuestionsForMeetup, getAllQuestionsByUser,
-  createQuestion,
-  upVote, downVote, getAllUpvoteForQuestion,
-  getAllDownvoteForQuestion, commentQuestion,
+  getAllUsers, getSpecificUser,
+  deleteAllUsers, deleteSpecificUser,
+} = UserController;
+
+const {
+  getAllQuestions, getAllQuestionsForMeetup,
+  getAllQuestionsByUser, createQuestion,
 } = QuestionController;
-const { rsvpMeetup, getAllRsvps, getAllRsvpsForMeetup, getAllRsvpsByUser } = RsvpController;
+
+const {
+  commentQuestion, getAllComments,
+  getAllCommentsForQuestion, getAllCommentsByUser,
+} = CommentController;
+
+const {
+  upVote, downVote,
+  getAllUpvoteForQuestion, getAllDownvoteForQuestion,
+} = VoteController;
+
+const { rsvpMeetup, getAllRsvps,
+  getAllRsvpsForMeetup, getAllRsvpsByUser,
+} = RsvpController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
@@ -58,11 +77,9 @@ router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount);//
-router.post('/auth/login', loginAccountValidator, loginAccount);//
+router.post('/auth/login', loginAccountValidator, login);//
 
-router.get('/auth/logout', (req, res) => {
-  res.status(200).send({ status: 200, auth: false, token: null });
-});
+router.get('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
@@ -88,6 +105,10 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
+
+router.get('/comments', verifyToken, isAdmin, getAllComments);//
+router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion);//
+router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 

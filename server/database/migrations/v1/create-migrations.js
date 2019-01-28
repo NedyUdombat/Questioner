@@ -1,4 +1,4 @@
-import pool from './dbConfig';
+import pool from '../../dbConfig';
 import createTables from './create';
 
 const createMigrations = async () => {

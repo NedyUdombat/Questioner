@@ -1,4 +1,4 @@
-import pool from './dbConfig';
+import pool from '../../dbConfig';
 import dropTables from './drop';
 
 const dropMigrations = async () => {

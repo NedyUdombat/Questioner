@@ -1,4 +1,4 @@
-import pool from './dbConfig';
+import pool from '../../database/dbConfig';
 
 
 class Users {

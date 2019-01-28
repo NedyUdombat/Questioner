@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import Validator from '../_helpers/post_validators';
-import pool from '../models/v1/dbConfig';
+import pool from '../database/dbConfig';
 
 class AccountValidator {
   static createAccountValidator(req, res, next) {

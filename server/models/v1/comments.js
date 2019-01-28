@@ -1,37 +1,37 @@
 import pool from '../../database/dbConfig';
 
-class Rsvps {
-  static getAllRsvps() {
+class Comments {
+  static getAllComments() {
     return new Promise((resolve, reject) => {
-      pool.query('SELECT * FROM rsvps')
+      pool.query('SELECT * FROM comments')
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
   }
 
-  static getAllRsvpsForMeetup(id) {
+  static getAllCommentsForQuestion(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${id}`)
+      pool.query(`SELECT * FROM comments where question_id = ${id}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
   }
 
-  static getAllRsvpsByUser(id) {
+  static getAllCommentsByUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM rsvps WHERE user_id = ${id}`)
+      pool.query(`SELECT * FROM comments where user_id = ${id}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
   }
 
-  static rsvpMeetup(rsvp, id) {
+  static commentQuestion(question) {
     return new Promise((resolve, reject) => {
-      pool.query(`INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (${id}, ${rsvp.userId}, '${rsvp.status}')  returning *`)
+      pool.query(`INSERT INTO comments ( question_id, user_id, comment) VALUES (${question.questionId}, ${question.userId}, '${question.comment}') returning *`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
   }
 }
 
-export default Rsvps;
+export default Comments;

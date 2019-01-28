@@ -1,4 +1,4 @@
-import pool from './dbConfig';
+import pool from '../../dbConfig';
 import seedTables from './seed';
 
 const seedMigrations = async () => {

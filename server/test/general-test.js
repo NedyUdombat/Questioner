@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import meetups from '../models/v1/meetups';
 
 // config chai to use expect
 chai.use(chaiHttp);
