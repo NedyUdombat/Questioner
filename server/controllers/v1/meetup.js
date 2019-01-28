@@ -1,4 +1,4 @@
-import Meetup from '../../models/v1/meetups';
+import Meetup from '../../models/v1/meetup';
 
 const { getAll, getSpecific, getUpcoming, create, deleteSpecific, deleteAllMeetups } = Meetup;
 

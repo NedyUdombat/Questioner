@@ -1,14 +1,14 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import Users from '../../models/v1/users';
+import User from '../../models/v1/user';
 import pool from '../../database/dbConfig';
 
 dotenv.config();
 
 const secretHash = process.env.SECRET_KEY;
 
-const { createAccount } = Users;
+const { createAccount } = User;
 
 class AuthController {
   static createAccount(req, res) {

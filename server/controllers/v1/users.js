@@ -1,7 +1,7 @@
-import Users from '../../models/v1/users';
+import User from '../../models/v1/user';
 
 
-const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = Users;
+const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = User;
 
 class UserController {
   static getAllUsers(req, res) {

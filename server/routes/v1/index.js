@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
 import MeetupController from '../../controllers/v1/meetup';
 import AuthController from '../../controllers/v1/auth';
 import UserController from '../../controllers/v1/users';
@@ -14,7 +13,7 @@ import CreateQuestionValidator from '../../middlewares/CreateQuestionValidator';
 import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
 import AccountValidator from '../../middlewares/AccountValidator';
 import VerifyToken from '../../middlewares/VerifyToken';
-
+import JwtDecode from '../../_helpers/jwtDecode';
 
 // deconstructure controllers
 const {
@@ -58,6 +57,9 @@ const { createMeetupValidator } = CreateMeetupValidator;
 const { createAccountValidator, loginAccountValidator } = AccountValidator;
 const { verifyToken } = VerifyToken;
 
+const { jwtDecode } = JwtDecode;
+
+
 const router = Router();
 
 // general route
@@ -90,7 +92,7 @@ router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 // Rsvp endpoints
 router.get('/rsvps', verifyToken, isAdmin, getAllRsvps);//
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup);//
-router.get('/rsvps/:userId', verifyToken, idValidator, getAllRsvpsByUser);//
+router.get('/rsvps/user', verifyToken, getAllRsvpsByUser);//
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
 
@@ -112,15 +114,6 @@ router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 
-// router.get('/decode', verifyToken, isAdmin, (req, res) => {
-//   const jwToken = req.headers['x-access-token'];
-//   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
-//
-//   jwt.verify(jwToken, 'iquodIkpaGHAntIm', (err, decoded) => {
-//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-//
-//     res.status(200).send(decoded);
-//   });
-// });
+router.get('/decode', verifyToken, isAdmin, jwtDecode);
 
 export default router;
