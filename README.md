@@ -51,12 +51,6 @@ Questioner is a web application that helps event organizers gather and prioritiz
 * [nyc](https://github.com/istanbuljs/nyc) - A reporting tool
 
 
-## API Documentation
-
-[Api Documentation](https://store-manager-develop.herokuapp.com/api-docs)
-
-
-
 ## How To Use
 
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
