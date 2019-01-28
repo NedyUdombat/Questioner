@@ -1,5 +1,5 @@
 import moment from 'moment';
-import pool from './dbConfig';
+import pool from '../../database/dbConfig';
 
 
 class Meetups {

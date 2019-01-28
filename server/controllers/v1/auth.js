@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import Users from '../../models/v1/users';
-import pool from '../../models/v1/dbConfig';
+import pool from '../../database/dbConfig';
 
 dotenv.config();
 
@@ -64,7 +64,7 @@ class AuthController {
       ));
   }
 
-  static loginAccount(req, res) {
+  static login(req, res) {
     const { email } = req.body;
     pool.query(`SELECT * FROM users Where email = '${email}' `)
       .then((user) => {
@@ -87,6 +87,14 @@ class AuthController {
       }).catch(/* istanbul ignore next */ err => (
         res.status(500).json(err)
       ));
+  }
+
+  static logout(req, res) {
+    return res.status(200).json({
+      status: 200,
+      auth: false,
+      token: null,
+    });
   }
 }
 

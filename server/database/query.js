@@ -1,10 +1,7 @@
 import pool from './dbConfig';
-// import createMigrations from './create-migrations';
-// import dropMigrations from './drop-migrations';
-// import seedMigrations from './seed-migrations';
-import createTables from './create';
-import seedTables from './seed';
-import dropTables from './drop';
+import dropTables from './migrations/v1/drop';
+import createTables from './migrations/v1/create';
+import seedTables from './seeds/v1/seed';
 
 const queryMigrations = async () => {
   try {

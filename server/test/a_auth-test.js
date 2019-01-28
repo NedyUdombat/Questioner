@@ -43,7 +43,7 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('/api/v1/auth/signup should respond with status code 400 if any fiels=ds is empty or off wromg data type', (done) => {
+    it('/api/v1/auth/signup should respond with status code 400 if any fiels=ds is empty or off wrong data type', (done) => {
       chai.request(app)
         .post('/api/v1/auth/signup')
         .set('Accept', 'application/json')

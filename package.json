@@ -12,18 +12,18 @@
     "babel-node": "babel-node server --presets=env",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "migrate:drop": "cross-env NODE_ENV=development babel-node server/models/v1/drop-migrations.js",
-    "migrate": "cross-env NODE_ENV=development npm run migrate:drop && babel-node server/models/v1/create-migrations.js",
-    "migrate-only": "cross-env NODE_ENV=development babel-node server/models/v1/create-migrations.js",
+    "migrate:drop": "cross-env NODE_ENV=development babel-node server/database/migrations/v1/drop-migrations.js",
+    "migrate": "cross-env NODE_ENV=development npm run migrate:drop && babel-node server/database/migrations/v1/create-migrations.js",
+    "migrate-only": "cross-env NODE_ENV=development babel-node server/database/migrations/v1/create-migrations.js",
+    "seed": "cross-env NODE_ENV=development babel-node server/database/seeds/seed-migrations.js",
     "migrate:seed": "cross-env NODE_ENV=development npm run migrate && npm run seed",
-    "seed": "cross-env NODE_ENV=development babel-node server/models/v1/seed-migrations.js",
-    "test-migrate:drop": "cross-env NODE_ENV=test babel-node server/models/v1/drop-migrations.js",
-    "test-migrate": "cross-env NODE_ENV=test npm run test-migrate:drop && babel-node server/models/v1/create-migrations.js",
-    "test-migrate-only": "cross-env NODE_ENV=test babel-node server/models/v1/create-migrations.js",
-    "test-seed": "cross-env NODE_ENV=test babel-node server/models/v1/seed-migrations.js",
+    "test-migrate:drop": "cross-env NODE_ENV=test babel-node server/database/migrations/v1/drop-migrations.js",
+    "test-migrate": "cross-env NODE_ENV=test npm run test-migrate:drop && babel-node server/database/migrations/v1/create-migrations.js",
+    "test-migrate-only": "cross-env NODE_ENV=test babel-node serverdatabase/migrations/v1/create-migrations.js",
+    "test-seed": "cross-env NODE_ENV=test babel-node server/database/seeds/v1/seed-migrations.js",
     "test-migrate:seed": "npm run test-migrate && npm run test-seed",
-    "query": "cross-env NODE_ENV=development babel-node server/models/v1/query.js",
-    "test-query": "cross-env NODE_ENV=test babel-node server/models/v1/query.js"
+    "query": "cross-env NODE_ENV=development babel-node server/database/query.js",
+    "test-query": "cross-env NODE_ENV=test babel-node server/database/query.js"
   },
   "nyc": {
     "exclude": [
