@@ -69,11 +69,9 @@ var mockQuestionDetails = {
 
 var mockRSVPDetails = {
   validRsvp: {
-    userId: 1,
     status: 'yes'
   },
   invalidRsvp: {
-    userId: 1,
     status: 'yess'
   }
 };

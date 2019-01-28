@@ -14,16 +14,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Rsvps = function () {
-  function Rsvps() {
-    _classCallCheck(this, Rsvps);
+var User = function () {
+  function User() {
+    _classCallCheck(this, User);
   }
 
-  _createClass(Rsvps, null, [{
-    key: 'getAllRsvps',
-    value: function getAllRsvps() {
+  _createClass(User, null, [{
+    key: 'getAllUsers',
+    value: function getAllUsers() {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps').then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM users').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getSpecificUser',
+    value: function getSpecificUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM users WHERE id = ' + id).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -31,33 +42,33 @@ var Rsvps = function () {
       });
     }
   }, {
-    key: 'getAllRsvpsForMeetup',
-    value: function getAllRsvpsForMeetup(id) {
+    key: 'createAccount',
+    value: function createAccount(details) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id).then(function (response) {
-          return resolve(response);
+        _dbConfig2.default.query('INSERT INTO users ( firstname, lastname, othername, username, email, password, phonenumber, role) VALUES (\'' + details.firstname + '\', \'' + details.lastname + '\',\'' + details.othername + '\', \'' + details.username + '\', \'' + details.email + '\', \'' + details.password + '\', \'' + details.phonenumber + '\', \'user\') returning *').then(function (results) {
+          return resolve(results);
         }).catch(function (error) {
           return reject(error);
         });
       });
     }
   }, {
-    key: 'getAllRsvpsByUser',
-    value: function getAllRsvpsByUser(id) {
+    key: 'deleteAllUsers',
+    value: function deleteAllUsers() {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id).then(function (response) {
-          return resolve(response);
+        _dbConfig2.default.query('DELETE FROM users').then(function (results) {
+          return resolve(results);
         }).catch(function (error) {
           return reject(error);
         });
       });
     }
   }, {
-    key: 'rsvpMeetup',
-    value: function rsvpMeetup(rsvp) {
+    key: 'deleteSpecificUser',
+    value: function deleteSpecificUser(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (' + rsvp.meetupId + ', ' + rsvp.userId + ', \'' + rsvp.status + '\')  returning *').then(function (response) {
-          return resolve(response);
+        _dbConfig2.default.query('DELETE FROM users WHERE id = ' + id).then(function (results) {
+          return resolve(results);
         }).catch(function (error) {
           return reject(error);
         });
@@ -65,7 +76,7 @@ var Rsvps = function () {
     }
   }]);
 
-  return Rsvps;
+  return User;
 }();
 
-exports.default = Rsvps;
+exports.default = User;

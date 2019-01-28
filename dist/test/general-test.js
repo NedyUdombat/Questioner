@@ -12,10 +12,6 @@ var _server = require('../server');
 
 var _server2 = _interopRequireDefault(_server);
 
-var _meetups = require('../models/v1/meetups');
-
-var _meetups2 = _interopRequireDefault(_meetups);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // config chai to use expect
