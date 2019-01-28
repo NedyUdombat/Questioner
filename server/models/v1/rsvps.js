@@ -25,9 +25,9 @@ class Rsvps {
     });
   }
 
-  static rsvpMeetup(rsvp, id) {
+  static rsvpMeetup(rsvp) {
     return new Promise((resolve, reject) => {
-      pool.query(`INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (${id}, ${rsvp.userId}, '${rsvp.status}')  returning *`)
+      pool.query(`INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (${rsvp.meetupId}, ${rsvp.userId}, '${rsvp.status}')  returning *`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

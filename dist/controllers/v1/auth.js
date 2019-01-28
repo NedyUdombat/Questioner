@@ -18,11 +18,11 @@ var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
-var _users = require('../../models/v1/users');
+var _user = require('../../models/v1/user');
 
-var _users2 = _interopRequireDefault(_users);
+var _user2 = _interopRequireDefault(_user);
 
-var _dbConfig = require('../../models/v1/dbConfig');
+var _dbConfig = require('../../database/dbConfig');
 
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
 
@@ -34,7 +34,7 @@ _dotenv2.default.config();
 
 var secretHash = process.env.SECRET_KEY;
 
-var _createAccount = _users2.default.createAccount;
+var _createAccount = _user2.default.createAccount;
 
 var AuthController = function () {
   function AuthController() {
@@ -103,8 +103,8 @@ var AuthController = function () {
       });
     }
   }, {
-    key: 'loginAccount',
-    value: function loginAccount(req, res) {
+    key: 'login',
+    value: function login(req, res) {
       var email = req.body.email;
 
       _dbConfig2.default.query('SELECT * FROM users Where email = \'' + email + '\' ').then(function (user) {
@@ -126,6 +126,15 @@ var AuthController = function () {
         return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
       }).catch( /* istanbul ignore next */function (err) {
         return res.status(500).json(err);
+      });
+    }
+  }, {
+    key: 'logout',
+    value: function logout(req, res) {
+      return res.status(200).json({
+        status: 200,
+        auth: false,
+        token: null
       });
     }
   }]);

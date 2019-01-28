@@ -1,6 +1,6 @@
 import pool from '../../database/dbConfig';
 
-class Comments {
+class Comment {
   static getAllComments() {
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM comments')
@@ -34,4 +34,4 @@ class Comments {
   }
 }
 
-export default Comments;
+export default Comment;

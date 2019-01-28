@@ -1,7 +1,7 @@
 import pool from '../../database/dbConfig';
 
 
-class Users {
+class User {
   static getAllUsers() {
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM users')
@@ -43,4 +43,4 @@ class Users {
   }
 }
 
-export default Users;
+export default User;

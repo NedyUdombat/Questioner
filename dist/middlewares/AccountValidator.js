@@ -14,7 +14,7 @@ var _post_validators = require('../_helpers/post_validators');
 
 var _post_validators2 = _interopRequireDefault(_post_validators);
 
-var _dbConfig = require('../models/v1/dbConfig');
+var _dbConfig = require('../database/dbConfig');
 
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
 

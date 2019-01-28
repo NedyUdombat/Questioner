@@ -1,22 +1,11 @@
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import Vote from '../../models/v1/votes';
-
-dotenv.config();
-
-const secretHash = process.env.SECRET_KEY;
+import Vote from '../../models/v1/vote';
 
 const { voteQuestion, getAllVotesByUser } = Vote;
 
 
 const getAllVotesForQuestion = (req, res, voteType) => {
-  const questionId = req.params.questionId;
-  let userId;
-  jwt.verify(req.headers['x-access-token'], secretHash, (err, decoded) => {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    userId = decoded.id;
-  });
-  const ids = { userId, questionId };
+  const { questionId } = req.params;
+  const ids = { userId: req.authData.id, questionId };
   getAllVotesByUser(voteType, ids)
     .then(results => res.status(200).json({
       status: 200,
@@ -29,32 +18,18 @@ const getAllVotesForQuestion = (req, res, voteType) => {
 };
 
 const vote = (req, res, voteType) => {
-  const questionId = req.params.questionId;
-  const jwToken = req.headers['x-access-token'];
-  let userId;
-  jwt.verify(jwToken, secretHash, (err, decoded) => {
-    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    userId = decoded.id;
-  });
+  const { questionId } = req.params;
   const question = {
-    userId,
+    userId: req.authData.id,
     questionId,
     voteType,
   };
   voteQuestion(question)
-    .then((results) => {
-      if (results.rowCount > 0) {
-        return res.status(201).json({
-          status: 201,
-          message: 'Upvote successful',
-          data: results.rows,
-        });
-      }
-      return res.status(400).json({
-        status: 400,
-        message: 'Question upvote unsuccessful',
-      });
-    })
+    .then(results => res.status(201).json({
+      status: 201,
+      message: 'Upvote successful',
+      data: results.rows,
+    }))
     .catch(error => res.status(500).json({
       status: 500,
       error,

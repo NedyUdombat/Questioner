@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _express = require('express');
 
-var _jsonwebtoken = require('jsonwebtoken');
-
-var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
-
 var _meetup = require('../../controllers/v1/meetup');
 
 var _meetup2 = _interopRequireDefault(_meetup);
@@ -25,6 +21,14 @@ var _users2 = _interopRequireDefault(_users);
 var _question = require('../../controllers/v1/question');
 
 var _question2 = _interopRequireDefault(_question);
+
+var _comment = require('../../controllers/v1/comment');
+
+var _comment2 = _interopRequireDefault(_comment);
+
+var _vote = require('../../controllers/v1/vote');
+
+var _vote2 = _interopRequireDefault(_vote);
 
 var _rsvp = require('../../controllers/v1/rsvp');
 
@@ -58,6 +62,10 @@ var _VerifyToken = require('../../middlewares/VerifyToken');
 
 var _VerifyToken2 = _interopRequireDefault(_VerifyToken);
 
+var _jwtDecode = require('../../_helpers/jwtDecode');
+
+var _jwtDecode2 = _interopRequireDefault(_jwtDecode);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // deconstructure controllers
@@ -68,7 +76,8 @@ var getAllMeetups = _meetup2.default.getAllMeetups,
     deleteSingleMeetup = _meetup2.default.deleteSingleMeetup,
     deleteAllMeetups = _meetup2.default.deleteAllMeetups;
 var createAccount = _auth2.default.createAccount,
-    loginAccount = _auth2.default.loginAccount;
+    login = _auth2.default.login,
+    logout = _auth2.default.logout;
 var getAllUsers = _users2.default.getAllUsers,
     getSpecificUser = _users2.default.getSpecificUser,
     deleteAllUsers = _users2.default.deleteAllUsers,
@@ -76,12 +85,15 @@ var getAllUsers = _users2.default.getAllUsers,
 var getAllQuestions = _question2.default.getAllQuestions,
     getAllQuestionsForMeetup = _question2.default.getAllQuestionsForMeetup,
     getAllQuestionsByUser = _question2.default.getAllQuestionsByUser,
-    createQuestion = _question2.default.createQuestion,
-    upVote = _question2.default.upVote,
-    downVote = _question2.default.downVote,
-    getAllUpvoteForQuestion = _question2.default.getAllUpvoteForQuestion,
-    getAllDownvoteForQuestion = _question2.default.getAllDownvoteForQuestion,
-    commentQuestion = _question2.default.commentQuestion;
+    createQuestion = _question2.default.createQuestion;
+var commentQuestion = _comment2.default.commentQuestion,
+    getAllComments = _comment2.default.getAllComments,
+    getAllCommentsForQuestion = _comment2.default.getAllCommentsForQuestion,
+    getAllCommentsByUser = _comment2.default.getAllCommentsByUser;
+var upVote = _vote2.default.upVote,
+    downVote = _vote2.default.downVote,
+    getAllUpvoteForQuestion = _vote2.default.getAllUpvoteForQuestion,
+    getAllDownvoteForQuestion = _vote2.default.getAllDownvoteForQuestion;
 var rsvpMeetup = _rsvp2.default.rsvpMeetup,
     getAllRsvps = _rsvp2.default.getAllRsvps,
     getAllRsvpsForMeetup = _rsvp2.default.getAllRsvpsForMeetup,
@@ -97,6 +109,7 @@ var createMeetupValidator = _CreateMeetupValidator2.default.createMeetupValidato
 var createAccountValidator = _AccountValidator2.default.createAccountValidator,
     loginAccountValidator = _AccountValidator2.default.loginAccountValidator;
 var verifyToken = _VerifyToken2.default.verifyToken;
+var jwtDecode = _jwtDecode2.default.jwtDecode;
 
 
 var router = (0, _express.Router)();
@@ -118,11 +131,9 @@ router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups); //
 
 // Authenticaton endpoints
 router.post('/auth/signup', createAccountValidator, createAccount); //
-router.post('/auth/login', loginAccountValidator, loginAccount); //
+router.post('/auth/login', loginAccountValidator, login); //
 
-router.get('/auth/logout', function (req, res) {
-  res.status(200).send({ status: 200, auth: false, token: null });
-});
+router.get('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
@@ -133,7 +144,7 @@ router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 // Rsvp endpoints
 router.get('/rsvps', verifyToken, isAdmin, getAllRsvps); //
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup); //
-router.get('/rsvps/:userId', verifyToken, idValidator, getAllRsvpsByUser); //
+router.get('/rsvps/user', verifyToken, getAllRsvpsByUser); //
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup); //
 
@@ -149,17 +160,12 @@ router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote); //
 
 
+router.get('/comments', verifyToken, isAdmin, getAllComments); //
+router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion); //
+router.get('/comments/user/', verifyToken, getAllCommentsByUser); //
+
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion); //
 
-// router.get('/decode', verifyToken, isAdmin, (req, res) => {
-//   const jwToken = req.headers['x-access-token'];
-//   if (!jwToken) return res.status(401).send({ auth: false, message: 'No token provided.' });
-//
-//   jwt.verify(jwToken, 'iquodIkpaGHAntIm', (err, decoded) => {
-//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-//
-//     res.status(200).send(decoded);
-//   });
-// });
+router.get('/decode', verifyToken, isAdmin, jwtDecode);
 
 exports.default = router;

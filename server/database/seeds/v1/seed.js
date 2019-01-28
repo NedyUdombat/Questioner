@@ -13,8 +13,14 @@ const seedTables = {
         `,
 
   questionsTable: `INSERT INTO questions( meetup_id, user_id, title, body)
-      VALUES (1, 2, 'hy', 'hy how are you'),
-      (2, 1, 'hello', 'I am good')
+      VALUES (1, 2, 'Possessions', 'If you lost all of your possessions but one, what would you want it to be?'),
+      (2, 1, 'Creation', 'What have you created that you are most proud of?'),
+      (1, 2, 'Interests', 'What are you interested in that most people haven''t heard of?'),
+      (2, 1, 'Book', 'What''s your favorite book?'),
+      (1, 2, 'Learn', 'What''s something you learned in the last week?'),
+      (2, 1, 'Honesty', 'What issue will you always speak your mind about?'),
+      (1, 2, 'Accomplishment', 'What dumb accomplishment are you most proud of?'),
+      (2, 1, 'Clothe', 'What''s your favorite piece of clothing you own?')
       `,
 
   rsvpsTable: `INSERT INTO rsvps (meetup_id, user_id, response)
@@ -24,7 +30,13 @@ const seedTables = {
 
   commentsTable: `INSERT INTO comments(user_id, question_id, comment)
         VALUES (2, 1, 'I am fine'),
-        (2, 1, 'What a day')
+        (1, 1, 'What a day'),
+        (2, 2, 'This is amazing'),
+        (1, 1, 'LOL'),
+        (1, 2, 'Wawu!!'),
+        (1, 1, 'Hell No'),
+        (2, 2, 'I am learning'),
+        (1, 2, 'Im impressed')
         `,
 
   votesTable: `INSERT INTO votes(user_id, question_id, vote_type )

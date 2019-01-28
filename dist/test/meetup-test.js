@@ -200,7 +200,7 @@ describe('Questioner Server', function () {
     });
 
     it('/api/v1/<user-id>/rsvps should respond with status code 200 and retrieve all rsvps by a user', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/rsvps/2').set('x-access-token', authTokenAdmin).end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/user').set('x-access-token', authTokenAdmin).end(function (err, res) {
         expect(res.status).to.equal(200);
         done();
       });
@@ -216,7 +216,7 @@ describe('Questioner Server', function () {
     });
 
     it('/api/v1/<user-id>/rsvps should respond with status code 401 id user is not logged-in', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/rsvps/2').set('Accept', 'application/json').end(function (err, res) {
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/user').set('Accept', 'application/json').end(function (err, res) {
         expect(res.status).to.equal(401);
         done();
       });

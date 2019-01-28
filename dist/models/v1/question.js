@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _dbConfig = require('../../database/dbConfig');
 
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
@@ -14,16 +18,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Rsvps = function () {
-  function Rsvps() {
-    _classCallCheck(this, Rsvps);
+var Question = function () {
+  function Question() {
+    _classCallCheck(this, Question);
   }
 
-  _createClass(Rsvps, null, [{
-    key: 'getAllRsvps',
-    value: function getAllRsvps() {
+  _createClass(Question, null, [{
+    key: 'getAllQuestions',
+    value: function getAllQuestions() {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps').then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM questions').then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -31,10 +35,10 @@ var Rsvps = function () {
       });
     }
   }, {
-    key: 'getAllRsvpsForMeetup',
-    value: function getAllRsvpsForMeetup(id) {
+    key: 'getAllQuestionsForMeetup',
+    value: function getAllQuestionsForMeetup(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id).then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM questions where meetup_id = ' + id).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -42,10 +46,10 @@ var Rsvps = function () {
       });
     }
   }, {
-    key: 'getAllRsvpsByUser',
-    value: function getAllRsvpsByUser(id) {
+    key: 'getAllQuestionsByUser',
+    value: function getAllQuestionsByUser(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id).then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM questions where user_id = ' + id).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -53,10 +57,11 @@ var Rsvps = function () {
       });
     }
   }, {
-    key: 'rsvpMeetup',
-    value: function rsvpMeetup(rsvp) {
+    key: 'askQuestion',
+    value: function askQuestion(question) {
+      var createdOn = (0, _moment2.default)().format();
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (' + rsvp.meetupId + ', ' + rsvp.userId + ', \'' + rsvp.status + '\')  returning *').then(function (response) {
+        _dbConfig2.default.query('INSERT INTO questions ( meetup_id, user_id, title, body, created_on) VALUES (' + question.meetupId + ', ' + question.userId + ', \'' + question.title + '\', \'' + question.body + '\', \'' + createdOn + '\') returning *').then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -65,7 +70,7 @@ var Rsvps = function () {
     }
   }]);
 
-  return Rsvps;
+  return Question;
 }();
 
-exports.default = Rsvps;
+exports.default = Question;

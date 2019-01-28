@@ -1,27 +1,17 @@
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import Rsvps from '../../models/v1/rsvps';
 
-dotenv.config();
-
-const secretHash = process.env.SECRET_KEY;
-
-const { rsvpMeetup, getAllRsvps, getAllRsvpsForMeetup, getAllRsvpsByUser } = Rsvps;
+const { rsvpMeetup, getAllRsvps,
+  getAllRsvpsForMeetup, getAllRsvpsByUser,
+} = Rsvps;
 
 class RsvpController {
   static rsvpMeetup(req, res) {
-    const id = req.params.meetupId;
-    const jwToken = req.headers['x-access-token'];
-    let userId;
-    jwt.verify(jwToken, secretHash, (err, decoded) => {
-      if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-      userId = decoded.id;
-    });
     const rsvp = {
-      userId,
+      meetupId: req.params.meetupId,
+      userId: req.authData.id,
       status: req.body.status,
     };
-    rsvpMeetup(rsvp, id)
+    rsvpMeetup(rsvp)
       .then((results) => {
         if (results.rowCount > 0) {
           return res.status(201).json({
@@ -85,7 +75,7 @@ class RsvpController {
   }
 
   static getAllRsvpsByUser(req, res) {
-    const { userId } = req.params;
+    const userId = req.authData.id;
     getAllRsvpsByUser(userId)
       .then((results) => {
         if (results.rowCount > 0) {

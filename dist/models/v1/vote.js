@@ -14,16 +14,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Rsvps = function () {
-  function Rsvps() {
-    _classCallCheck(this, Rsvps);
+var Vote = function () {
+  function Vote() {
+    _classCallCheck(this, Vote);
   }
 
-  _createClass(Rsvps, null, [{
-    key: 'getAllRsvps',
-    value: function getAllRsvps() {
+  _createClass(Vote, null, [{
+    key: 'getAllVotesByUser',
+    value: function getAllVotesByUser(voteType, id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps').then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM votes where vote_type = \'' + voteType + '\' AND user_id = ' + id.userId + ' AND question_id = ' + id.questionId).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -31,32 +31,10 @@ var Rsvps = function () {
       });
     }
   }, {
-    key: 'getAllRsvpsForMeetup',
-    value: function getAllRsvpsForMeetup(id) {
+    key: 'voteQuestion',
+    value: function voteQuestion(question) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id).then(function (response) {
-          return resolve(response);
-        }).catch(function (error) {
-          return reject(error);
-        });
-      });
-    }
-  }, {
-    key: 'getAllRsvpsByUser',
-    value: function getAllRsvpsByUser(id) {
-      return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id).then(function (response) {
-          return resolve(response);
-        }).catch(function (error) {
-          return reject(error);
-        });
-      });
-    }
-  }, {
-    key: 'rsvpMeetup',
-    value: function rsvpMeetup(rsvp) {
-      return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (' + rsvp.meetupId + ', ' + rsvp.userId + ', \'' + rsvp.status + '\')  returning *').then(function (response) {
+        _dbConfig2.default.query('INSERT INTO votes (user_id, question_id, vote_type) VALUES (' + question.userId + ', ' + question.questionId + ', \'' + question.voteType + '\') returning *').then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -65,7 +43,7 @@ var Rsvps = function () {
     }
   }]);
 
-  return Rsvps;
+  return Vote;
 }();
 
-exports.default = Rsvps;
+exports.default = Vote;

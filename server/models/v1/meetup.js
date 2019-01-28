@@ -2,7 +2,7 @@ import moment from 'moment';
 import pool from '../../database/dbConfig';
 
 
-class Meetups {
+class Meetup {
   static getAll() {
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM meetups')
@@ -62,4 +62,4 @@ class Meetups {
   }
 }
 
-export default Meetups;
+export default Meetup;

@@ -6,20 +6,20 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _meetups = require('../../models/v1/meetups');
+var _meetup = require('../../models/v1/meetup');
 
-var _meetups2 = _interopRequireDefault(_meetups);
+var _meetup2 = _interopRequireDefault(_meetup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var getAll = _meetups2.default.getAll,
-    getSpecific = _meetups2.default.getSpecific,
-    getUpcoming = _meetups2.default.getUpcoming,
-    create = _meetups2.default.create,
-    deleteSpecific = _meetups2.default.deleteSpecific,
-    _deleteAllMeetups = _meetups2.default.deleteAllMeetups;
+var getAll = _meetup2.default.getAll,
+    getSpecific = _meetup2.default.getSpecific,
+    getUpcoming = _meetup2.default.getUpcoming,
+    create = _meetup2.default.create,
+    deleteSpecific = _meetup2.default.deleteSpecific,
+    _deleteAllMeetups = _meetup2.default.deleteAllMeetups;
 
 var MeetupController = function () {
   function MeetupController() {

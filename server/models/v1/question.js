@@ -1,7 +1,7 @@
 import moment from 'moment';
 import pool from '../../database/dbConfig';
 
-class Questions {
+class Question {
   static getAllQuestions() {
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM questions')
@@ -36,4 +36,4 @@ class Questions {
   }
 }
 
-export default Questions;
+export default Question;
