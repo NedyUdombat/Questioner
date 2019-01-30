@@ -18,6 +18,14 @@ class Question {
     });
   }
 
+  static getSpecificQuestionsForMeetupByUser(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM questions where meetup_id = ${id.meetupId} AND user_id = ${id.userId}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
   static getAllQuestionsByUser(id) {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * FROM questions where user_id = ${id}`)

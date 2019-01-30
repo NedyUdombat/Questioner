@@ -42,6 +42,17 @@ var Rsvps = function () {
       });
     }
   }, {
+    key: 'getAllUsersComingForAMeetup',
+    value: function getAllUsersComingForAMeetup(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id + ' AND response = \'yes\'').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'getAllRsvpsByUser',
     value: function getAllRsvpsByUser(id) {
       return new Promise(function (resolve, reject) {
@@ -57,6 +68,28 @@ var Rsvps = function () {
     value: function rsvpMeetup(rsvp) {
       return new Promise(function (resolve, reject) {
         _dbConfig2.default.query('INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (' + rsvp.meetupId + ', ' + rsvp.userId + ', \'' + rsvp.status + '\')  returning *').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'getAllSpecificRsvpByUser',
+    value: function getAllSpecificRsvpByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + id.meetupId + ' AND user_id = ' + id.userId).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'changeRsvpMeetup',
+    value: function changeRsvpMeetup(rsvp) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('UPDATE rsvps SET response = \'' + rsvp.response + '\' WHERE meetup_id = ' + rsvp.meetupId + ' AND user_id = ' + rsvp.userId).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);

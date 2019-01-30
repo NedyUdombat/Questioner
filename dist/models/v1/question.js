@@ -46,6 +46,17 @@ var Question = function () {
       });
     }
   }, {
+    key: 'getSpecificQuestionsForMeetupByUser',
+    value: function getSpecificQuestionsForMeetupByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM questions where meetup_id = ' + id.meetupId + ' AND user_id = ' + id.userId).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'getAllQuestionsByUser',
     value: function getAllQuestionsByUser(id) {
       return new Promise(function (resolve, reject) {
