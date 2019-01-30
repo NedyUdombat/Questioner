@@ -17,6 +17,14 @@ class Rsvps {
     });
   }
 
+  static getAllUsersComingForAMeetup(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${id} AND response = 'yes'`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
   static getAllRsvpsByUser(id) {
     return new Promise((resolve, reject) => {
       pool.query(`SELECT * FROM rsvps WHERE user_id = ${id}`)
@@ -28,6 +36,22 @@ class Rsvps {
   static rsvpMeetup(rsvp) {
     return new Promise((resolve, reject) => {
       pool.query(`INSERT INTO rsvps ( meetup_id, user_id, response) VALUES (${rsvp.meetupId}, ${rsvp.userId}, '${rsvp.status}')  returning *`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static getAllSpecificRsvpByUser(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${id.meetupId} AND user_id = ${id.userId}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
+  static changeRsvpMeetup(rsvp) {
+    return new Promise((resolve, reject) => {
+      pool.query(`UPDATE rsvps SET response = '${rsvp.response}' WHERE meetup_id = ${rsvp.meetupId} AND user_id = ${rsvp.userId}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

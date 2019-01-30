@@ -31,6 +31,28 @@ var Vote = function () {
       });
     }
   }, {
+    key: 'checkForDuplicateVoteByUser',
+    value: function checkForDuplicateVoteByUser(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM votes where user_id = ' + id.userId + '\' AND question_id = ' + id.questionId).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'changeVoteByUserForQuestion',
+    value: function changeVoteByUserForQuestion(question) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('UPDATE votes  SET vote_type = \'' + question.voteType + '\' where user_id = ' + question.userId + '\' AND question_id = ' + question.questionId).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'voteQuestion',
     value: function voteQuestion(question) {
       return new Promise(function (resolve, reject) {
