@@ -149,6 +149,29 @@
 }
 /*  */
 
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: #000203;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: dodgerblue;
+  color: white;
+}
+.center {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 5%;
+}
+
 
 /*  SECTIONS  */
 .section {
@@ -190,6 +213,9 @@
   	display: block;
   	float:left;
   	margin: 3% 0%;
+  }
+  .group{
+    margin-bottom: 20%;
   }
 }
 @media (min-width: 760px) and (max-width: 980px) {
@@ -383,12 +409,12 @@ textarea{
 }
 .comment-div textarea{
   resize: none;
-  border-radius: 50px;
+  border-radius: 50px!important;
   margin-bottom: 10px;
   padding: 5px 30px;
 }
 textarea:focus{
-  border-radius: 50px;
+  border-radius: 0px;
   outline: none;
 }
 
