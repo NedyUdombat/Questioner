@@ -1,37 +1,34 @@
 
+const signup = (user) => {
 
-const newPost = (post) => {
-  // const setOptions = {
-  //   method: 'POST',
-  //   body: JSON.stringify(post),
-  //   header: new Headers({
-  //     'Content-Type': 'application/json',
-  //   }),
-  // };
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }),
+  };
 
-  // return fetch('https://andela-questioner-app.herokuapp.com/api/v1/meetups/upcoming')
-  //   .then(res => res.json())
-  //   .then(res => console.log(res))
-  //   .catch(error => console.log(error));
+  return fetch('http://127.0.0.1:8080/api/v1/auth/signup', options)
+    .then(res => res.json())
+    .then(res => res)
+    .catch(err => console.log(err));
 };
 
-// const post = {
-//   title: 'Pretty little fears',
-//   body: 'Now can you tell me like it is',
-//   userId: 1,
-// };
 
+const signUp = () => {
+  const password = document.querySelector('#password').value;
+  const confirmPassword = document.querySelector('#confirmPassword').value;
+  console.log(password, confirmPassword);
 
-const logger = () => {
-  // const formData = new FormData(document.querySelector('#signup'));
-  // for (const pair of formData.entries()) {
-  //   console.log(pair[0], pair[1]);
-  // }
-
-  return fetch('http://127.0.0.1:8080/api/v1/meetups/upcoming')
-    .then(res => res.json())
-    .then((posts) => {
-      console.log(posts);
-    });
-  // newPost(post);
+  if (password !== confirmPassword) {
+    return alert('passwords do not match!')
+  }
+  const formData = new FormData(document.querySelector('#signup'));
+  const user = {};
+  for (const [key, value]  of formData.entries()) {
+      user[key] = value;
+  }
+  // signup(user);
 };

@@ -32,38 +32,38 @@
         <div class="card d-flex justify-content-center">
           <div class="w-90">
             <p class="f-32 text-center text-blue">Sign Up</p>
-            <form class="" id="signup">
+            <form class="" id="signup" method="post">
               <div class="input-grid">
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="firstName" id="firstName" value="" placeholder="First Name" class="w-100">
+                  <input type="text" name="firstname" id="firstName" value="" placeholder="First Name" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="lastName" id="lastName" value="" placeholder="Last Name" class="w-100">
+                  <input type="text" name="lastname" id="lastName" value="" placeholder="Last Name" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="otherName" id="otherName" value="" placeholder="Other Name" class="w-100">
+                  <input type="text" name="othername" id="otherName" value="" placeholder="Other Name" class="w-100">
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="username" id="username" value="" placeholder="Username" class="w-100">
+                  <input type="text" name="username" id="username" value="" placeholder="Username" class="w-100" minlength="4" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="email" name="email" id="email" value="" placeholder="Email Address" class="w-100">
+                  <input type="email" name="email" id="email" value="" placeholder="Email Address" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="tel" name="phoneNUmber" id="phoneNUmber" value="" placeholder="Phone Number" class="w-100">
+                  <input type="tel" name="phonenumber" id="phoneNUmber" value="" placeholder="Phone Number" class="w-100">
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100">
+                  <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="password" name="confirmPassword" id="confirmPassword" value="" placeholder="Confirm Password" class="w-100">
+                  <input type="password" name="confirmPassword" id="confirmPassword" value="" placeholder="Confirm Password" class="w-100" required>
                 </div>
               </div>
               <div class="input-div d-flex justify-content-center">
-                <a type="button" name="button" class="btn btn-blue w-100 d-flex justify-content-center align-items-center" onclick="logger();">
-                  Sign Up
+                <input type="submit" name="button" value="Sign Up" class="btn btn-blue w-100 d-flex justify-content-center align-items-center" onick="sigUp();">
+
                   <i class="fas fa-arrow-right text-white fa-xs"></i>
-                </a>
+                <!-- </a> -->
               </div>
               <p  class="f-12 text-grey text-center link">Already have an account? Log in <a href="login.html" class="text-blue">here</a> </p>
             </form>
