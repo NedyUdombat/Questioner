@@ -19,49 +19,32 @@ class AuthController {
     const userDetails = {
       firstname, lastname, othername, username, email, password: hash, phonenumber,
     };
-    pool.query(`SELECT email from users where email = '${email}'`)
-      .then((found) => {
-        if (found.rowCount === 0) {
-          createAccount(userDetails)
-            .then((results) => {
-              if (results.rowCount > 0) {
-                const returnedUserDetails = results.rows[0];
-                const { id, role } = returnedUserDetails;
-                const authDetail = { id, username, email, role };
-                const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '100hr' });
+    createAccount(userDetails)
+      .then((results) => {
+        const returnedUserDetails = results.rows[0];
+        const { id, role } = returnedUserDetails;
+        const authDetail = { id, username, email, role };
+        const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
-                return res.status(201).json({
-                  status: 201,
-                  message: 'Account created',
-                  data: {
-                    id: results.rows[0].id,
-                    fullname: `${results.rows[0].firstname} ${results.rows[0].othername} ${results.rows[0].lastname}`,
-                    username: results.rows[0].username,
-                    email: results.rows[0].email,
-                    phonenumber: results.rows[0].phonenumber,
-                    registered: results.rows[0].registered,
-                    jwToken,
-                  },
-                });
-              }
-              return res.status(500).json({
-                status: 500,
-                error: 'Could not create account',
-              });
-            })
-            .catch(error => res.status(400).json({
-              status: 400,
-              error: error.message,
-            }));
-        } else {
-          return res.status(409).json({
-            tatus: 409,
-            message: 'email is already in use, if that email belongs to you, kindly login',
-            error: true });
-        }
-      }).catch(err => (
-        res.status(500).json(err)
-      ));
+        return res.status(201).json({
+          status: 201,
+          message: 'Account created',
+          data: {
+            id: results.rows[0].id,
+            fullname: `${results.rows[0].firstname} ${results.rows[0].othername} ${results.rows[0].lastname}`,
+            username: results.rows[0].username,
+            email: results.rows[0].email,
+            phonenumber: results.rows[0].phonenumber,
+            registered: results.rows[0].registered,
+            jwToken,
+            authDetail,
+          },
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
   }
 
   static login(req, res) {
@@ -73,18 +56,17 @@ class AuthController {
             id: user.rows[0].id, username: user.rows[0].username, email, role: user.rows[0].role,
           };
 
-          const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '100hr' });
+          const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
           return res.status(200).json({
             status: 200,
             message: 'Successfully logged in',
             jwToken,
-            username: authDetail.username,
-            email,
+            authDetail,
           });
         }
         return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
-      }).catch(/* istanbul ignore next */ err => (
+      }).catch(err => (
         res.status(500).json(err)
       ));
   }

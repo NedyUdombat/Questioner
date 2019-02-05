@@ -15,12 +15,12 @@ const createTables = {
       firstname VARCHAR not null,
       lastname VARCHAR not null,
       othername VARCHAR,
-      username VARCHAR not null,
+      username VARCHAR UNIQUE not null,
       email VARCHAR UNIQUE not null,
       password VARCHAR not null,
       phonenumber VARCHAR,
       role VARCHAR not null,
-      registered DATE DEFAULT NOW()
+      registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`,
 
   questionsTable: `CREATE TABLE IF NOT EXISTS questions(
