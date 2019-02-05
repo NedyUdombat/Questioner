@@ -8,7 +8,7 @@ const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of our api' });

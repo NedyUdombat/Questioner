@@ -38,7 +38,7 @@ describe('Questioner Server', () => {
         .send(validUserAccount)
         .end((err, res) => {
           expect(res.status).to.equal(409);
-          expect(res.body.message).to.eql('email is already in use, if that email belongs to you, kindly login');
+          expect(res.body.message).to.eql('Credentials already in use');
           done();
         });
     });

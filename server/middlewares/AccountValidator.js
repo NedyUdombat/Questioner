@@ -3,7 +3,7 @@ import Validator from '../_helpers/post_validators';
 import pool from '../database/dbConfig';
 
 class AccountValidator {
-  static createAccountValidator(req, res, next) {
+  static createAccountInputValidator(req, res, next) {
     const { firstname, lastname, username, email, password } = req.body;
 
     const fields = { firstname, lastname, username, email, password };
@@ -21,6 +21,25 @@ class AccountValidator {
       });
     }
     return next();
+  }
+
+  static createAccountDuplicateValidator(req, res, next) {
+    const { email, username } = req.body;
+    pool.query(`SELECT email from users where email = '${email}'`)
+      .then((foundEmail) => {
+        pool.query(`SELECT username from users where username = '${username}'`)
+          .then((foundUsername) => {
+            if (foundEmail.rowCount === 0 && foundUsername.rowCount === 0) {
+              return next();
+            }
+            res.status(409).json({
+              status: 409,
+              message: 'Credentials already in use',
+              error: true });
+          });
+      }).catch(err => (
+        res.status(500).json(err)
+      ));
   }
 
   static loginAccountValidator(req, res, next) {

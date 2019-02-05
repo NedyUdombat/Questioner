@@ -44,7 +44,8 @@ const {
   getAllUpvoteForQuestion, getAllDownvoteForQuestion,
 } = VoteController;
 
-const { rsvpMeetup, getAllRsvps,
+const {
+  rsvpMeetup, getAllRsvps,
   getAllRsvpsForMeetup, getAllRsvpsByUser,
 } = RsvpController;
 
@@ -54,9 +55,11 @@ const { isAdmin } = VerifyAdmin;
 const { statusValidator } = MeetupValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
 const { createMeetupValidator } = CreateMeetupValidator;
-const { createAccountValidator, loginAccountValidator } = AccountValidator;
+const {
+  createAccountInputValidator, loginAccountValidator,
+  createAccountDuplicateValidator,
+} = AccountValidator;
 const { verifyToken } = VerifyToken;
-
 const { jwtDecode } = JwtDecode;
 
 
@@ -78,7 +81,7 @@ router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSin
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
 
 // Authenticaton endpoints
-router.post('/auth/signup', createAccountValidator, createAccount);//
+router.post('/auth/signup', createAccountInputValidator, createAccountDuplicateValidator, createAccount);//
 router.post('/auth/login', loginAccountValidator, login);//
 
 router.get('/auth/logout', logout);
