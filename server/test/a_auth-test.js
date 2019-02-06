@@ -111,7 +111,7 @@ describe('Questioner Server', () => {
 
     it('/api/v1/auth/logout should respond with status code 200 and log user out', (done) => {
       chai.request(app)
-        .get('/api/v1/auth/logout')
+        .post('/api/v1/auth/logout')
         .set('Accept', 'application/json')
         .send(validAdminAccount)
         .end((err, res) => {
