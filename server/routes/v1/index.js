@@ -84,7 +84,7 @@ router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
 router.post('/auth/signup', createAccountInputValidator, createAccountDuplicateValidator, createAccount);//
 router.post('/auth/login', loginAccountValidator, login);//
 
-router.get('/auth/logout', logout);
+router.post('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);

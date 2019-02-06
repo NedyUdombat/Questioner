@@ -32,18 +32,18 @@
         <div class="card d-flex justify-content-center w-100">
           <div class="w-100">
             <p class="f-32 text-center text-blue">Login</p>
-            <form class="">
+            <form class="" id="login" method="post">
               <div class="input-div d-flex justify-content-center">
-                <input type="text" name="username" id="username" value="" placeholder="Username" class="w-100">
+                <input type="email" name="email" id="email" value="" placeholder="Email" class="w-100" required>
               </div>
               <div class="input-div d-flex justify-content-center">
-                <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100">
+                <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100" required>
+              </div>
+              <div class="error">
+
               </div>
               <div class="input-div d-flex justify-content-center">
-                <a type="button" name="button" class="btn btn-blue w-100 d-flex justify-content-center align-items-center" href="user-profile.html">
-                  Login
-                  <i class="fas fa-arrow-right text-white fa-xs"></i>
-                </a>
+                <input type="submit" name="button" value="Log In" class="btn btn-blue btn-submit w-100 d-flex justify-content-center align-items-center">
               </div>
               <p  class="f-12 text-grey text-center link mt-2">Don't have an account? Sign up <a href="sign-up.html" class="text-blue">here</a> </p>
               <p  class="f-12 text-grey text-center link">Forgot Password? <a href="forgot-password.html" class="text-blue">Go here</a> </p>
@@ -53,5 +53,6 @@
       </div>
     </div>
     <script src="./assets/js/nav.js" charset="utf-8"></script>
+    <script src="./assets/js/login.js" charset="utf-8"></script>
   </body>
 </html>
