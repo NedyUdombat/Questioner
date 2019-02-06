@@ -16,6 +16,9 @@ class VerifyToken {
       });
     }
     jwt.verify(jwToken, secretHash, (err, authData) => {
+      if (err) {
+        return res.status(400).json(err);
+      }
       req.authData = authData;
       return next();
     });

@@ -16,7 +16,9 @@ const signup = (user) => {
       document.querySelector('.error').innerHTML = res.message;
       localStorage.setItem('token', res.data.jwToken);
       localStorage.setItem('id', res.data.authDetail.id);
-      window.location.replace('meetups.html');
+      setTimeout(() => {
+        window.location.assign('meetups.html');
+      }, 2000);
     })
     .catch(err => console.log(err));
 };
