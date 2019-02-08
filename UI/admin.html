@@ -14,11 +14,13 @@
     <!-- External fonts -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="assets/js/auth.js" charset="utf-8"></script>
   </head>
   <body>
 
     <div class="topnav" id="myTopnav">
       <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="javascript:void(0);"  onclick="logoutButton();" id="logout">logout</a>
       <a href="admin.html">Admin</a>
       <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
         <i class="fa fa-bars"></i>
@@ -254,8 +256,9 @@
             <a href="#">&raquo;</a>
           </div>
         </div>
-    <script src="./assets/js/nav.js" charset="utf-8"></script>
     <!--  scripts -->
+    <script src="./assets/js/nav.js" charset="utf-8"></script>
+    <script src="./assets/js/logout.js" charset="utf-8"></script>
     <script src="assets/js/modal.js" charset="utf-8"></script>
   </body>
 </html>

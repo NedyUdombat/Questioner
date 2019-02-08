@@ -56,16 +56,20 @@ class AccountValidator {
     }
     pool.query(`SELECT * FROM users Where email = '${email}' `)
       .then((user) => {
-        if (bcrypt.compareSync(password, user.rows[0].password) === false) {
-          return res.status(401).json({
-            status: 401,
-            message: 'Wrong Password',
-          });
+        if (user.rowCount > 0) {
+          if (bcrypt.compareSync(password, user.rows[0].password) === false) {
+            return res.status(401).json({
+              status: 401,
+              message: 'Wrong Password',
+            });
+          }
+          req.user = user.rows[0];
+          return next();
         }
-      }).catch(/* istanbul ignore next */ err => (
+        return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
+      }).catch(err => (
         res.status(500).json(err)
       ));
-    return next();
   }
 }
 

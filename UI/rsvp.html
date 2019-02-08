@@ -14,11 +14,13 @@
     <!-- External fonts -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="assets/js/auth.js" charset="utf-8"></script>
   </head>
   <body>
 
     <div class="topnav" id="myTopnav">
       <a href="index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="javascript:void(0);"  onclick="logoutButton();" id="logout">logout</a>
       <a href="user-profile.html">User Profile</a>
       <a href="meetups.html">Meetups</a>
       <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
@@ -125,11 +127,11 @@
             <li><a href="top-feeds.html"><i class="fas fa-rss-square fa-lg fa-fw"></i></a></li>
             <li><a href="my-questions.html"><i class="fas fa-question fa-lg fa-fw"></i>(2)</a></li>
             <li><a href="my-comments.html"><i class="fas fa-comment fa-lg fa-fw"></i>(4)</a></li>
-            <li><a href="rsvp.html" class="active"><i class="fas fa-calendar fa-lg fa-fw"></i>(3)</a></li>
+            <li><a href="rsvp.html" class="active"><i class="fas fa-calendar-check fa-lg fa-fw"></i>(3)</a></li>
           </ul>
         </nav>
     </div>
     <script src="./assets/js/nav.js" charset="utf-8"></script>
-
+    <script src="./assets/js/logout.js" charset="utf-8"></script>
   </body>
 </html>
