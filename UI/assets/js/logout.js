@@ -7,8 +7,13 @@ const logout = () => {
       window.location.replace('login.html');
     })
     .catch(err => console.log(err));
+  // console.log("logout");
 };
 
-document.querySelector('#logout').addEventListener('submit', () => {
-  logout();
-});
+const logoutButton = () => {
+  // document.querySelector('#logoutForm').addEventListener('submit', () => {
+    logout();
+  // });
+  // console.log("logout");
+
+}

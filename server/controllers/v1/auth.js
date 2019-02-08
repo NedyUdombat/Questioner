@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import User from '../../models/v1/user';
-import pool from '../../database/dbConfig';
 
 dotenv.config();
 
@@ -48,27 +47,18 @@ class AuthController {
   }
 
   static login(req, res) {
-    const { email } = req.body;
-    pool.query(`SELECT * FROM users Where email = '${email}' `)
-      .then((user) => {
-        if (user.rowCount > 0) {
-          const authDetail = {
-            id: user.rows[0].id, username: user.rows[0].username, email, role: user.rows[0].role,
-          };
+    const authDetail = {
+      id: req.user.id, username: req.user.username, email: req.user.email, role: req.user.role,
+    };
 
-          const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '2hr' });
+    const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '2hr' });
 
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully logged in',
-            jwToken,
-            authDetail,
-          });
-        }
-        return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
-      }).catch(err => (
-        res.status(500).json(err)
-      ));
+    return res.status(200).json({
+      status: 200,
+      message: 'Successfully logged in',
+      jwToken,
+      authDetail,
+    });
   }
 
   static logout(req, res) {
