@@ -2,7 +2,6 @@ window.addEventListener('load', () => {
   fetch('http://127.0.0.1:8080/api/v1/meetups/upcoming')
     .then(res => res.json())
     .then((res) => {
-      console.log(res.data);
       let output = '';
       res.data.forEach((meetup) => {
         output += `<div class="col span_1_of_3">
@@ -22,7 +21,7 @@ window.addEventListener('load', () => {
                 </a>
               </div>
             </div>
-        	</div>`;
+          </div>`;
         const meetupContainer = document.querySelector('.section');
         meetupContainer.innerHTML = output;
       });
