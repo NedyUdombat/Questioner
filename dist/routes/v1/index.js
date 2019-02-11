@@ -106,8 +106,9 @@ var isAdmin = _VerifyAdmin2.default.isAdmin;
 var statusValidator = _MeetupValidator2.default.statusValidator;
 var createQuestionValidator = _CreateQuestionValidator2.default.createQuestionValidator;
 var createMeetupValidator = _CreateMeetupValidator2.default.createMeetupValidator;
-var createAccountValidator = _AccountValidator2.default.createAccountValidator,
-    loginAccountValidator = _AccountValidator2.default.loginAccountValidator;
+var createAccountInputValidator = _AccountValidator2.default.createAccountInputValidator,
+    loginAccountValidator = _AccountValidator2.default.loginAccountValidator,
+    createAccountDuplicateValidator = _AccountValidator2.default.createAccountDuplicateValidator;
 var verifyToken = _VerifyToken2.default.verifyToken;
 var jwtDecode = _jwtDecode2.default.jwtDecode;
 
@@ -130,10 +131,10 @@ router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSin
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups); //
 
 // Authenticaton endpoints
-router.post('/auth/signup', createAccountValidator, createAccount); //
+router.post('/auth/signup', createAccountInputValidator, createAccountDuplicateValidator, createAccount); //
 router.post('/auth/login', loginAccountValidator, login); //
 
-router.get('/auth/logout', logout);
+router.post('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);

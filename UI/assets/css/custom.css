@@ -222,7 +222,9 @@ select:hover{
   border: 2px solid #182825;
   color: #182825;
 }
-
+.fa-spinner {
+  margin: 5% 0%;
+}
 .dropdown {
     position: relative;
     display: inline-block;

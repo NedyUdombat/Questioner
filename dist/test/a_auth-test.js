@@ -43,7 +43,7 @@ describe('Questioner Server', function () {
     it('/api/v1/auth/signup should respond with status code 409 if account already exists', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/auth/signup').set('Accept', 'application/json').send(validUserAccount).end(function (err, res) {
         expect(res.status).to.equal(409);
-        expect(res.body.message).to.eql('email is already in use, if that email belongs to you, kindly login');
+        expect(res.body.message).to.eql('Credentials already in use');
         done();
       });
     });
@@ -99,7 +99,7 @@ describe('Questioner Server', function () {
     */
 
     it('/api/v1/auth/logout should respond with status code 200 and log user out', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/auth/logout').set('Accept', 'application/json').send(validAdminAccount).end(function (err, res) {
+      _chai2.default.request(_server2.default).post('/api/v1/auth/logout').set('Accept', 'application/json').send(validAdminAccount).end(function (err, res) {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
         expect(res.body.auth).eql(false);

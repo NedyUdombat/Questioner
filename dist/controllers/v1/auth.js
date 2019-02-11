@@ -22,10 +22,6 @@ var _user = require('../../models/v1/user');
 
 var _user2 = _interopRequireDefault(_user);
 
-var _dbConfig = require('../../database/dbConfig');
-
-var _dbConfig2 = _interopRequireDefault(_dbConfig);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57,75 +53,49 @@ var AuthController = function () {
       var userDetails = {
         firstname: firstname, lastname: lastname, othername: othername, username: username, email: email, password: hash, phonenumber: phonenumber
       };
-      _dbConfig2.default.query('SELECT email from users where email = \'' + email + '\'').then(function (found) {
-        if (found.rowCount === 0) {
-          _createAccount(userDetails).then(function (results) {
-            if (results.rowCount > 0) {
-              var returnedUserDetails = results.rows[0];
-              var id = returnedUserDetails.id,
-                  role = returnedUserDetails.role;
+      _createAccount(userDetails).then(function (results) {
+        var returnedUserDetails = results.rows[0];
+        var id = returnedUserDetails.id,
+            role = returnedUserDetails.role;
 
-              var authDetail = { id: id, username: username, email: email, role: role };
-              var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '100hr' });
+        var authDetail = { id: id, username: username, email: email, role: role };
+        var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '2hr' });
 
-              return res.status(201).json({
-                status: 201,
-                message: 'Account created',
-                data: {
-                  id: results.rows[0].id,
-                  fullname: results.rows[0].firstname + ' ' + results.rows[0].othername + ' ' + results.rows[0].lastname,
-                  username: results.rows[0].username,
-                  email: results.rows[0].email,
-                  phonenumber: results.rows[0].phonenumber,
-                  registered: results.rows[0].registered,
-                  jwToken: jwToken
-                }
-              });
-            }
-            return res.status(500).json({
-              status: 500,
-              error: 'Could not create account'
-            });
-          }).catch(function (error) {
-            return res.status(400).json({
-              status: 400,
-              error: error.message
-            });
-          });
-        } else {
-          return res.status(409).json({
-            tatus: 409,
-            message: 'email is already in use, if that email belongs to you, kindly login',
-            error: true });
-        }
-      }).catch(function (err) {
-        return res.status(500).json(err);
+        return res.status(201).json({
+          status: 201,
+          message: 'Account created',
+          data: {
+            id: results.rows[0].id,
+            fullname: results.rows[0].firstname + ' ' + results.rows[0].othername + ' ' + results.rows[0].lastname,
+            username: results.rows[0].username,
+            email: results.rows[0].email,
+            phonenumber: results.rows[0].phonenumber,
+            registered: results.rows[0].registered,
+            jwToken: jwToken,
+            authDetail: authDetail
+          }
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
       });
     }
   }, {
     key: 'login',
     value: function login(req, res) {
-      var email = req.body.email;
+      var authDetail = {
+        id: req.user.id, username: req.user.username, email: req.user.email, role: req.user.role
+      };
 
-      _dbConfig2.default.query('SELECT * FROM users Where email = \'' + email + '\' ').then(function (user) {
-        if (user.rowCount > 0) {
-          var authDetail = {
-            id: user.rows[0].id, username: user.rows[0].username, email: email, role: user.rows[0].role
-          };
+      var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '2hr' });
 
-          var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '100hr' });
-
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully logged in',
-            jwToken: jwToken,
-            username: authDetail.username,
-            email: email
-          });
-        }
-        return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
-      }).catch( /* istanbul ignore next */function (err) {
-        return res.status(500).json(err);
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully logged in',
+        jwToken: jwToken,
+        authDetail: authDetail
       });
     }
   }, {

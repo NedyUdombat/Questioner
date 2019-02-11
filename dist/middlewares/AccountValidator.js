@@ -28,8 +28,8 @@ var AccountValidator = function () {
   }
 
   _createClass(AccountValidator, null, [{
-    key: 'createAccountValidator',
-    value: function createAccountValidator(req, res, next) {
+    key: 'createAccountInputValidator',
+    value: function createAccountInputValidator(req, res, next) {
       var _req$body = req.body,
           firstname = _req$body.firstname,
           lastname = _req$body.lastname,
@@ -55,11 +55,32 @@ var AccountValidator = function () {
       return next();
     }
   }, {
-    key: 'loginAccountValidator',
-    value: function loginAccountValidator(req, res, next) {
+    key: 'createAccountDuplicateValidator',
+    value: function createAccountDuplicateValidator(req, res, next) {
       var _req$body2 = req.body,
           email = _req$body2.email,
-          password = _req$body2.password;
+          username = _req$body2.username;
+
+      _dbConfig2.default.query('SELECT email from users where email = \'' + email + '\'').then(function (foundEmail) {
+        _dbConfig2.default.query('SELECT username from users where username = \'' + username + '\'').then(function (foundUsername) {
+          if (foundEmail.rowCount === 0 && foundUsername.rowCount === 0) {
+            return next();
+          }
+          res.status(409).json({
+            status: 409,
+            message: 'Credentials already in use',
+            error: true });
+        });
+      }).catch(function (err) {
+        return res.status(500).json(err);
+      });
+    }
+  }, {
+    key: 'loginAccountValidator',
+    value: function loginAccountValidator(req, res, next) {
+      var _req$body3 = req.body,
+          email = _req$body3.email,
+          password = _req$body3.password;
 
 
       var fields = { email: email, password: password };
@@ -72,16 +93,20 @@ var AccountValidator = function () {
         });
       }
       _dbConfig2.default.query('SELECT * FROM users Where email = \'' + email + '\' ').then(function (user) {
-        if (_bcryptjs2.default.compareSync(password, user.rows[0].password) === false) {
-          return res.status(401).json({
-            status: 401,
-            message: 'Wrong Password'
-          });
+        if (user.rowCount > 0) {
+          if (_bcryptjs2.default.compareSync(password, user.rows[0].password) === false) {
+            return res.status(401).json({
+              status: 401,
+              message: 'Wrong Password'
+            });
+          }
+          req.user = user.rows[0];
+          return next();
         }
-      }).catch( /* istanbul ignore next */function (err) {
+        return res.status(404).json({ status: 404, message: 'User does not exist', error: true });
+      }).catch(function (err) {
         return res.status(500).json(err);
       });
-      return next();
     }
   }]);
 
