@@ -1,5 +1,14 @@
 window.addEventListener('load', () => {
-  fetch('https://andela-questioner-app.herokuapp.com/api/v1/meetups/upcoming')
+  const token = localStorage.getItem('token');
+  const options = {
+    method: 'GET',
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  };
+  fetch('http://127.0.0.1:8080/api/v1/meetups', options)
     .then(res => res.json())
     .then((res) => {
       let output = '';

@@ -9,7 +9,7 @@ const login = (user) => {
     }),
   };
 
-  fetch('http://127.0.0.1:8080/api/v1/auth/logout')
+  fetch('http://127.0.0.1:8080/api/v1/auth/logout', options)
     .then(response => response.json())
     .then(() => fetch('http://127.0.0.1:8080/api/v1/auth/login', options)
       .then(res => res.json())
