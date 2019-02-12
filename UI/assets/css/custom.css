@@ -22,7 +22,9 @@ a{
 .flex-row {
 
 }
-
+.logged-in {
+  /* display: none!important; */
+}
 /*  */
 
 /*  */
