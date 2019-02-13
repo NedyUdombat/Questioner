@@ -33,97 +33,9 @@
           <button type="button" class="btn btn-blue create-meetup-btn" onclick="launchModal('createMeetupModal');">Create Meetup</button>
         </div>
         <div class="section group">
-          <div class="col span_1_of_3">
-            <div class="d-flex justify-content-center">
-              <div class="product-card">
-                <a href="single-meetup.html">
-                  <div class="card-image-top">
-                    <img src="assets/images/ty.jfif" alt="empty cart" class="product-image">
-                  </div>
-                  <div class="product-card-details">
-                    <p class="f-20 "> <b>Making The Web Accessible For Everyone</b> </p>
-                    <div class="d-flex justify-content-between mt-1">
-                      <small class="f-12"><i>DevFestSS Uyo</i></small>
-                      <p class="text-blue">12/12/12</p>
-                    </div>
-                  </div>
-                  <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col span_1_of_3">
-            <div class="d-flex justify-content-center">
-              <div class="product-card">
-                <a href="single-meetup.html">
-                  <div class="card-image-top">
-                    <img src="assets/images/stars.jfif" alt="empty cart" class="product-image">
-                  </div>
-                  <div class="product-card-details">
-                    <p class="f-20 "> <b>Becoming A GDE</b> </p>
-                    <div class="d-flex justify-content-between mt-1">
-                      <small class="f-12"><i>DevFestSS Uyo</i></small>
-                      <p class="text-blue">12/12/12</p>
-                    </div>
-                  </div>
-                  <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col span_1_of_3">
-            <div class="d-flex justify-content-center">
-              <div class="product-card">
-                <a href="single-meetup.html">
-                  <div class="card-image-top">
-                    <img src="assets/images/qw.jfif" alt="empty cart" class="product-image">
-                  </div>
-                  <div class="product-card-details">
-                    <p class="f-20 "> <b>Making The Web Accessible For Everyone</b> </p>
-                    <div class="d-flex justify-content-between mt-1">
-                      <small class="f-12"><i>DevFestSS Uyo</i></small>
-                      <p class="text-blue">12/12/12</p>
-                    </div>
-                  </div>
-                  <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="col span_1_of_3">
-            <div class="d-flex justify-content-center">
-              <div class="product-card">
-                <a href="single-meetup.html">
-                  <div class="card-image-top">
-                    <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
-                  </div>
-                  <div class="product-card-details">
-                    <p class="f-20 "> <b>Developer Advocacy</b> </p>
-                    <div class="d-flex justify-content-between mt-1">
-                      <small class="f-12"><i>DevFestSS Uyo</i></small>
-                      <p class="text-blue">12/12/12</p>
-                    </div>
-                  </div>
-                  <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <div class="d-flex justify-content-center">
+            <i class="fa fa-spinner fa-pulse fa-10x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
@@ -145,7 +57,7 @@
         </div>
         <div class="modal-footer d-flex justify-content-between">
           <button type="button" class="btn btn-red"  onclick="closeModal('deleteMeetupModal')">Cancel</button>
-          <button type="button" class="btn btn-blue">Delete</button>
+          <button type="button" class="btn btn-blue" onclick="deleteSpecificMeetup();">Delete</button>
         </div>
       </div>
 
@@ -208,19 +120,19 @@
         </div>
         <div class="modal-body">
           <div class="create-meetup-form">
-            <form class="">
+            <form class="" id="createMeetup" method="post">
               <div class="input-grid">
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupName" id="meetupName" value="" placeholder="Meetup Name" class="w-100" sze="35">
+                  <input type="text" name="organizerName" id="organizerName" value="" placeholder="Organizer Name" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupTopic" id="meetupTopic" value="" placeholder="Meetup Topic" class="w-100" sie="35">
+                  <input type="text" name="topic" id="topic" value="" placeholder="Meetup Topic" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="date" name="meetupDate" id="meetupDate" value="" placeholder="Meetup Date" class="w-100" sze="35">
+                  <input type="date" name="happeningOn" id="happeningOn" value="" placeholder="Meetup Date" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupLocation" id="meetupLocation" value="" placeholder="Meetup Location" class="w-100"  sze="35">
+                  <input type="text" name="location" id="location" value="" placeholder="Meetup Location" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
                   <select class="" name="">
@@ -234,31 +146,40 @@
                   <input type="file" name="meetupImage" value="" id="meetupImage" hidden>
                 </div>
               </div>
+              <div class="error">
+
+              </div>
+              <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-red"  onclick="closeModal('createMeetupModal')">Cancel</button>
+                <input type="submit" ame="button" class="btn btn-blue" value="Create">
+                <!-- <input type="submit" name="button" value="Sign Up" class="btn btn-blue btn-submit w-100 d-flex justify-content-center align-items-center"> -->
+              </div>
             </form>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-red"  onclick="closeModal('createMeetupModal')">Cancel</button>
-          <button type="button" class="btn btn-blue">Create</button>
-        </div>
+
       </div>
 
     </div>
 
-        <div class="center d-flex justify-content-center">
-          <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#">1</a>
-            <a class="active" href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">&raquo;</a>
-          </div>
-        </div>
+    <div class="center d-flex justify-content-center">
+      <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">&raquo;</a>
+      </div>
+    </div>
     <!--  scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js" charset="utf-8"></script>
     <script src="./assets/js/nav.js" charset="utf-8"></script>
     <script src="./assets/js/logout.js" charset="utf-8"></script>
     <script src="assets/js/modal.js" charset="utf-8"></script>
+    <script src="./assets/js/api/admin-meetups.js" charset="utf-8"></script>
+    <script src="./assets/js/api/create-meetup.js" charset="utf-8"></script>
+    <script src="./assets/js/api/delete-meetup.js" charset="utf-8"></script>
   </body>
 </html>
