@@ -59,7 +59,7 @@ var AuthController = function () {
             role = returnedUserDetails.role;
 
         var authDetail = { id: id, username: username, email: email, role: role };
-        var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '2hr' });
+        var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
         return res.status(201).json({
           status: 201,
@@ -89,7 +89,7 @@ var AuthController = function () {
         id: req.user.id, username: req.user.username, email: req.user.email, role: req.user.role
       };
 
-      var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '2hr' });
+      var jwToken = _jsonwebtoken2.default.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
       return res.status(200).json({
         status: 200,
