@@ -16,33 +16,48 @@ window.addEventListener('load', () => {
     .then(res => res.json())
     .then((res) => {
       console.log(res);
-      // let output = '';
-      // res.data.forEach((meetup) => {
-      //   output += `<div class="col span_1_of_3">
-      //       <div class="d-flex justify-content-center">
-      //         <div class="product-card">
-      //           <a href="single-meetup.html?meetup=" + ${meetup.id}">
-      //             <div class="card-image-top">
-      //               <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
-      //             </div>
-      //             <div class="product-card-details">
-      //               <p class="f-20 "> <b>${meetup.topic}</b> </p>
-      //               <div class="d-flex justify-content-between mt-1">
-      //                 <small class="f-12"><i>${meetup.organizer_name}</i></small>
-      //                 <p class="text-blue">${moment(meetup.happening_on).format('DD MMMM YYYY')}</p>
-      //               </div>
-      //             </div>
-      //             <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-      //               <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-      //               <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-      //               <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
-      //             </div>
-      //           </a>
-      //         </div>
-      //       </div>
-      //     </div>`;
-      //   const meetupContainer = document.querySelector('.section');
-      //   meetupContainer.innerHTML = output;
-      // });
+      const output = `<div class="single-meetup-card">
+          <div class="w-100">
+            <div class="card-header">
+              <div class="d-flex justify-content-center">
+                <img src="assets/images/meetup1.jfif" alt="Meetup Image" class="meetup-image">
+              </div>
+              <div class="d-block">
+                <p class="f-24">${res.data.topic}</p>
+                <p>${res.data.organizer_name}</p>
+                <p class="text-blue date">${moment(res.data.happening_on).format('DD MMMM YYYY')}</p>
+                <div class="d-flex tags ">
+                  <div class=" d-flex">
+                    <div class="tag edu">
+                      ${res.data.tags}
+                    </div>
+                    <div class="tag health">
+                      health
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="d-flex ">
+                <p class="d-flex"> <span class="text-blue">Location: </span>&nbsp;&nbsp;</p>
+                <p>${res.data.location}</p>
+              </div>
+            </div>
+            <div class="card-footer ">
+              <button type="button" class="btn bg-transparent pl-0 tooltip question-btn" onclick="launchModal('askQuestionModal')">
+                <i class="fas fa-plus f-32 text-grey"></i>
+                <span class="tooltiptext">Click here to ask</span>
+              </button>
+
+              <button type="button" class="btn bg-transparent tooltip rsvp-btn" onclick="rsvp()">
+                <i class="far fa-calendar-check text-grey f-32"></i>
+                <span class="tooltiptext rsvp-tooltip-text">Click here to rsvp</span>
+              </button>
+            </div>
+          </div>
+        </div>`;
+        const meetupContainer = document.querySelector('.single-meetup-div');
+        meetupContainer.innerHTML = output;
     });
 });

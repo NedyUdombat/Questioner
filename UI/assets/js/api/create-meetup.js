@@ -17,15 +17,12 @@ const create = (meetup) => {
       if (res.status === 201) {
         setTimeout(() => {
           document.location.reload();
-          // window.location.assign('meetups.html');
         }, 2000);
       }
       document.querySelector('.error').style.display = 'flex';
       document.querySelector('.error').innerHTML = res.message;
     })
-    .catch((err) => {
-
-    });
+    .catch(err => console.log(err));
 };
 
 const createMeetup = (event) => {
@@ -33,7 +30,7 @@ const createMeetup = (event) => {
   const formData = new FormData(document.querySelector('#createMeetup'));
   const meetup = {};
   for (const [key, value] of formData.entries()) {
-    console.log(meetup[key] = value);
+    meetup[key] = value;
   }
 
   create(meetup);

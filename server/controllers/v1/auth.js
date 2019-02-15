@@ -23,7 +23,7 @@ class AuthController {
         const returnedUserDetails = results.rows[0];
         const { id, role } = returnedUserDetails;
         const authDetail = { id, username, email, role };
-        const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '2hr' });
+        const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
         return res.status(201).json({
           status: 201,
@@ -51,7 +51,7 @@ class AuthController {
       id: req.user.id, username: req.user.username, email: req.user.email, role: req.user.role,
     };
 
-    const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '2hr' });
+    const jwToken = jwt.sign(authDetail, secretHash, { expiresIn: '24hr' });
 
     return res.status(200).json({
       status: 200,

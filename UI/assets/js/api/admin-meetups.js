@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
   fetch('http://127.0.0.1:8080/api/v1/meetups', options)
     .then(res => res.json())
     .then((res) => {
-      // console.log(res.data[].id);
+      window._meetup = res.data;
       let output = '';
       res.data.forEach((meetup) => {
         output += `<div class="col span_1_of_3">
@@ -30,14 +30,13 @@ window.addEventListener('load', () => {
                   </div>
                   <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
                     <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="launchModal('editModal');"></i> </button>
-                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="launchModal('deleteMeetupModal');"></i> </button>
+                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="startEdit('editModal', ${meetup.id})"></i> </button>
+                    <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="startDelete ('deleteMeetupModal', ${meetup.id})"></i> </button>
                   </div>
                 </a>
               </div>
             </div>
           </div>`;
-        console.log(meetup.id);
         const meetupContainer = document.querySelector('.section');
         meetupContainer.innerHTML = output;
       });
