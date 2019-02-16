@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 
 
 const seedTables = {
-  meetupsTable: `INSERT INTO meetups(organizer_name, topic, location, happening_on )
-    VALUES ('100daysofcode', 'learing', 'uyo', to_date('${moment('2019-11-11').format('YYYY-MM-DD')}', 'YYYY MM DD')),
-    ('Freecodecamp', 'DB management', 'Ikeja', to_date('${moment('2019-08-01').format('YYYY-MM-DD')}', 'YYYY MM DD'))
+  meetupsTable: `INSERT INTO meetups(organizer_name, topic, location, happening_on, image )
+    VALUES ('100daysofcode', 'learing', 'uyo', to_date('${moment('2019-11-11').format('YYYY-MM-DD')}', 'YYYY MM DD'), ''),
+    ('Freecodecamp', 'DB management', 'Ikeja', to_date('${moment('2019-08-01').format('YYYY-MM-DD')}', 'YYYY MM DD'), '')
     `,
   usersTable: `INSERT INTO users(firstname, lastname, othername, username, email, password, phonenumber, role)
         VALUES ('nedy', 'udombat', '', 'nedyy', 'nedyudombat@gmail.com', '${bcrypt.hashSync('Iamtheadmin', 10)}', 07018228593, 'admin'),

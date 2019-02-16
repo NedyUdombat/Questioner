@@ -6,7 +6,7 @@ const createTables = {
       location VARCHAR not null,
       happening_On DATE not null,
       tags VARCHAR[],
-      images VARCHAR[],
+      image VARCHAR,
       created_on DATE DEFAULT NOW()
     )`,
 
