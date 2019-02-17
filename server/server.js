@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import router from './routes/v1/index';
-import Upload from './middlewares/ImageUpload';
 
 
 const app = express();
@@ -15,22 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to our Questioner api! Visit /api/v1 for the Version 1 of our api' });
 });
-
-
-app.post('/api/images', (req, res) => {
-  console.log("yeah");
-});
-// app.post('/api/images', Upload.single('file'));
-// (req, res) => {
-//   console.log(req.file) // to see what is returned to you
-//   const image = {};
-//   image.url = req.file.url;
-//   image.id = req.file.public_id;
-//   Image.create(image) // save image information in database
-//     .then(newImage => res.json(newImage))
-//     .catch(err => console.log(err));
-// }
-// );
 
 app.use('/api/v1', router);
 

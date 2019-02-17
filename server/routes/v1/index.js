@@ -14,6 +14,7 @@ import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
 import AccountValidator from '../../middlewares/AccountValidator';
 import VerifyToken from '../../middlewares/VerifyToken';
 import JwtDecode from '../../_helpers/jwtDecode';
+import Upload from '../../middlewares/ImageUpload';
 
 // deconstructure controllers
 const {
@@ -69,6 +70,11 @@ const router = Router();
 router.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
+
+router.post('/images', Upload.single('image'), (req, res) => {
+  res.json(req.file);
+});
+
 
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups);//

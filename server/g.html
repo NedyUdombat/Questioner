@@ -8,7 +8,7 @@
     <form id="imag"  enctype="multipart/form-data" method="post">
 
         <label for="exampleInputFile">File input</label>
-        <input type="file" id="exampleInputFile">
+        <input type="file" id="exampleInputFile" name="image">
       <input type="submit">
     </form>
 
@@ -19,18 +19,16 @@
           method: 'POST',
           body: user,
           headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/form-data',
           }),
         };
 
-        return fetch('http://127.0.0.1:8080/api/images', options)
-          .then(res => res.json())
+        return fetch('http://127.0.0.1:8080/api/v1/images', options)
+          // .then(res => res.json())
           .then((res) => {
             console.log(res)
           })
           .catch(err => console.log(err));
-          console.log('1')
       };
 
       const signUp = (event) => {

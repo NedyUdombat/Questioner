@@ -14,6 +14,6 @@ const storage = cloudinaryStorage({
   cloudinary,
   folder: 'demo',
   allowedFormats: ['jpg', 'png'],
-  transformation: [{ width: 500, height: 500, crop: 'limit' }],
+  // transformation: [{ width: 500, height: 500, crop: 'limit' }],
 });
 export default multer({ storage });
