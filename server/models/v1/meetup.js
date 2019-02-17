@@ -35,11 +35,11 @@ class Meetup {
       location: details.location,
       happeningOn: newHappeningOn,
       tags: details.tags ? details.tags : '{}',
-      images: details.images ? details.images : '{}',
+      image: details.image ? details.image : '',
       createdOn: moment().format(),
     };
     return new Promise((resolve, reject) => {
-      pool.query(`INSERT INTO meetups ( organizer_name, topic, location, happening_On, tags, images, created_on) VALUES ('${meetupDetails.organizer_name}', '${meetupDetails.topic}','${meetupDetails.location}', '${meetupDetails.happeningOn}', '${meetupDetails.tags}', '${meetupDetails.images}', '${meetupDetails.createdOn}') returning *`)
+      pool.query(`INSERT INTO meetups ( organizer_name, topic, location, happening_On, tags, image, created_on) VALUES ('${meetupDetails.organizer_name}', '${meetupDetails.topic}','${meetupDetails.location}', '${meetupDetails.happeningOn}', '${meetupDetails.tags}', '${meetupDetails.image}', '${meetupDetails.createdOn}') returning *`)
         .then(results => resolve(results))
         .catch(error => reject(error));
     });
