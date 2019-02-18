@@ -15,9 +15,9 @@ const seedTables = {
   questionsTable: `INSERT INTO questions( meetup_id, user_id, title, body)
       VALUES (1, 2, 'Possessions', 'If you lost all of your possessions but one, what would you want it to be?'),
       (2, 1, 'Creation', 'What have you created that you are most proud of?'),
-      (1, 2, 'Interests', 'What are you interested in that most people haven''t heard of?'),
+      (2, 2, 'Interests', 'What are you interested in that most people haven''t heard of?'),
       (2, 1, 'Book', 'What''s your favorite book?'),
-      (1, 2, 'Learn', 'What''s something you learned in the last week?'),
+      (2, 2, 'Learn', 'What''s something you learned in the last week?'),
       (2, 1, 'Honesty', 'What issue will you always speak your mind about?'),
       (1, 2, 'Accomplishment', 'What dumb accomplishment are you most proud of?'),
       (2, 1, 'Clothe', 'What''s your favorite piece of clothing you own?')

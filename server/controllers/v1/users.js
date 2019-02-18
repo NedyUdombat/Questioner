@@ -26,7 +26,7 @@ class UserController {
   }
 
   static getSpecificUser(req, res) {
-    const { userId } = req.params;
+    const userId = req.authData.id;
     getSpecificUser(userId)
       .then((user) => {
         if (user.rowCount > 0) {
