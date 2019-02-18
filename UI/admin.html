@@ -63,52 +63,7 @@
 
     </div>
 
-    <div id="editModal" class="modal">
-
-      <!-- Modal content -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="close"  onclick="closeModal('editModal')">&times;</span>
-          <h2>&nbsp;</h2>
-        </div>
-        <div class="modal-body">
-          <div class="create-meetup-form">
-            <form class="">
-              <div class="input-grid">
-                <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupName" id="meetupName" value="" placeholder="DevFestSS" class="w-100" sze="35">
-                </div>
-                <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupTopic" id="meetupTopic" value="" placeholder="Web Accessibilty" class="w-100" sie="35">
-                </div>
-                <div class="input-div d-flex justify-content-center">
-                  <input type="date" name="meetupDate" id="meetupDate" value="" placeholder="12/02/19" class="w-100" sze="35">
-                </div>
-                <div class="input-div d-flex justify-content-center">
-                  <input type="text" name="meetupLocation" id="meetupLocation" value="" placeholder="Tech Zone Park" class="w-100"  sze="35">
-                </div>
-                <div class="input-div d-flex justify-content-center">
-                  <select class="" name="">
-                    <option value="" class="text-grey">Choose Tag</option>
-                    <option value="">Technology</option>
-                    <option value="">Health</option>
-                  </select>
-                </div>
-                <div class="input-div d-flex justify-content-center">
-                  <button type="button" name="button" class=" btn choose-image-label w-100"><label for="meetupImage"> Choose Image</label></button>
-                  <input type="file" name="meetupImage" value="" id="meetupImage" hidden>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-red"  onclick="closeModal('editModal')">Cancel</button>
-          <button type="button" class="btn btn-blue">Add</button>
-        </div>
-      </div>
-
-    </div>
+    <div id="editModal" class="modal"></div>
 
     <div id="createMeetupModal" class="modal">
 
@@ -120,7 +75,7 @@
         </div>
         <div class="modal-body">
           <div class="create-meetup-form">
-            <form class="" id="createMeetup" method="post">
+            <form class="" id="createMeetup" method="post" enctype="multipart/form-data">
               <div class="input-grid">
                 <div class="input-div d-flex justify-content-center">
                   <input type="text" name="organizerName" id="organizerName" value="" placeholder="Organizer Name" class="w-100" required>
@@ -143,7 +98,7 @@
                 </div>
                 <div class="input-div d-flex justify-content-center">
                   <button type="button" name="button" class=" btn choose-image-label w-100"><label for="meetupImage"> Choose Image</label></button>
-                  <input type="file" name="meetupImage" value="" id="meetupImage" hidden>
+                  <input type="file" name="Image" value="" id="meetupImage" hidden>
                 </div>
               </div>
               <div class="error">
