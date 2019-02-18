@@ -1,9 +1,14 @@
+import Meetup from '../../models/v1/meetup';
 import Question from '../../models/v1/question';
+import User from '../../models/v1/user';
 
 const {
   getAllQuestions, getAllQuestionsForMeetup,
   getAllQuestionsByUser, askQuestion,
 } = Question;
+
+const { getSpecificUser } = User;
+const { getSpecific } = Meetup;
 
 class QuestionController {
   static getAllQuestions(req, res) {
@@ -49,23 +54,32 @@ class QuestionController {
 
   static getAllQuestionsByUser(req, res) {
     const userId = req.authData.id;
-    getAllQuestionsByUser(userId)
-      .then((results) => {
-        if (results.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
-            data: results.rows,
-          });
-        }
-        return res.status(404).json({
-          status: 404,
-          data: 'No question has been asked so far',
-        });
-      })
-      .catch(error => res.status(400).json({
-        status: 400,
-        error: error.message,
-      }));
+    getSpecificUser(userId)
+      .then((user) => {
+        const userDetails = {
+          fullname: `${user.rows[0].firstname} ${user.rows[0].lastname}`,
+          username: user.rows[0].username,
+        };
+        getAllQuestionsByUser(userId)
+          .then((results) => {
+            if (results.rowCount > 0) {
+              return res.status(200).json({
+                status: 200,
+                data: results.rows,
+                userDetails,
+              });
+            }
+            return res.status(404).json({
+              status: 404,
+              data: 'No question has been asked so far',
+            });
+          })
+          .catch(error => res.status(400).json({
+            status: 400,
+            error: error.message,
+          }));
+      });
+
   }
 
   static createQuestion(req, res) {

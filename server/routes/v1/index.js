@@ -94,7 +94,7 @@ router.post('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
-router.get('/users/:userId', verifyToken, idValidator, getSpecificUser);
+router.get('/user', verifyToken, getSpecificUser);
 router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
 router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 
