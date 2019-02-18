@@ -25,7 +25,8 @@ const seedTables = {
 
   rsvpsTable: `INSERT INTO rsvps (meetup_id, user_id, response)
       VALUES (2, 1, 'yes'),
-      (1, 2, 'no')
+      (1, 2, 'no'),
+      (2, 2, 'yes')
       `,
 
   commentsTable: `INSERT INTO comments(user_id, question_id, comment)
