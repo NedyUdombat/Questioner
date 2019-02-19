@@ -1,14 +1,13 @@
-import Meetup from '../../models/v1/meetup';
 import Question from '../../models/v1/question';
 import User from '../../models/v1/user';
 
 const {
   getAllQuestions, getAllQuestionsForMeetup,
   getAllQuestionsByUser, askQuestion,
+  getSpecificQuestion,
 } = Question;
 
 const { getSpecificUser } = User;
-const { getSpecific } = Meetup;
 
 class QuestionController {
   static getAllQuestions(req, res) {
@@ -78,8 +77,30 @@ class QuestionController {
             status: 400,
             error: error.message,
           }));
-      });
+      })
+      .catch(error => res.status(500).json({ status: 500, error }));
+  }
 
+  static getSpecificQuestion(req, res) {
+    const { questionId } = req.params;
+    getSpecificQuestion(questionId)
+      .then((question) => {
+        if (question.rowCount > 0) {
+          const userId = question.rows[0].user_id;
+          getSpecificUser(userId)
+            .then(user => res.status(200).json({
+              question: question.rows[0],
+              user: user.rows[0],
+            }))
+            .catch(error => res.status(500).json({ status: 500, error }));
+        } else {
+          return res.status(404).json({
+            status: 404,
+            data: 'Question does not exist',
+          });
+        }
+      })
+      .catch(error => res.status(500).json({ status: 500, error }));
   }
 
   static createQuestion(req, res) {

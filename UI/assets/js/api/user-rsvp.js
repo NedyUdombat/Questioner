@@ -22,8 +22,8 @@ window.addEventListener('load', () => {
           const newRsvpAmount = rsvpAmount;
           newRsvpAmount.innerHTML = res.data.length;
         });
-        res.data.forEach((meetup) => {
-          fetch(`http://127.0.0.1:8080/api/v1/meetups/${meetup.meetup_id}`, options)
+        res.data.forEach((rsvp) => {
+          fetch(`http://127.0.0.1:8080/api/v1/meetups/${rsvp.meetup_id}`, options)
             .then(response => response.json())
             .then((response) => {
               output += `<div class="col span_1_of_3">

@@ -33,6 +33,7 @@ const {
 const {
   getAllQuestions, getAllQuestionsForMeetup,
   getAllQuestionsByUser, createQuestion,
+  getSpecificQuestion,
 } = QuestionController;
 
 const {
@@ -109,6 +110,7 @@ router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator
 router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
 router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup);//
 router.get('/questions/user', verifyToken, getAllQuestionsByUser);//
+router.get('/questions/:questionId', verifyToken, getSpecificQuestion);//
 router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion);//
 router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion);//
 
@@ -116,7 +118,7 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
-
+// comments endpoints
 router.get('/comments', verifyToken, isAdmin, getAllComments);//
 router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion);//
 router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
