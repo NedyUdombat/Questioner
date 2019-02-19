@@ -11,7 +11,11 @@ window.addEventListener('load', () => {
   fetch('http://127.0.0.1:8080/api/v1/questions/user', options)
     .then(res => res.json())
     .then((res) => {
-      console.log(res);
+      const questionAmounts = document.querySelectorAll('.question-amount');
+      questionAmounts.forEach((questionAmount) => {
+        const newQuestionAmount = questionAmount;
+        newQuestionAmount.innerHTML = res.data.length;
+      });
       let output = '';
       res.data.forEach((question) => {
         output += `<div class="question-card">
@@ -25,7 +29,7 @@ window.addEventListener('load', () => {
               </div>
             </div>
             <div class="">
-              <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, "YYYYMMDD").fromNow()}</p>
+              <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
             </div>
           </div>
           <div class="card-body question">
@@ -64,8 +68,8 @@ window.addEventListener('load', () => {
               </div>
             </form>
           </div>
-        </div>`
-      })
+        </div>`;
+      });
       const meetupContainer = document.querySelector('#questions');
       meetupContainer.innerHTML = output;
     });

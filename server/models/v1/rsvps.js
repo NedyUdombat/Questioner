@@ -27,7 +27,7 @@ class Rsvps {
 
   static getAllRsvpsByUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM rsvps WHERE user_id = ${id}`)
+      pool.query(`SELECT * FROM rsvps WHERE user_id = ${id} AND response = 'yes'`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
