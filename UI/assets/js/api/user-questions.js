@@ -34,7 +34,10 @@ window.addEventListener('load', () => {
                   <div class="">
                     <p>${res.userDetails.fullname}</p>
                     <p class="f-14 text-grey">@${res.userDetails.username}</p>
-                    <p class="f-12 text-grey"><i>replying to: <span class="truncate">${response.data.topic}</span> </i></p>
+                    <div class="d-flex">
+                      <p class="f-12 text-grey"><i>replying to: &nbsp;</i></p>
+                      <p class="f-12 truncate"><i> ${response.data.topic} </i></p>
+                    </div>
                   </div>
                 </div>
                 <div class="">

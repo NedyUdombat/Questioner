@@ -40,6 +40,9 @@ window.addEventListener('load', () => {
                           <p class="text-blue">${moment(response.data.happening_on).format('DD MMMM YYYY')}</p>
                         </div>
                       </div>
+                      <div class="text-center mt-1">
+                        <i class="fas fa-calendar-check fa-lg fa-fw text-blue"></i>
+                      </div>
                     </a>
                   </div>
                 </div>

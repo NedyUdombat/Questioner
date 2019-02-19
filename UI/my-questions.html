@@ -74,20 +74,6 @@
     <script src="./assets/js/nav.js" charset="utf-8"></script>
     <script src="./assets/js/logout.js" charset="utf-8"></script>
     <script src="./assets/js/api/user-questions.js" charset="utf-8"></script>
-    <script type="text/javascript">
-
-      const truncate = (elem, limit, after) => {
-        if (!elem || !limit) return;
-        let content = elem.textContent.trim();
-        content = content.split(' ').slice(0, limit);
-        content = content.join(' ') + (after || '');
-        const newElem = elem;
-        newElem.textContent = content;
-      };
-
-      const elem = document.querySelector('.truncate');
-      console.log(elem);
-      // truncate(elem, 0, '...');
     </script>
   </body>
 </html>

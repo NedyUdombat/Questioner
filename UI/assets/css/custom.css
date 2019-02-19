@@ -26,7 +26,13 @@ a{
   /* display: none!important; */
 }
 /*  */
-
+.truncate {
+  float: right;
+  width: 200px!important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /*  */
 .btn{
   /* width: 100%; */
