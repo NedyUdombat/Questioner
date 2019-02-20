@@ -28,6 +28,7 @@ const { createAccount, login, logout } = AuthController;
 const {
   getAllUsers, getSpecificUser,
   deleteAllUsers, deleteSpecificUser,
+  getAnyUser,
 } = UserController;
 
 const {
@@ -49,6 +50,7 @@ const {
 const {
   rsvpMeetup, getAllRsvps,
   getAllRsvpsForMeetup, getAllRsvpsByUser,
+  checkRsvpMeetup,
 } = RsvpController;
 
 // deconstructure middlewares
@@ -96,6 +98,7 @@ router.post('/auth/logout', logout);
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
 router.get('/user', verifyToken, getSpecificUser);
+router.get('/user/:userId', verifyToken, getAnyUser);
 router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
 router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 
@@ -103,6 +106,7 @@ router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 router.get('/rsvps', verifyToken, isAdmin, getAllRsvps);//
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup);//
 router.get('/rsvps/user', verifyToken, getAllRsvpsByUser);//
+router.get('/:meetupId/rsvp/user', verifyToken, checkRsvpMeetup);//
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, rsvpDuplicateValidator, rsvpMeetup);//
 

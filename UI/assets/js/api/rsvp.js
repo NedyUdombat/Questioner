@@ -1,3 +1,7 @@
+const token = localStorage.getItem('token');
+let meetupId = document.location.search.split('meetup/')[1];
+meetupId = Number(meetupId);
+
 
 const launchToast = (msg, state) => {
   const toastDiv = document.querySelector('#toast');
@@ -14,10 +18,6 @@ const launchToast = (msg, state) => {
 
 const rsvp = () => {
   const rsvpIcon = document.querySelector('.fa-calendar-check');
-  let meetupId = document.location.search.split('meetup/')[1];
-  meetupId = Number(meetupId);
-
-  const token = localStorage.getItem('token');
   const options = {
     method: 'POST',
     headers: new Headers({

@@ -2,6 +2,7 @@ import Rsvps from '../../models/v1/rsvps';
 
 const { rsvpMeetup, getAllRsvps,
   getAllRsvpsForMeetup, getAllRsvpsByUser,
+  checkRsvpMeetup,
 } = Rsvps;
 
 class RsvpController {
@@ -17,6 +18,30 @@ class RsvpController {
         message: 'Meetup rsvp successful',
         data: results.rows[0],
       }))
+      .catch(error => res.status(400).json({
+        status: 400,
+        error,
+      }));
+  }
+
+  static checkRsvpMeetup(req, res) {
+    const rsvp = {
+      meetupId: req.params.meetupId,
+      userId: req.authData.id,
+    };
+    checkRsvpMeetup(rsvp)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            data: results.rows[0],
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          message: 'User has not rsvped for this meetup',
+        });
+      })
       .catch(error => res.status(400).json({
         status: 400,
         error,
