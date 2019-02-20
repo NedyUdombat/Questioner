@@ -77,21 +77,9 @@ describe('Questioner Server', () => {
       chai.request(app)
         .post('/api/v1/meetups/1/rsvp')
         .set('x-access-token', authToken)
-        .send(validRsvp)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Rsvp meetup successful');
-          done();
-        });
-    });
-
-    it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 400 if status is not yes, no or maybe', (done) => {
-      chai.request(app)
-        .post('/api/v1/meetups/1/rsvp')
-        .set('x-access-token', authToken)
-        .send(invalidRsvp)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.body.message).to.eql('Meetup rsvp successful');
           done();
         });
     });
