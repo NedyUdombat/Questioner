@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 const seedTables = {
   meetupsTable: `INSERT INTO meetups(organizer_name, topic, location, happening_on, image )
-    VALUES ('100daysofcode', 'learning', '302 nwaninba road Uyo Akwa IBom state', to_date('${moment('2019-11-11').format('YYYY-MM-DD')}', 'YYYY MM DD'), 'http://res.cloudinary.com/nedy123/image/upload/v1550365575/demo/an38yitvd6gluvvhisim.jpg'),
+    VALUES ('100daysofcode', 'learniing', '302 nwaninba road Uyo Akwa IBom state', to_date('${moment('2019-11-11').format('YYYY-MM-DD')}', 'YYYY MM DD'), 'http://res.cloudinary.com/nedy123/image/upload/v1550365575/demo/an38yitvd6gluvvhisim.jpg'),
     ('Freecodecamp', 'DB management', 'Isalem junction off jakande estate lekkin phase 2 lagos epe express way', to_date('${moment('2019-08-01').format('YYYY-MM-DD')}', 'YYYY MM DD'), 'http://res.cloudinary.com/nedy123/image/upload/v1550366709/demo/pnpdclh6b9ytwanj2ofm.jpg')
     `,
   usersTable: `INSERT INTO users(firstname, lastname, othername, username, email, password, phonenumber, role)
@@ -25,8 +25,7 @@ const seedTables = {
 
   rsvpsTable: `INSERT INTO rsvps (meetup_id, user_id, response)
       VALUES (2, 1, 'yes'),
-      (1, 2, 'no'),
-      (2, 2, 'yes')
+      (1, 1, 'no')
       `,
 
   commentsTable: `INSERT INTO comments(user_id, question_id, comment)

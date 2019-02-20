@@ -1,11 +1,13 @@
 import pool from '../../database/dbConfig';
 import Comment from '../../models/v1/comment';
+import User from '../../models/v1/user';
 
 const {
   commentQuestion, getAllComments,
   getAllCommentsForQuestion, getAllCommentsByUser,
 } = Comment;
 
+const { getSpecificUser } = User;
 
 class CommentController {
   static getAllComments(req, res) {
@@ -52,26 +54,34 @@ class CommentController {
   }
 
   static getAllCommentsByUser(req, res) {
-    const { id } = req.authData;
-    const userId = id;
-    getAllCommentsByUser(userId)
-      .then((comments) => {
-        if (comments.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully retreived all your comments',
-            data: comments.rows,
-          });
-        }
-        return res.status(404).json({
-          status: 404,
-          message: 'No comments For this user',
-        });
+    const userId = req.authData.id;
+    getSpecificUser(userId)
+      .then((user) => {
+        const userDetails = {
+          fullname: `${user.rows[0].firstname} ${user.rows[0].lastname}`,
+          username: user.rows[0].username,
+        };
+        getAllCommentsByUser(userId)
+          .then((comments) => {
+            if (comments.rowCount > 0) {
+              return res.status(200).json({
+                status: 200,
+                message: 'Successfully retreived all your comments',
+                data: comments.rows,
+                userDetails,
+              });
+            }
+            return res.status(404).json({
+              status: 404,
+              message: 'No comments For this user',
+            });
+          })
+          .catch(error => res.status(500).json({
+            status: 500,
+            error,
+          }));
       })
-      .catch(error => res.status(500).json({
-        status: 500,
-        error,
-      }));
+      .catch(error => res.status(500).json({ status: 500, error }));
   }
 
   static commentQuestion(req, res) {
@@ -92,7 +102,7 @@ class CommentController {
               userId,
               title: retreivedQuestion.rows[0].title,
               body: retreivedQuestion.rows[0].body,
-              comment: results.rows[0].comment,
+              comment: results.rows,
             };
             return res.status(201).json({
               status: 201,

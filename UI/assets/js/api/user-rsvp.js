@@ -22,8 +22,8 @@ window.addEventListener('load', () => {
           const newRsvpAmount = rsvpAmount;
           newRsvpAmount.innerHTML = res.data.length;
         });
-        res.data.forEach((meetup) => {
-          fetch(`http://127.0.0.1:8080/api/v1/meetups/${meetup.meetup_id}`, options)
+        res.data.forEach((rsvp) => {
+          fetch(`http://127.0.0.1:8080/api/v1/meetups/${rsvp.meetup_id}`, options)
             .then(response => response.json())
             .then((response) => {
               output += `<div class="col span_1_of_3">
@@ -39,6 +39,9 @@ window.addEventListener('load', () => {
                           <small class="f-12"><i>${response.data.organizer_name}</i></small>
                           <p class="text-blue">${moment(response.data.happening_on).format('DD MMMM YYYY')}</p>
                         </div>
+                      </div>
+                      <div class="text-center mt-1">
+                        <i class="fas fa-calendar-check fa-lg fa-fw text-blue"></i>
                       </div>
                     </a>
                   </div>

@@ -9,22 +9,14 @@ class RsvpController {
     const rsvp = {
       meetupId: req.params.meetupId,
       userId: req.authData.id,
-      status: req.body.status,
+      status: 'yes',
     };
     rsvpMeetup(rsvp)
-      .then((results) => {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Rsvp meetup successful',
-            data: results.rows,
-          });
-        }
-        return res.status(400).json({
-          status: 400,
-          error: 'Could not rsvp for meetup',
-        });
-      })
+      .then(results => res.status(201).json({
+        status: 201,
+        message: 'Meetup rsvp successful',
+        data: results.rows[0],
+      }))
       .catch(error => res.status(400).json({
         status: 400,
         error,

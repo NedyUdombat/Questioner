@@ -49,7 +49,8 @@ const createTables = {
       question_id INT not null,
       comment VARCHAR not null,
       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-      FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
+      FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE,
+      created_on DATE DEFAULT NOW()
     )`,
 
   votesTable: `CREATE TYPE type AS ENUM ('upvote', 'downvote');

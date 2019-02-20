@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
         output += `<div class="col span_1_of_3">
             <div class="d-flex justify-content-center">
               <div class="product-card">
-                <a href="single-meetup.html">
+                <a href="single-meetup.html?meetup/${meetup.id}">
                   <div class="card-image-top">
                     <img src="${meetup.image}" alt="empty cart" class="product-image">
                   </div>

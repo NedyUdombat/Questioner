@@ -8,7 +8,7 @@ import VoteController from '../../controllers/v1/vote';
 import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
-import MeetupValidator from '../../middlewares/MeetupValidator';
+import RsvpValidator from '../../middlewares/RsvpValidator';
 import CreateQuestionValidator from '../../middlewares/CreateQuestionValidator';
 import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
 import AccountValidator from '../../middlewares/AccountValidator';
@@ -33,6 +33,7 @@ const {
 const {
   getAllQuestions, getAllQuestionsForMeetup,
   getAllQuestionsByUser, createQuestion,
+  getSpecificQuestion,
 } = QuestionController;
 
 const {
@@ -53,7 +54,7 @@ const {
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
 const { isAdmin } = VerifyAdmin;
-const { statusValidator } = MeetupValidator;
+const { rsvpDuplicateValidator } = RsvpValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
 const { createMeetupValidator } = CreateMeetupValidator;
 const {
@@ -81,7 +82,7 @@ router.get('/meetups', verifyToken, getAllMeetups);//
 router.get('/meetups/upcoming', getUpcomingMeetups);//
 router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
-router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
+router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), createMeetup);//
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
@@ -103,12 +104,13 @@ router.get('/rsvps', verifyToken, isAdmin, getAllRsvps);//
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup);//
 router.get('/rsvps/user', verifyToken, getAllRsvpsByUser);//
 
-router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
+router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, rsvpDuplicateValidator, rsvpMeetup);//
 
 // question endpoints
 router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
 router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup);//
 router.get('/questions/user', verifyToken, getAllQuestionsByUser);//
+router.get('/questions/:questionId', verifyToken, getSpecificQuestion);//
 router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion);//
 router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion);//
 
@@ -116,7 +118,7 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
-
+// comments endpoints
 router.get('/comments', verifyToken, isAdmin, getAllComments);//
 router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion);//
 router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
