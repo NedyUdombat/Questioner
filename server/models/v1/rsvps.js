@@ -56,6 +56,14 @@ class Rsvps {
         .catch(error => reject(error));
     });
   }
+
+  static checkRsvpMeetup(rsvp) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM rsvps WHERE meetup_id = ${rsvp.meetupId} AND user_id = ${rsvp.userId}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
 }
 
 export default Rsvps;

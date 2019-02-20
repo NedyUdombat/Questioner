@@ -11,7 +11,6 @@ window.addEventListener('load', () => {
   fetch('http://127.0.0.1:8080/api/v1/comments/user', options)
     .then(res => res.json())
     .then((res) => {
-      console.log(res);
       let output = '';
       if (res.status === 404) {
         output = ` <h1 class="text-center" style="margin-top:20%;"> ${res.message} </h1>`;
@@ -27,7 +26,6 @@ window.addEventListener('load', () => {
           fetch(`http://127.0.0.1:8080/api/v1/questions/${comment.question_id}`, options)
             .then(response => response.json())
             .then((response) => {
-              console.log(response);
               output += `<div class="question-card">
                 <div class="card-header details">
                   <div class="d-flex">

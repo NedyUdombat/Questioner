@@ -37,6 +37,7 @@ class QuestionController {
         if (results.rowCount > 0) {
           return res.status(200).json({
             status: 200,
+            amount: results.rowCount,
             data: results.rows,
           });
         }
