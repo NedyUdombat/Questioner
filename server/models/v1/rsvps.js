@@ -49,9 +49,9 @@ class Rsvps {
     });
   }
 
-  static changeRsvpMeetup(rsvp) {
+  static changeRsvpMeetup(rsvp, newResponse) {
     return new Promise((resolve, reject) => {
-      pool.query(`UPDATE rsvps SET response = '${rsvp.response}' WHERE meetup_id = ${rsvp.meetupId} AND user_id = ${rsvp.userId}`)
+      pool.query(`UPDATE rsvps SET response = '${newResponse}' WHERE meetup_id = ${rsvp.meetupId} AND user_id = ${rsvp.userId}   returning *`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

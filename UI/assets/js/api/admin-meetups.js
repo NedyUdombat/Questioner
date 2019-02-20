@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
               <div class="product-card">
                 <a href="single-meetup.html?meetup/${meetup.id}">
                   <div class="card-image-top">
-                    <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
+                    <img src="${meetup.image}" alt="empty cart" class="product-image">
                   </div>
                   <div class="product-card-details">
                     <p class="f-20 "> <b>${meetup.topic}</b> </p>
