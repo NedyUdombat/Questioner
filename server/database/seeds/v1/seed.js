@@ -33,7 +33,7 @@ const seedTables = {
         (1, 1, 'What a day'),
         (2, 2, 'This is amazing'),
         (1, 1, 'LOL'),
-        (1, 2, 'Wawu!!'),
+        (2, 2, 'Wawu!!'),
         (1, 1, 'Hell No'),
         (2, 2, 'I am learning'),
         (1, 2, 'Im impressed')

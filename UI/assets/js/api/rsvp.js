@@ -1,4 +1,3 @@
-const token = localStorage.getItem('token');
 let meetupId = document.location.search.split('meetup/')[1];
 meetupId = Number(meetupId);
 
