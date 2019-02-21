@@ -19,9 +19,18 @@
   padding: 15px 30px;
 }
 #askQuestionModal textarea{
+  border: 1px solid black;
   resize: none;
 }
-
+#askQuestionModal .input-div input{
+  padding: 0px;
+  height:45px;
+  width: 100%;
+  font-size: 18px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  border-radius: 0px;
+}
 /*  */
 .products-list-main-container{
   width: 100%;

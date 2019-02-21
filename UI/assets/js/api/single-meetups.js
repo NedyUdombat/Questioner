@@ -57,8 +57,8 @@ const getSingleMeetupDetails = () => {
               </div>
             </div>
             <div class="card-footer ">
-              <button type="button" class="btn bg-transparent pl-0 tooltip question-btn" onclick="launchModal('askQuestionModal')">
-                <i class="fas fa-plus f-32 text-grey"></i>
+              <button type="button" class="btn bg-transparent pl-0 tooltip question-btn">
+                <i class="fas fa-plus f-32 text-grey"  onclick="startAskQuestion('askQuestionModal', ${res.data.id})"></i>
                 <span class="tooltiptext">Click here to ask</span>
               </button>
 
@@ -98,7 +98,7 @@ const checkIfMeetupIsRsvpedByUser = () => {
         document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to rsvp';
       }
     });
-  }, 1000)
+  }, 2000)
 }
 
 const getSingleMeetupQuestions = () => {
@@ -113,9 +113,7 @@ const getSingleMeetupQuestions = () => {
   fetch(`http://127.0.0.1:8080/api/v1//${meetupId}/questions`, options)
     .then(res => res.json())
     .then((res) => {
-      console.log(res);
       document.querySelector('.question-amount').innerHTML = `${res.amount}`;
-      // return;
       let output ='';
       res.data.forEach((question) => {
         fetch(`http://127.0.0.1:8080/api/v1//user/${question.user_id}`, options)

@@ -22,7 +22,6 @@ const create = (meetup) => {
       document.querySelector('.error').style.display = 'flex';
       document.querySelector('.error').innerHTML = res.message;
     })
-    .catch(err => console.log(err));
 };
 
 const createMeetup = (event) => {

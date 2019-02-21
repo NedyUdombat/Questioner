@@ -129,6 +129,6 @@ router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 
-router.get('/decode', verifyToken, isAdmin, jwtDecode);
+router.get('/decode', verifyToken, jwtDecode);
 
 export default router;
