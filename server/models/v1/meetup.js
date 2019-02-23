@@ -45,6 +45,23 @@ class Meetup {
     });
   }
 
+  static editMeetup(details, id) {
+    const meetupDetails = {
+      organizer_name: details.organizerName,
+      topic: details.topic,
+      location: details.location,
+      happeningOn: moment(details.happeningOn).format('YYYY-MM-DD'),
+      tags: details.tags ? details.tags : '{}',
+      image: details.image ? details.image : '',
+    };
+    return new Promise((resolve, reject) => {
+      pool.query(`UPDATE meetups SET topic = '${meetupDetails.topic}', location = '${meetupDetails.location}', happening_On = '${meetupDetails.happeningOn}', tags = '${meetupDetails.tags}', organizer_name = '${meetupDetails.organizer_name}', image = '${meetupDetails.image}'  WHERE id = ${id} returning *`)
+        .then(results => resolve(results))
+        .catch(error => reject(error));
+    });
+  }
+
+
   static deleteSpecific(id) {
     return new Promise((resolve, reject) => {
       pool.query(`DELETE FROM meetups WHERE id = ${id}`)

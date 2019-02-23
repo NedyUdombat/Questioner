@@ -21,7 +21,7 @@ const create = (meetup) => {
       }
       document.querySelector('.error').style.display = 'flex';
       document.querySelector('.error').innerHTML = res.message;
-    })
+    });
 };
 
 const createMeetup = (event) => {
