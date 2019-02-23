@@ -1,7 +1,7 @@
 const upVoteBtn = document.querySelector('.up-vote-btn');
 const downVoteBtn = document.querySelector('.down-vote-btn');
 
-const rsvpIcon = document.querySelector('.fa-calendar-check');
+// const rsvpIcon = document.querySelector('.fa-calendar-check');
 let upVoteAmount = document.querySelector('.up-vote-amount').innerHTML;
 let downVoteAmount = document.querySelector('.down-vote-amount').innerHTML;
 const commentContainer = document.querySelector('.comment-div');
@@ -11,20 +11,22 @@ let voteCheck = 0;
 let upVoteCount = 1;
 let downVoteCount = 1;
 
-// Toggle rsvp user effect(color)
-const rsvp = () => {
-  if (toggleState === 0) {
-    rsvpIcon.classList.remove('text-grey');
-    rsvpIcon.classList.add('rsvp-blue');
-    document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to cancel';
-    toggleState = 1;
-  } else {
-    rsvpIcon.classList.add('text-grey');
-    rsvpIcon.classList.remove('rsvp-blue');
-    document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to rsvp';
-    toggleState = 0;
-  }
-};
+// // Toggle rsvp user effect(color)
+// const rsvp = () => {
+//   console.log(rsvpIcon);
+//   return;
+//   if (toggleState === 0) {
+//     rsvpIcon.classList.remove('text-grey');
+//     rsvpIcon.classList.add('rsvp-blue');
+//     document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to cancel';
+//     toggleState = 1;
+//   } else {
+//     rsvpIcon.classList.add('text-grey');
+//     rsvpIcon.classList.remove('rsvp-blue');
+//     document.querySelector('.rsvp-tooltip-text').innerHTML = 'Click here to rsvp';
+//     toggleState = 0;
+//   }
+// };
 
 // upvote funtion
 function upVote() {

@@ -2,6 +2,7 @@ import Rsvps from '../../models/v1/rsvps';
 
 const { rsvpMeetup, getAllRsvps,
   getAllRsvpsForMeetup, getAllRsvpsByUser,
+  checkRsvpMeetup,
 } = Rsvps;
 
 class RsvpController {
@@ -9,20 +10,36 @@ class RsvpController {
     const rsvp = {
       meetupId: req.params.meetupId,
       userId: req.authData.id,
-      status: req.body.status,
+      status: 'yes',
     };
     rsvpMeetup(rsvp)
+      .then(results => res.status(201).json({
+        status: 201,
+        message: 'Meetup rsvp successful',
+        data: results.rows[0],
+      }))
+      .catch(error => res.status(400).json({
+        status: 400,
+        error,
+      }));
+  }
+
+  static checkRsvpMeetup(req, res) {
+    const rsvp = {
+      meetupId: req.params.meetupId,
+      userId: req.authData.id,
+    };
+    checkRsvpMeetup(rsvp)
       .then((results) => {
         if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Rsvp meetup successful',
-            data: results.rows,
+          return res.status(200).json({
+            status: 200,
+            data: results.rows[0],
           });
         }
-        return res.status(400).json({
-          status: 400,
-          error: 'Could not rsvp for meetup',
+        return res.status(200).json({
+          status: 200,
+          message: 'User has not rsvped for this meetup',
         });
       })
       .catch(error => res.status(400).json({
@@ -86,7 +103,7 @@ class RsvpController {
         }
         return res.status(404).json({
           status: 404,
-          data: 'you have no rsvps',
+          message: 'you have no rsvps',
         });
       })
       .catch(error => res.status(400).json({

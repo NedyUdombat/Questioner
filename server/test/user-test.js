@@ -86,9 +86,9 @@ describe('Questioner Server', () => {
     /*
     ** Test to get specific user
     */
-    it('/api/v1/users/<userId> should respond with status code 200 and retrieve specific user', (done) => {
+    it('/api/v1/user should respond with status code 200 and retrieve specific user', (done) => {
       chai.request(app)
-        .get('/api/v1/users/2')
+        .get('/api/v1/user')
         .set('x-access-token', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -97,38 +97,14 @@ describe('Questioner Server', () => {
         });
     });
 
-    it('/api/v1/users should respond with status code 404 if the user doesn\'t exist', (done) => {
+    it('/api/v1/user should respond with status code 401 if the requester is not logged in', (done) => {
       chai.request(app)
-        .get('/api/v1/users/100000')
-        .set('x-access-token', authToken)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body.message).to.eql('User not found');
-          expect(res.body.error).to.eql(true);
-          done();
-        });
-    });
-
-    it('/api/v1/users should respond with status code 401 if the requester is not logged in', (done) => {
-      chai.request(app)
-        .get('/api/v1/users/2')
+        .get('/api/v1/user')
         .set('Accept', 'application/json')
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body.message).to.eql('Please provide a JWT token');
           expect(res.body.auth).to.eql(false);
-          done();
-        });
-    });
-
-    it('/api/v1/users should respond with status code 400 if the id is not a number', (done) => {
-      chai.request(app)
-        .get('/api/v1/users/j')
-        .set('x-access-token', authToken)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.message).to.eql('ID can only be a number');
-          expect(res.body.error).to.eql(true);
           done();
         });
     });

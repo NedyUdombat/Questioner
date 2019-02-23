@@ -1,5 +1,5 @@
 window.addEventListener('load', () => {
-  fetch('https://andela-questioner-app.herokuapp.com/api/v1/meetups/upcoming')
+  fetch('http://127.0.0.1:8080/api/v1/meetups/upcoming')
     .then(res => res.json())
     .then((res) => {
       let output = '';
@@ -7,9 +7,9 @@ window.addEventListener('load', () => {
         output += `<div class="col span_1_of_3">
             <div class="d-flex justify-content-center">
               <div class="product-card">
-                <a href="single-meetup.html">
+                <a href="single-meetup.html?meetup/${meetup.id}">
                   <div class="card-image-top">
-                    <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
+                    <img src="${meetup.image}" alt="empty cart" class="product-image">
                   </div>
                   <div class="product-card-details">
                     <p class="f-20 "> <b>${meetup.topic}</b> </p>

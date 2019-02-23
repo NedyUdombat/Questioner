@@ -8,18 +8,20 @@ import VoteController from '../../controllers/v1/vote';
 import RsvpController from '../../controllers/v1/rsvp';
 import ParamsValidator from '../../middlewares/ParamsValidator';
 import VerifyAdmin from '../../middlewares/VerifyAdmin';
-import MeetupValidator from '../../middlewares/MeetupValidator';
+import RsvpValidator from '../../middlewares/RsvpValidator';
 import CreateQuestionValidator from '../../middlewares/CreateQuestionValidator';
 import CreateMeetupValidator from '../../middlewares/CreateMeetupValidator';
 import AccountValidator from '../../middlewares/AccountValidator';
 import VerifyToken from '../../middlewares/VerifyToken';
 import JwtDecode from '../../_helpers/jwtDecode';
+import Upload from '../../middlewares/ImageUpload';
 
 // deconstructure controllers
 const {
   getAllMeetups, getSingleMeetup,
   getUpcomingMeetups, createMeetup,
   deleteSingleMeetup, deleteAllMeetups,
+  editMeetup,
 } = MeetupController;
 
 const { createAccount, login, logout } = AuthController;
@@ -27,11 +29,13 @@ const { createAccount, login, logout } = AuthController;
 const {
   getAllUsers, getSpecificUser,
   deleteAllUsers, deleteSpecificUser,
+  getAnyUser,
 } = UserController;
 
 const {
   getAllQuestions, getAllQuestionsForMeetup,
   getAllQuestionsByUser, createQuestion,
+  getSpecificQuestion,
 } = QuestionController;
 
 const {
@@ -47,14 +51,15 @@ const {
 const {
   rsvpMeetup, getAllRsvps,
   getAllRsvpsForMeetup, getAllRsvpsByUser,
+  checkRsvpMeetup,
 } = RsvpController;
 
 // deconstructure middlewares
 const { idValidator } = ParamsValidator;
 const { isAdmin } = VerifyAdmin;
-const { statusValidator } = MeetupValidator;
+const { rsvpDuplicateValidator } = RsvpValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
-const { createMeetupValidator } = CreateMeetupValidator;
+const { createMeetupValidator, createMeetupDuplicateValidator } = CreateMeetupValidator;
 const {
   createAccountInputValidator, loginAccountValidator,
   createAccountDuplicateValidator,
@@ -70,12 +75,21 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
 
+router.post('/images', Upload.single('image'), (req, res) => {
+  res.status(201).json({
+    result: req.file,
+    ok: 'lets see',
+  });
+});
+
+
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups);//
 router.get('/meetups/upcoming', getUpcomingMeetups);//
 router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
-router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetup);//
+router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetupDuplicateValidator, Upload.single('image'), createMeetup);//
+router.patch('/meetups', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), editMeetup);//
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//
@@ -88,7 +102,8 @@ router.post('/auth/logout', logout);
 
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
-router.get('/users/:userId', verifyToken, idValidator, getSpecificUser);
+router.get('/user', verifyToken, getSpecificUser);
+router.get('/user/:userId', verifyToken, getAnyUser);
 router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
 router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 
@@ -96,13 +111,15 @@ router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
 router.get('/rsvps', verifyToken, isAdmin, getAllRsvps);//
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup);//
 router.get('/rsvps/user', verifyToken, getAllRsvpsByUser);//
+router.get('/:meetupId/rsvp/user', verifyToken, checkRsvpMeetup);//
 
-router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, statusValidator, rsvpMeetup);//
+router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, rsvpDuplicateValidator, rsvpMeetup);//
 
 // question endpoints
 router.get('/questions', verifyToken, isAdmin, getAllQuestions);//
 router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup);//
 router.get('/questions/user', verifyToken, getAllQuestionsByUser);//
+router.get('/questions/:questionId', verifyToken, getSpecificQuestion);//
 router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion);//
 router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion);//
 
@@ -110,13 +127,13 @@ router.post('/questions', verifyToken, createQuestionValidator, createQuestion);
 router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote);//
 router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote);//
 
-
+// comments endpoints
 router.get('/comments', verifyToken, isAdmin, getAllComments);//
 router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion);//
 router.get('/comments/user/', verifyToken, getAllCommentsByUser);//
 
 router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion);//
 
-router.get('/decode', verifyToken, isAdmin, jwtDecode);
+router.get('/decode', verifyToken, jwtDecode);
 
 export default router;

@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
               <div class="product-card">
                 <a href="single-meetup.html?meetup/${meetup.id}">
                   <div class="card-image-top">
-                    <img src="assets/images/meetup1.jfif" alt="empty cart" class="product-image">
+                    <img src="${meetup.image}" alt="empty cart" class="product-image">
                   </div>
                   <div class="product-card-details">
                     <p class="f-20 "> <b>${meetup.topic}</b> </p>
@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
                     </div>
                   </div>
                   <div class="product-card-footer d-flex justify-content-around align-items-center w-100">
-                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
+                    <button type="button" name="button" class="btn bg-transparent w-100"><a href="single-meetup.html?meetup/${meetup.id}"><i class="fas fa-eye fa-lg fa-fw"></i> </a></button>
                     <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-edit fa-lg fa-fw text-blue" onclick="startEdit('editModal', ${meetup.id})"></i> </button>
                     <button type="button" name="button" class="btn bg-transparent w-100"><i class="fas fa-trash fa-lg fa-fw text-red" onclick="startDelete ('deleteMeetupModal', ${meetup.id})"></i> </button>
                   </div>

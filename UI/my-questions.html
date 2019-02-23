@@ -33,9 +33,9 @@
         <ul>
           <li><a href="user-profile.html">My Profile</a></li>
           <li><a href="top-feeds.html">Top Feeds</a></li>
-          <li><a href="my-questions.html" class="active">My Questions (2)</a></li>
-          <li><a href="my-comments.html">My Comments (4)</a></li>
-          <li><a href="rsvp.html">RSVP (3)</a></li>
+          <li><a href="my-questions.html" class="active">My Questions</a></li>
+          <li><a href="my-comments.html">My Comments</a></li>
+          <li><a href="rsvp.html">RSVP</a></li>
         </ul>
       </nav>
     </div>
@@ -44,112 +44,16 @@
       <div class="content h-100 ">
         <div class="d-flex sm justify-content-center">
           <div class="title-tag">
-            <p>My Questions</p>
+            <p>My Questions (<span class="question-amount">0</span>) </p>
             <div class="d-flex justify-content-center">
               <div class="dash"> </div>
             </div>
           </div>
         </div>
-        <div class="question-card">
-          <div class="card-header details">
-            <div class="d-flex">
-              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-              <div class="">
-                <p>Nedy Udombat</p>
-                <p class="f-14 text-grey">@nedy</p>
-                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
-              </div>
-            </div>
-            <div class="">
-              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
-            </div>
-          </div>
-          <div class="card-body question">
-            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
-          </div>
-          <div class="card-footer actions">
-            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
-              <div class="d-flex  w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
-                </button>
-                <span class="up-vote-amount">60</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                </button>
-                <span class="down-vote-amount">4</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
-                  <i class="fas fa-comment f-24"></i>
-                </button>
-                <span class="amount">8</span>
-              </div>
-
-            </div>
-          </div>
-          <div class="bg-white d-none comment-div">
-            <form>
-              <div class="d-flex justify-content-center ">
-                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-blue">comment</button>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="question-card">
-          <div class="card-header details">
-            <div class="d-flex">
-              <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-              <div class="">
-                <p>Nedy Udombat</p>
-                <p class="f-14 text-grey">@nedy</p>
-                <p class="f-12 text-grey"><i>replying to:Making The Web Accessible For Everyone ...</i></p>
-              </div>
-            </div>
-            <div class="">
-              <p class="f-14 text-grey time-posted">Asked : 54 minutes ago</p>
-            </div>
-          </div>
-          <div class="card-body question">
-            <p>Question: What word would you use to describe a man who does not have all his fingers on one hand?</p>
-          </div>
-          <div class="card-footer actions">
-            <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
-              <div class="d-flex  w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                  <i class="fas fa-caret-up text-blue f-28 mr-3"></i>
-                </button>
-                <span class="up-vote-amount">60</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                  <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                </button>
-                <span class="down-vote-amount">4</span>
-              </div>
-              <div class="d-flex w-100 justify-content-center ">
-                <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
-                  <i class="fas fa-comment f-24"></i>
-                </button>
-                <span class="amount">8</span>
-              </div>
-
-            </div>
-          </div>
-          <div class="bg-white d-none comment-div">
-            <form>
-              <div class="d-flex justify-content-center ">
-                <textarea class="w-100" rows="3" maxlength="150" name="question" placeholder="Type your comment here (150 characters max)"></textarea>
-              </div>
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-blue">comment</button>
-              </div>
-            </form>
+        <div id="questions">
+          <div class="d-flex justify-content-center">
+            <i class="fa fa-spinner fa-pulse fa-10x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
@@ -160,13 +64,16 @@
           <ul>
             <li><a href="user-profile.html"><i class="fas fa-user fa-lg fa-fw"></i></a></li>
             <li><a href="top-feeds.html"><i class="fas fa-rss-square fa-lg fa-fw"></i></a></li>
-            <li><a href="my-questions.html" class="active"><i class="fas fa-question fa-lg fa-fw"></i>(2)</a></li>
-            <li><a href="my-comments.html"><i class="fas fa-comment fa-lg fa-fw"></i>(4)</a></li>
-            <li><a href="rsvp.html"><i class="fas fa-calendar-check fa-lg fa-fw"></i>(3)</a></li>
+            <li><a href="my-questions.html" class="active"><i class="fas fa-question fa-lg fa-fw"></i></a></li>
+            <li><a href="my-comments.html"><i class="fas fa-comment fa-lg fa-fw"></i></a></li>
+            <li><a href="rsvp.html"><i class="fas fa-calendar-check fa-lg fa-fw"></i></a></li>
           </ul>
         </nav>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js" charset="utf-8"></script>
     <script src="./assets/js/nav.js" charset="utf-8"></script>
     <script src="./assets/js/logout.js" charset="utf-8"></script>
+    <script src="./assets/js/api/user-questions.js" charset="utf-8"></script>
+    </script>
   </body>
 </html>

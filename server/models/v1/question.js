@@ -34,6 +34,14 @@ class Question {
     });
   }
 
+  static getSpecificQuestion(id) {
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM questions where id = ${id}`)
+        .then(response => resolve(response))
+        .catch(error => reject(error));
+    });
+  }
+
   static askQuestion(question) {
     const createdOn = moment().format();
     return new Promise((resolve, reject) => {

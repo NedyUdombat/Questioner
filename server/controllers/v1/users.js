@@ -3,6 +3,28 @@ import User from '../../models/v1/user';
 
 const { getAllUsers, getSpecificUser, deleteAllUsers, deleteSpecificUser } = User;
 
+const getUser = (req, res, id) => {
+  getSpecificUser(id)
+    .then((user) => {
+      if (user.rowCount > 0) {
+        return res.status(200).json({
+          status: 200,
+          message: 'Successfully retrieved specific user',
+          data: user.rows[0],
+        });
+      }
+      return res.status(404).json({
+        status: 404,
+        message: 'User not found',
+        error: true,
+      });
+    })
+    .catch(error => res.status(400).json({
+      status: 400,
+      error: error.message,
+    }));
+};
+
 class UserController {
   static getAllUsers(req, res) {
     getAllUsers()
@@ -26,26 +48,13 @@ class UserController {
   }
 
   static getSpecificUser(req, res) {
+    const userId = req.authData.id;
+    getUser(req, res, userId);
+  }
+
+  static getAnyUser(req, res) {
     const { userId } = req.params;
-    getSpecificUser(userId)
-      .then((user) => {
-        if (user.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully retrieved specific user',
-            data: user.rows[0],
-          });
-        }
-        return res.status(404).json({
-          status: 404,
-          message: 'User not found',
-          error: true,
-        });
-      })
-      .catch(error => res.status(400).json({
-        status: 400,
-        error: error.message,
-      }));
+    getUser(req, res, userId);
   }
 
   static deleteAllUsers(req, res) {

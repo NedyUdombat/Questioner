@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form id="imag"  enctype="multipart/form-data" method="post">
+
+        <label for="exampleInputFile">File input</label>
+        <input type="file" id="exampleInputFile" name="image">
+      <input type="submit">
+    </form>
+
+    <script>
+
+      const sendImage = (image) => {
+        const options = {
+          method: 'POST',
+          body: JSON.stringify(image),
+          // headers: new Headers({
+          //   'Content-Type': 'application/form-data',
+          // }),
+        };
+
+        fetch('http://127.0.0.1:8080/api/v1/images', options)
+          // .then(res => res.json())
+          .then((res) => {
+            console.log(res)
+          })
+          .catch(err => console.log(err));
+      };
+
+      const sendImageJob = (event) => {
+        event.preventDefault();
+
+        // const el = document.getElementById('exampleInputFile');
+        // const image = el.files[0];
+        // console.log(image);
+        // const bodi = { image };
+        const data = {
+        	image: imageField.files[0]
+        };
+
+        const fd = new FormData(document.querySelector('#imag'))
+        for (const p of fd) {
+        	fd.append(p, data[p])
+        }
+
+        const image {
+        	body: fd
+        }
+        //
+        // const formData = new FormData(document.querySelector('#imag'));
+        // const image = {};
+        // for (const [key, value] of formData.entries()) {
+        //   console.log(image[key] = value);
+        // }
+
+        sendImage(image);
+      };
+
+      document.querySelector('#imag').addEventListener('submit', (event) => {
+        sendImageJob(event);
+      });
+
+    </script>
+  </body>
+</html>
