@@ -21,6 +21,7 @@ const {
   getAllMeetups, getSingleMeetup,
   getUpcomingMeetups, createMeetup,
   deleteSingleMeetup, deleteAllMeetups,
+  editMeetup,
 } = MeetupController;
 
 const { createAccount, login, logout } = AuthController;
@@ -58,7 +59,7 @@ const { idValidator } = ParamsValidator;
 const { isAdmin } = VerifyAdmin;
 const { rsvpDuplicateValidator } = RsvpValidator;
 const { createQuestionValidator } = CreateQuestionValidator;
-const { createMeetupValidator } = CreateMeetupValidator;
+const { createMeetupValidator, createMeetupDuplicateValidator } = CreateMeetupValidator;
 const {
   createAccountInputValidator, loginAccountValidator,
   createAccountDuplicateValidator,
@@ -75,7 +76,10 @@ router.get('/', (req, res) => {
 });
 
 router.post('/images', Upload.single('image'), (req, res) => {
-  res.json(req.file);
+  res.status(201).json({
+    result: req.file,
+    ok: 'lets see',
+  });
 });
 
 
@@ -84,7 +88,8 @@ router.get('/meetups', verifyToken, getAllMeetups);//
 router.get('/meetups/upcoming', getUpcomingMeetups);//
 router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
-router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), createMeetup);//
+router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetupDuplicateValidator, Upload.single('image'), createMeetup);//
+router.patch('/meetups', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), editMeetup);//
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//

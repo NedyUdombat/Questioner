@@ -1,6 +1,6 @@
 import Meetup from '../../models/v1/meetup';
 
-const { getAll, getSpecific, getUpcoming, create, deleteSpecific, deleteAllMeetups } = Meetup;
+const { getAll, getSpecific, getUpcoming, create, deleteSpecific, deleteAllMeetups, editMeetup } = Meetup;
 
 class MeetupController {
   static getAllMeetups(req, res) {
@@ -81,6 +81,28 @@ class MeetupController {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed',
+        });
+      })
+      .catch(error => res.status(400).json({
+        status: 400,
+        error: error.message,
+      }));
+  }
+
+  static editMeetup(req, res) {
+    const meetupsDetails = req.body;
+    editMeetup(meetupsDetails, meetupsDetails.id)
+      .then((results) => {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Meetup Edited',
+            data: results.rows,
+          });
+        }
+        return res.status(500).json({
+          status: 500,
+          error: 'Meetup Edit failed',
         });
       })
       .catch(error => res.status(400).json({

@@ -21,6 +21,14 @@
 #askQuestionModal textarea{
   border: 1px solid black;
   resize: none;
+  font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #828282;
+}
+#askQuestionModal textarea::placeholder{
+  font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #828282;
 }
 #askQuestionModal .input-div input{
   padding: 0px;
@@ -139,20 +147,23 @@
   justify-content: center;
   align-items: center;
 }
-.view-meetups .btn{
+.view-meetups a{
   margin-top: 20px;
   border-radius: 2%;
   width: 15%;
   background: transparent;
   border: 2px solid #00AEFF;
   color: #00AEFF;
+  display: flex;
+  justify-content: center;
+  padding: 1% 0%;
 }
 
-.view-meetups .btn:hover{
+.view-meetups a:hover{
   background: #00AEFF;
   color: #FFFFFF;
 }
-.view-meetups .btn:focus{
+.view-meetups a:focus{
   border: 3px solid #00AEFF;
   color: #FFFFFF;
 }
