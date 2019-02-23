@@ -32,7 +32,7 @@
         <div class="card d-flex justify-content-center">
           <div class="w-90">
             <p class="f-32 text-center text-blue">Sign Up</p>
-            <form class="" id="signup" method="post">
+            <form class="" id="signup" method="post" autocomplete="on">
               <div class="input-grid">
                 <div class="input-div d-flex justify-content-center">
                   <input type="text" name="firstname" id="firstName" value="" placeholder="First Name" class="w-100" required>
@@ -50,10 +50,10 @@
                   <input type="email" name="email" id="email" value="" placeholder="Email Address" class="w-100" required>
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="tel" name="phonenumber" id="phoneNUmber" value="" placeholder="Phone Number" class="w-100">
+                  <input type="tel" name="phonenumber" id="phoneNUmber" value="" placeholder="Phone Number" class="w-100" pattern="{+0-9}[13]">
                 </div>
                 <div class="input-div d-flex justify-content-center">
-                  <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100" required>
+                  <input type="password" name="password" id="password" value="" placeholder="Password" class="w-100" required pattern="(?=.*\d)(?=.*[a-z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                 </div>
                 <div class="input-div d-flex justify-content-center">
                   <input type="password" name="confirmPassword" id="confirmPassword" value="" placeholder="Confirm Password" class="w-100" required>
