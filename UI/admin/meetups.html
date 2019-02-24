@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Questioner | Profile</title>
+    <link rel="stylesheet" href="../assets/css/font.css">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/chrome.css">
+    <link rel="stylesheet" href="../assets/css/meetup.css">
+    <link rel="stylesheet" href="../assets/css/modal.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- External fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="../assets/js/auth.js" charset="utf-8"></script>
+  </head>
+  <body>
+
+    <div class="topnav" id="myTopnav">
+      <a href="../index.html" class="active brand"><span class="f-24 font-bold">Q</span>uestioner</a>
+      <a href="javascript:void(0);"  onclick="logoutButton();" id="logout">logout</a>
+      <a href="user-profile.html">User Profile</a>
+      <a href="meetups.html">Meetups</a>
+      <a href="javascript:void(0);" class="icon" onclick="navbarResponsiveness();">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+
+    <div class="sticky-nav d-flex justify-content-center">
+      <nav>
+        <ul>
+          <li><a href="user-profile.html" class="active">All Meetups</a></li>
+          <li><a href="top-feeds.html">All Users</a></li>
+          <li><a href="my-questions.html">All Questions (2)</a></li>
+          <li><a href="my-comments.html">All Comments (4)</a></li>
+          <li><a href="rsvp.html">All RSVPs (3)</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="content d-flex justify-content-center admin">
+      <div class="w-90">
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-blue create-meetup-btn" onclick="launchModal('createMeetupModal');">Create Meetup</button>
+        </div>
+        <div class="section group">
+          <div class="d-flex justify-content-center">
+            <i class="fa fa-spinner fa-pulse fa-10x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- modals -->
+    <div id="deleteMeetupModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close" onclick="closeModal('deleteMeetupModal')">&times;</span>
+          <h2>&nbsp;</h2>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this meetup?</p>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-red"  onclick="closeModal('deleteMeetupModal')">Cancel</button>
+          <button type="button" class="btn btn-blue" onclick="deleteSpecificMeetup();">Delete</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="editModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close"  onclick="closeModal('editModal')">&times;</span>
+          <h2>&nbsp;</h2>
+        </div>
+        <div class="modal-body">
+          <div class="create-meetup-form">
+            <form class="">
+              <div class="input-grid">
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="meetupName" id="meetupName" value="" placeholder="DevFestSS" class="w-100" sze="35">
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="meetupTopic" id="meetupTopic" value="" placeholder="Web Accessibilty" class="w-100" sie="35">
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="date" name="meetupDate" id="meetupDate" value="" placeholder="12/02/19" class="w-100" sze="35">
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="meetupLocation" id="meetupLocation" value="" placeholder="Tech Zone Park" class="w-100"  sze="35">
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <select class="" name="">
+                    <option value="" class="text-grey">Choose Tag</option>
+                    <option value="">Technology</option>
+                    <option value="">Health</option>
+                  </select>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <button type="button" name="button" class=" btn choose-image-label w-100"><label for="meetupImage"> Choose Image</label></button>
+                  <input type="file" name="meetupImage" value="" id="meetupImage" hidden>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-red"  onclick="closeModal('editModal')">Cancel</button>
+          <button type="button" class="btn btn-blue">Add</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="createMeetupModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close" onclick="closeModal('createMeetupModal')" >&times;</span>
+          <h2>&nbsp;</h2>
+        </div>
+        <div class="modal-body">
+          <div class="create-meetup-form">
+            <form class="" id="createMeetup" method="post">
+              <div class="input-grid">
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="organizerName" id="organizerName" value="" placeholder="Organizer Name" class="w-100" required>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="topic" id="topic" value="" placeholder="Meetup Topic" class="w-100" required>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="date" name="happeningOn" id="happeningOn" value="" placeholder="Meetup Date" class="w-100" required>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <input type="text" name="location" id="location" value="" placeholder="Meetup Location" class="w-100" required>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <select class="" name="tags">
+                    <option value="" class="text-grey">Choose Tag</option>
+                    <option value="">Technology</option>
+                    <option value="">Health</option>
+                  </select>
+                </div>
+                <div class="input-div d-flex justify-content-center">
+                  <button type="button" name="button" class=" btn choose-image-label w-100"><label for="meetupImage"> Choose Image</label></button>
+                  <input type="file" name="meetupImage" value="" id="meetupImage" hidden>
+                </div>
+              </div>
+              <div class="error">
+
+              </div>
+              <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-red"  onclick="closeModal('createMeetupModal')">Cancel</button>
+                <input type="submit" ame="button" class="btn btn-blue" value="Create">
+                <!-- <input type="submit" name="button" value="Sign Up" class="btn btn-blue btn-submit w-100 d-flex justify-content-center align-items-center"> -->
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="center d-flex justify-content-center">
+      <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">&raquo;</a>
+      </div>
+    </div>
+
+
+
+    <div class=" d-flex justify-content-center" id="footer">
+        <nav>
+          <ul>
+            <li><a href="user-profile.html" class="active"><i class="fas fa-user fa-lg fa-fw"></i></a></li>
+            <li><a href="top-feeds.html"><i class="fas fa-rss-square fa-lg fa-fw"></i></a></li>
+            <li><a href="my-questions.html"><i class="fas fa-question fa-lg fa-fw"></i>(2)</a></li>
+            <li><a href="my-comments.html"><i class="fas fa-comment fa-lg fa-fw"></i>(4)</a></li>
+            <li><a href="rsvp.html"><i class="fas fa-calendar-check fa-lg fa-fw"></i>(3)</a></li>
+          </ul>
+        </nav>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js" charset="utf-8"></script>
+    <script src="../assets/js/nav.js" charset="utf-8"></script>
+    <script src="../assets/js/logout.js" charset="utf-8"></script>
+    <script src="../assets/js/modal.js" charset="utf-8"></script>
+    <script src="../assets/js/api/admin-meetups.js" charset="utf-8"></script>
+    <script src="../assets/js/api/create-meetup.js" charset="utf-8"></script>
+    <script src="../assets/js/api/delete-meetup.js" charset="utf-8"></script>
+    <script src="../assets/js/api/edit-meetup.js" charset="utf-8"></script>
+  </body>
+</html>
