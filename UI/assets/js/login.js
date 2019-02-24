@@ -19,7 +19,7 @@ const login = (user) => {
         localStorage.setItem('token', res.jwToken);
         localStorage.setItem('id', res.authDetail.id);
         if (res.authDetail.role === 'admin') {
-          window.location.assign('admin/meetups.html');
+          window.location.assign('admin.html');
         } else {
           window.location.assign('user-profile.html');
         }
