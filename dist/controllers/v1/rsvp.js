@@ -17,7 +17,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _rsvpMeetup = _rsvps2.default.rsvpMeetup,
     _getAllRsvps = _rsvps2.default.getAllRsvps,
     _getAllRsvpsForMeetup = _rsvps2.default.getAllRsvpsForMeetup,
-    _getAllRsvpsByUser = _rsvps2.default.getAllRsvpsByUser;
+    _getAllRsvpsByUser = _rsvps2.default.getAllRsvpsByUser,
+    _checkRsvpMeetup = _rsvps2.default.checkRsvpMeetup;
 
 var RsvpController = function () {
   function RsvpController() {
@@ -30,19 +31,38 @@ var RsvpController = function () {
       var rsvp = {
         meetupId: req.params.meetupId,
         userId: req.authData.id,
-        status: req.body.status
+        status: 'yes'
       };
       _rsvpMeetup(rsvp).then(function (results) {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Rsvp meetup successful',
-            data: results.rows
-          });
-        }
+        return res.status(201).json({
+          status: 201,
+          message: 'Meetup rsvp successful',
+          data: results.rows[0]
+        });
+      }).catch(function (error) {
         return res.status(400).json({
           status: 400,
-          error: 'Could not rsvp for meetup'
+          error: error
+        });
+      });
+    }
+  }, {
+    key: 'checkRsvpMeetup',
+    value: function checkRsvpMeetup(req, res) {
+      var rsvp = {
+        meetupId: req.params.meetupId,
+        userId: req.authData.id
+      };
+      _checkRsvpMeetup(rsvp).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(200).json({
+            status: 200,
+            data: results.rows[0]
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          message: 'User has not rsvped for this meetup'
         });
       }).catch(function (error) {
         return res.status(400).json({
@@ -110,7 +130,7 @@ var RsvpController = function () {
         }
         return res.status(404).json({
           status: 404,
-          data: 'you have no rsvps'
+          message: 'you have no rsvps'
         });
       }).catch(function (error) {
         return res.status(400).json({

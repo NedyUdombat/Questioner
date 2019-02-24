@@ -66,11 +66,30 @@ var Meetup = function () {
         location: details.location,
         happeningOn: newHappeningOn,
         tags: details.tags ? details.tags : '{}',
-        images: details.images ? details.images : '{}',
+        image: details.image ? details.image : '',
         createdOn: (0, _moment2.default)().format()
       };
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('INSERT INTO meetups ( organizer_name, topic, location, happening_On, tags, images, created_on) VALUES (\'' + meetupDetails.organizer_name + '\', \'' + meetupDetails.topic + '\',\'' + meetupDetails.location + '\', \'' + meetupDetails.happeningOn + '\', \'' + meetupDetails.tags + '\', \'' + meetupDetails.images + '\', \'' + meetupDetails.createdOn + '\') returning *').then(function (results) {
+        _dbConfig2.default.query('INSERT INTO meetups ( organizer_name, topic, location, happening_On, tags, image, created_on) VALUES (\'' + meetupDetails.organizer_name + '\', \'' + meetupDetails.topic + '\',\'' + meetupDetails.location + '\', \'' + meetupDetails.happeningOn + '\', \'' + meetupDetails.tags + '\', \'' + meetupDetails.image + '\', \'' + meetupDetails.createdOn + '\') returning *').then(function (results) {
+          return resolve(results);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'editMeetup',
+    value: function editMeetup(details, id) {
+      var meetupDetails = {
+        organizer_name: details.organizerName,
+        topic: details.topic,
+        location: details.location,
+        happeningOn: (0, _moment2.default)(details.happeningOn).format('YYYY-MM-DD'),
+        tags: details.tags ? details.tags : '{}',
+        image: details.image ? details.image : ''
+      };
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('UPDATE meetups SET topic = \'' + meetupDetails.topic + '\', location = \'' + meetupDetails.location + '\', happening_On = \'' + meetupDetails.happeningOn + '\', tags = \'' + meetupDetails.tags + '\', organizer_name = \'' + meetupDetails.organizer_name + '\', image = \'' + meetupDetails.image + '\'  WHERE id = ' + id + ' returning *').then(function (results) {
           return resolve(results);
         }).catch(function (error) {
           return reject(error);

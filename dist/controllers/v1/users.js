@@ -15,9 +15,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _getAllUsers = _user2.default.getAllUsers,
-    _getSpecificUser = _user2.default.getSpecificUser,
+    getSpecificUser = _user2.default.getSpecificUser,
     _deleteAllUsers = _user2.default.deleteAllUsers,
     _deleteSpecificUser = _user2.default.deleteSpecificUser;
+
+
+var getUser = function getUser(req, res, id) {
+  getSpecificUser(id).then(function (user) {
+    if (user.rowCount > 0) {
+      return res.status(200).json({
+        status: 200,
+        message: 'Successfully retrieved specific user',
+        data: user.rows[0]
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: 'User not found',
+      error: true
+    });
+  }).catch(function (error) {
+    return res.status(400).json({
+      status: 400,
+      error: error.message
+    });
+  });
+};
 
 var UserController = function () {
   function UserController() {
@@ -49,27 +72,15 @@ var UserController = function () {
   }, {
     key: 'getSpecificUser',
     value: function getSpecificUser(req, res) {
+      var userId = req.authData.id;
+      getUser(req, res, userId);
+    }
+  }, {
+    key: 'getAnyUser',
+    value: function getAnyUser(req, res) {
       var userId = req.params.userId;
 
-      _getSpecificUser(userId).then(function (user) {
-        if (user.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully retrieved specific user',
-            data: user.rows[0]
-          });
-        }
-        return res.status(404).json({
-          status: 404,
-          message: 'User not found',
-          error: true
-        });
-      }).catch(function (error) {
-        return res.status(400).json({
-          status: 400,
-          error: error.message
-        });
-      });
+      getUser(req, res, userId);
     }
   }, {
     key: 'deleteAllUsers',

@@ -14,6 +14,10 @@ var _comment = require('../../models/v1/comment');
 
 var _comment2 = _interopRequireDefault(_comment);
 
+var _user = require('../../models/v1/user');
+
+var _user2 = _interopRequireDefault(_user);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,6 +26,7 @@ var _commentQuestion = _comment2.default.commentQuestion,
     _getAllComments = _comment2.default.getAllComments,
     _getAllCommentsForQuestion = _comment2.default.getAllCommentsForQuestion,
     _getAllCommentsByUser = _comment2.default.getAllCommentsByUser;
+var getSpecificUser = _user2.default.getSpecificUser;
 
 var CommentController = function () {
   function CommentController() {
@@ -77,26 +82,33 @@ var CommentController = function () {
   }, {
     key: 'getAllCommentsByUser',
     value: function getAllCommentsByUser(req, res) {
-      var id = req.authData.id;
-
-      var userId = id;
-      _getAllCommentsByUser(userId).then(function (comments) {
-        if (comments.rowCount > 0) {
-          return res.status(200).json({
-            status: 200,
-            message: 'Successfully retreived all your comments',
-            data: comments.rows
+      var userId = req.authData.id;
+      getSpecificUser(userId).then(function (user) {
+        var userDetails = {
+          fullname: user.rows[0].firstname + ' ' + user.rows[0].lastname,
+          username: user.rows[0].username
+        };
+        _getAllCommentsByUser(userId).then(function (comments) {
+          if (comments.rowCount > 0) {
+            return res.status(200).json({
+              status: 200,
+              message: 'Successfully retreived all your comments',
+              data: comments.rows,
+              userDetails: userDetails
+            });
+          }
+          return res.status(404).json({
+            status: 404,
+            message: 'No comments For this user'
           });
-        }
-        return res.status(404).json({
-          status: 404,
-          message: 'No comments For this user'
+        }).catch(function (error) {
+          return res.status(500).json({
+            status: 500,
+            error: error
+          });
         });
       }).catch(function (error) {
-        return res.status(500).json({
-          status: 500,
-          error: error
-        });
+        return res.status(500).json({ status: 500, error: error });
       });
     }
   }, {
@@ -118,7 +130,7 @@ var CommentController = function () {
             userId: userId,
             title: retreivedQuestion.rows[0].title,
             body: retreivedQuestion.rows[0].body,
-            comment: results.rows[0].comment
+            comment: results.rows
           };
           return res.status(201).json({
             status: 201,

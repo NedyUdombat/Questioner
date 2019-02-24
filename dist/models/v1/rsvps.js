@@ -56,7 +56,7 @@ var Rsvps = function () {
     key: 'getAllRsvpsByUser',
     value: function getAllRsvpsByUser(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id).then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE user_id = ' + id + ' AND response = \'yes\'').then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -87,9 +87,20 @@ var Rsvps = function () {
     }
   }, {
     key: 'changeRsvpMeetup',
-    value: function changeRsvpMeetup(rsvp) {
+    value: function changeRsvpMeetup(rsvp, newResponse) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('UPDATE rsvps SET response = \'' + rsvp.response + '\' WHERE meetup_id = ' + rsvp.meetupId + ' AND user_id = ' + rsvp.userId).then(function (response) {
+        _dbConfig2.default.query('UPDATE rsvps SET response = \'' + newResponse + '\' WHERE meetup_id = ' + rsvp.meetupId + ' AND user_id = ' + rsvp.userId + '   returning *').then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
+    key: 'checkRsvpMeetup',
+    value: function checkRsvpMeetup(rsvp) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM rsvps WHERE meetup_id = ' + rsvp.meetupId + ' AND user_id = ' + rsvp.userId).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);

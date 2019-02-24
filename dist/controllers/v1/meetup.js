@@ -19,7 +19,8 @@ var getAll = _meetup2.default.getAll,
     getUpcoming = _meetup2.default.getUpcoming,
     create = _meetup2.default.create,
     deleteSpecific = _meetup2.default.deleteSpecific,
-    _deleteAllMeetups = _meetup2.default.deleteAllMeetups;
+    _deleteAllMeetups = _meetup2.default.deleteAllMeetups,
+    _editMeetup = _meetup2.default.editMeetup;
 
 var MeetupController = function () {
   function MeetupController() {
@@ -109,6 +110,29 @@ var MeetupController = function () {
         return res.status(500).json({
           status: 500,
           error: 'Meetup creation failed'
+        });
+      }).catch(function (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message
+        });
+      });
+    }
+  }, {
+    key: 'editMeetup',
+    value: function editMeetup(req, res) {
+      var meetupsDetails = req.body;
+      _editMeetup(meetupsDetails, meetupsDetails.id).then(function (results) {
+        if (results.rowCount > 0) {
+          return res.status(201).json({
+            status: 201,
+            message: 'Meetup Edited',
+            data: results.rows
+          });
+        }
+        return res.status(500).json({
+          status: 500,
+          error: 'Meetup Edit failed'
         });
       }).catch(function (error) {
         return res.status(400).json({

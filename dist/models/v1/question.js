@@ -68,6 +68,17 @@ var Question = function () {
       });
     }
   }, {
+    key: 'getSpecificQuestion',
+    value: function getSpecificQuestion(id) {
+      return new Promise(function (resolve, reject) {
+        _dbConfig2.default.query('SELECT * FROM questions where id = ' + id).then(function (response) {
+          return resolve(response);
+        }).catch(function (error) {
+          return reject(error);
+        });
+      });
+    }
+  }, {
     key: 'askQuestion',
     value: function askQuestion(question) {
       var createdOn = (0, _moment2.default)().format();
