@@ -56,8 +56,8 @@ class MeetupController {
             data: results.rows,
           });
         }
-        return res.status(200).json({
-          status: 200,
+        return res.status(404).json({
+          status: 404,
           error: 'There are no upcoming meetups',
         });
       })
@@ -70,19 +70,11 @@ class MeetupController {
   static createMeetup(req, res) {
     const meetupsDetails = req.body;
     create(meetupsDetails)
-      .then((results) => {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Meetup creation successful',
-            data: results.rows,
-          });
-        }
-        return res.status(500).json({
-          status: 500,
-          error: 'Meetup creation failed',
-        });
-      })
+      .then(results => res.status(201).json({
+        status: 201,
+        message: 'Meetup creation successful',
+        data: results.rows,
+      }))
       .catch(error => res.status(400).json({
         status: 400,
         error: error.message,
@@ -92,19 +84,11 @@ class MeetupController {
   static editMeetup(req, res) {
     const meetupsDetails = req.body;
     editMeetup(meetupsDetails, meetupsDetails.id)
-      .then((results) => {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Meetup Edited',
-            data: results.rows,
-          });
-        }
-        return res.status(500).json({
-          status: 500,
-          error: 'Meetup Edit failed',
-        });
-      })
+      .then(results => res.status(201).json({
+        status: 201,
+        message: 'Meetup Edited',
+        data: results.rows[0],
+      }))
       .catch(error => res.status(400).json({
         status: 400,
         error: error.message,
@@ -123,7 +107,7 @@ class MeetupController {
         }
         return res.status(404).json({
           status: 404,
-          error: 'Meetup Record not found',
+          error: 'Meetup Records not found',
         });
       })
       .catch(error => res.status(400).json({
