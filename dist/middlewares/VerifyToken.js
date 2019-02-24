@@ -40,7 +40,7 @@ var VerifyToken = function () {
       }
       _jsonwebtoken2.default.verify(jwToken, secretHash, function (err, authData) {
         if (err) {
-          return res.status(400).json(err);
+          return res.status(401).json(err);
         }
         req.authData = authData;
         return next();

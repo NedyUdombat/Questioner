@@ -74,16 +74,9 @@ describe('Questioner Server', function () {
     */
 
     it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 200 and rsvp for an upcoming meetup', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/meetups/1/rsvp').set('x-access-token', authToken).send(validRsvp).end(function (err, res) {
+      _chai2.default.request(_server2.default).post('/api/v1/meetups/1/rsvp').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(201);
-        expect(res.body.message).to.eql('Rsvp meetup successful');
-        done();
-      });
-    });
-
-    it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 400 if status is not yes, no or maybe', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/meetups/1/rsvp').set('x-access-token', authToken).send(invalidRsvp).end(function (err, res) {
-        expect(res.status).to.equal(400);
+        expect(res.body.message).to.eql('Meetup rsvp successful');
         done();
       });
     });

@@ -10,6 +10,10 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _dbConfig = require('../database/dbConfig');
+
+var _dbConfig2 = _interopRequireDefault(_dbConfig);
+
 var _post_validators = require('../_helpers/post_validators');
 
 var _post_validators2 = _interopRequireDefault(_post_validators);
@@ -50,6 +54,23 @@ var CreateMeetupValidator = function () {
         });
       }
       return next();
+    }
+  }, {
+    key: 'createMeetupDuplicateValidator',
+    value: function createMeetupDuplicateValidator(req, res, next) {
+      var meetupDetails = req.body;
+      _dbConfig2.default.query('SELECT * from meetups where topic = \'' + meetupDetails.topic + '\' AND location = \'' + meetupDetails.location + '\' AND happening_on= \'' + meetupDetails.happeningOn + '\'').then(function (foundMeetup) {
+        if (foundMeetup.rowCount > 0) {
+          return res.status(409).json({
+            status: 409,
+            message: 'Meetup Already Exists',
+            error: true
+          });
+        }
+        return next();
+      }).catch(function (err) {
+        return res.status(500).json(err);
+      });
     }
   }]);
 
