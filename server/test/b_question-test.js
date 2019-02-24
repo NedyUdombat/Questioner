@@ -59,6 +59,9 @@ describe('Questioner Server', () => {
         });
     });
 
+    /*
+    ** Testing Comment Creation
+    */
     it('/api/v1/1/comments should respond with status code 201 and comment on a question', (done) => {
       chai.request(app)
         .post('/api/v1/1/comments')
@@ -66,6 +69,17 @@ describe('Questioner Server', () => {
         .send(comment)
         .end((err, res) => {
           expect(res.status).to.equal(201);
+          done();
+        });
+    });
+
+    it('/api/v1/1/comments should respond with status code 404 if question does not exist', (done) => {
+      chai.request(app)
+        .post('/api/v1/10000000/comments')
+        .set('x-access-token', authToken)
+        .send(comment)
+        .end((err, res) => {
+          expect(res.status).to.equal(500);
           done();
         });
     });
@@ -265,6 +279,7 @@ describe('Questioner Server', () => {
           done();
         });
     });
+    
 
     it('/api/v1/questions should respond with status code 401 if user is not logged in', (done) => {
       chai.request(app)

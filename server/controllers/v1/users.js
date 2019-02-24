@@ -67,8 +67,8 @@ class UserController {
             data: users.rows,
           });
         }
-        return res.status(409).json({
-          status: 409,
+        return res.status(404).json({
+          status: 404,
           message: 'No user found',
         });
       })
