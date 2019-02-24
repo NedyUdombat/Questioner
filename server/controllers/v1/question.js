@@ -86,20 +86,13 @@ class QuestionController {
     const { questionId } = req.params;
     getSpecificQuestion(questionId)
       .then((question) => {
-        if (question.rowCount > 0) {
-          const userId = question.rows[0].user_id;
-          getSpecificUser(userId)
-            .then(user => res.status(200).json({
-              question: question.rows[0],
-              user: user.rows[0],
-            }))
-            .catch(error => res.status(500).json({ status: 500, error }));
-        } else {
-          return res.status(404).json({
-            status: 404,
-            data: 'Question does not exist',
-          });
-        }
+        const userId = question.rows[0].user_id;
+        getSpecificUser(userId)
+          .then(user => res.status(200).json({
+            question: question.rows[0],
+            user: user.rows[0],
+          }))
+          .catch(error => res.status(500).json({ status: 500, error }));
       })
       .catch(error => res.status(500).json({ status: 500, error }));
   }

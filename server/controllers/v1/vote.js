@@ -1,15 +1,17 @@
 import Vote from '../../models/v1/vote';
 
-const { voteQuestion, getAllVotesByUser } = Vote;
+const { voteQuestion, getAllVotesForQuestion,
+  checkForDuplicateVoteByUser, changeVoteByUserForQuestion,
+} = Vote;
 
 
-const getAllVotesForQuestion = (req, res, voteType) => {
+const getAllVotesForQuestionFunction = (req, res, voteType) => {
   const { questionId } = req.params;
-  const ids = { userId: req.authData.id, questionId };
-  getAllVotesByUser(voteType, ids)
+  getAllVotesForQuestion(voteType, questionId)
     .then(results => res.status(200).json({
       status: 200,
-      upvote: results.rowCount,
+      voteType,
+      amount: results.rowCount,
     }))
     .catch(error => res.status(400).json({
       status: 400,
@@ -17,44 +19,67 @@ const getAllVotesForQuestion = (req, res, voteType) => {
     }));
 };
 
-const vote = (req, res, voteType) => {
+const voter = (req, res, voteType) => {
   const { questionId } = req.params;
-  const question = {
-    userId: req.authData.id,
-    questionId,
-    voteType,
-  };
-  voteQuestion(question)
-    .then(results => res.status(201).json({
-      status: 201,
-      message: 'Upvote successful',
-      data: results.rows,
-    }))
-    .catch(error => res.status(500).json({
-      status: 500,
-      error,
-    }));
+  const userId = req.authData.id;
+  let newVoteType;
+  const vote = { userId, questionId, voteType };
+  const newVote = { userId, questionId };
+  const ids = { userId, questionId };
+  checkForDuplicateVoteByUser(ids)
+    .then((result) => {
+      if (result.rowCount === 0) {
+        voteQuestion(vote)
+          .then(results => res.status(201).json({
+            status: 201,
+            message: `${voteType} successful`,
+            data: results.rows,
+          }))
+          .catch(error => res.status(500).json({
+            status: 500,
+            error,
+          }));
+      } else if (result.rows[0].vote_type === 'upvote') {
+        newVoteType = 'downvote';
+        newVote.newVoteType = newVoteType;
+        changeVoteByUserForQuestion(newVote)
+          .then(response => res.status(201).json({
+            status: 201,
+            message: `${newVoteType} successful`,
+            data: response.rows,
+          }));
+      } else if (result.rows[0].vote_type === 'downvote') {
+        newVoteType = 'upvote';
+        newVote.newVoteType = newVoteType;
+        changeVoteByUserForQuestion(newVote)
+          .then(response => res.status(201).json({
+            status: 201,
+            message: `${newVoteType} successful`,
+            data: response.rows,
+          }));
+      }
+    });
 };
 
 class VoteController {
   static upVote(req, res) {
     const voteType = 'upvote';
-    vote(req, res, voteType);
+    voter(req, res, voteType);
   }
 
   static downVote(req, res) {
     const voteType = 'downvote';
-    vote(req, res, voteType);
+    voter(req, res, voteType);
   }
 
   static getAllUpvoteForQuestion(req, res) {
     const voteType = 'upvote';
-    getAllVotesForQuestion(req, res, voteType);
+    getAllVotesForQuestionFunction(req, res, voteType);
   }
 
   static getAllDownvoteForQuestion(req, res) {
     const voteType = 'downvote';
-    getAllVotesForQuestion(req, res, voteType);
+    getAllVotesForQuestionFunction(req, res, voteType);
   }
 }
 

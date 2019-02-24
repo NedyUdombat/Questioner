@@ -42,12 +42,16 @@ const seedTables = {
   votesTable: `INSERT INTO votes(user_id, question_id, vote_type )
       VALUES (1, 1, 'upvote'),
       (1, 2, 'downvote'),
-      (1, 1, 'upvote'),
-      (1, 2, 'downvote'),
-      (1, 1, 'upvote'),
-      (1, 2, 'downvote'),
-      (1, 1, 'upvote'),
-      (1, 2, 'downvote')
+      (2, 2, 'downvote'),
+      (1, 4, 'downvote'),
+      (2, 4, 'upvote'),
+      (1, 5, 'upvote'),
+      (2, 5, 'upvote'),
+      (1, 6, 'downvote'),
+      (1, 7, 'upvote'),
+      (2, 7, 'upvote'),
+      (1, 8, 'downvote'),
+      (2, 8, 'upvote')
       `,
 };
 
