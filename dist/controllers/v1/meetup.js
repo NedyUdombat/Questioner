@@ -84,8 +84,8 @@ var MeetupController = function () {
             data: results.rows
           });
         }
-        return res.status(200).json({
-          status: 200,
+        return res.status(404).json({
+          status: 404,
           error: 'There are no upcoming meetups'
         });
       }).catch(function (error) {
@@ -100,16 +100,10 @@ var MeetupController = function () {
     value: function createMeetup(req, res) {
       var meetupsDetails = req.body;
       create(meetupsDetails).then(function (results) {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Meetup creation successful',
-            data: results.rows
-          });
-        }
-        return res.status(500).json({
-          status: 500,
-          error: 'Meetup creation failed'
+        return res.status(201).json({
+          status: 201,
+          message: 'Meetup creation successful',
+          data: results.rows
         });
       }).catch(function (error) {
         return res.status(400).json({
@@ -123,16 +117,10 @@ var MeetupController = function () {
     value: function editMeetup(req, res) {
       var meetupsDetails = req.body;
       _editMeetup(meetupsDetails, meetupsDetails.id).then(function (results) {
-        if (results.rowCount > 0) {
-          return res.status(201).json({
-            status: 201,
-            message: 'Meetup Edited',
-            data: results.rows
-          });
-        }
-        return res.status(500).json({
-          status: 500,
-          error: 'Meetup Edit failed'
+        return res.status(201).json({
+          status: 201,
+          message: 'Meetup Edited',
+          data: results.rows[0]
         });
       }).catch(function (error) {
         return res.status(400).json({
@@ -154,7 +142,7 @@ var MeetupController = function () {
         }
         return res.status(404).json({
           status: 404,
-          error: 'Meetup Record not found'
+          error: 'Meetup Records not found'
         });
       }).catch(function (error) {
         return res.status(400).json({

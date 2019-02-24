@@ -137,7 +137,7 @@ describe('Questioner Server', () => {
     /*
     ** Test to get any user
     */
-    it('/api/v1/user/1 should respond with status code 200 and retrieve any user', (done) => {
+    it('/api/v1/user/<userId> should respond with status code 200 and retrieve any user', (done) => {
       chai.request(app)
         .get('/api/v1/user/1')
         .set('x-access-token', authToken)
@@ -147,8 +147,18 @@ describe('Questioner Server', () => {
           done();
         });
     });
-
-    it('/api/v1/user should respond with status code 404 if user doesn\t exist', (done) => {
+    it('/api/v1/user/<userId> should respond with status code 400 if id is not a number', (done) => {
+      chai.request(app)
+        .get('/api/v1/user/d')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.eql('ID can only be a number');
+          expect(res.body.error).to.eql(true);
+          done();
+        });
+    });
+    it('/api/v1/user/<userId> should respond with status code 404 if user doesn\t exist', (done) => {
       chai.request(app)
         .get('/api/v1/user/100000000')
         .set('x-access-token', authToken)
@@ -159,7 +169,7 @@ describe('Questioner Server', () => {
           done();
         });
     });
-    it('/api/v1/user should respond with status code 401 if requester is not logged in', (done) => {
+    it('/api/v1/user/<userId> should respond with status code 401 if requester is not logged in', (done) => {
       chai.request(app)
         .get('/api/v1/user/100000000')
         .set('Accept', 'application/json')
@@ -180,6 +190,17 @@ describe('Questioner Server', () => {
         .end((err, res) => {
           expect(res.status).to.eql(200);
           expect(res.body.message).to.eql('Successfully deleted user');
+          done();
+        });
+    });
+    it('/api/v1/users/2 should respond with status code 400 if ID is not a number', (done) => {
+      chai.request(app)
+        .delete('/api/v1/users/me')
+        .set('x-access-token', authTokenAdmin)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.eql('ID can only be a number');
+          expect(res.body.error).to.eql(true);
           done();
         });
     });

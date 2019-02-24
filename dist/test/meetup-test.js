@@ -20,6 +20,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _chai2.default.use(_chaiHttp2.default);
 var expect = _chai2.default.expect;
 var validMeetup = _mockData.mockMeetupDetails.validMeetup,
+    validEditMeetup = _mockData.mockMeetupDetails.validEditMeetup,
     invalidPastMeetup = _mockData.mockMeetupDetails.invalidPastMeetup,
     emptyFieldMeetup = _mockData.mockMeetupDetails.emptyFieldMeetup;
 var validRsvp = _mockData.mockRSVPDetails.validRsvp,
@@ -54,6 +55,14 @@ describe('Questioner Server', function () {
         done();
       });
     });
+    it('/api/v1/meetups should respond with status code 409 if meetup already exists', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/meetups').set('x-access-token', authTokenAdmin).send(validMeetup).end(function (err, res) {
+        expect(res.status).to.equal(409);
+        expect(res.body.message).to.eql('Meetup Already Exists');
+        expect(res.body.error).to.eql(true);
+        done();
+      });
+    });
 
     it('/api/v1/meetups should respond with status code 400 if date is in the past', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/meetups').set('x-access-token', authTokenAdmin).send(invalidPastMeetup).end(function (err, res) {
@@ -74,7 +83,7 @@ describe('Questioner Server', function () {
     */
 
     it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 200 and rsvp for an upcoming meetup', function (done) {
-      _chai2.default.request(_server2.default).post('/api/v1/meetups/1/rsvp').set('x-access-token', authToken).end(function (err, res) {
+      _chai2.default.request(_server2.default).post('/api/v1/meetups/1/rsvp').set('x-access-token', authTokenAdmin).end(function (err, res) {
         expect(res.status).to.equal(201);
         expect(res.body.message).to.eql('Meetup rsvp successful');
         done();
@@ -84,6 +93,26 @@ describe('Questioner Server', function () {
     it('/api/v1/meetups/<meetup-id>/rsvps should respond with status code 404 if meetup does not exist', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/meetups/18/rsvps').set('x-access-token', authToken).send(validRsvp).end(function (err, res) {
         expect(res.status).to.equal(404);
+        done();
+      });
+    });
+  });
+
+  describe('PATCH /', function () {
+    /*
+    ** Testing Meetup Creation
+    */
+    it('/api/v1/meetups should respond with status code 201 and edit a meetup', function (done) {
+      _chai2.default.request(_server2.default).patch('/api/v1/meetups').set('x-access-token', authTokenAdmin).send(validEditMeetup).end(function (err, res) {
+        expect(res.status).to.equal(201);
+        expect(res.body.message).to.eql('Meetup Edited');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+    });
+    it('/api/v1/meetups should respond with status code 400 if meetup id is not provided', function (done) {
+      _chai2.default.request(_server2.default).patch('/api/v1/meetups').set('x-access-token', authTokenAdmin).send(validMeetup).end(function (err, res) {
+        expect(res.status).to.equal(400);
         done();
       });
     });
@@ -200,10 +229,9 @@ describe('Questioner Server', function () {
     });
 
     it('/api/v1/<user-id>/rsvps should respond with status code 404 if that user has no rsvps', function (done) {
-      _chai2.default.request(_server2.default).get('/api/v1/rsvps/10000').set('x-access-token', authTokenAdmin).end(function (err, res) {
-        res.body.data = [];
+      _chai2.default.request(_server2.default).get('/api/v1/rsvps/user').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.eql(404);
-        expect(res.body.data).to.eql([]);
+        expect(res.body.message).to.eql('you have no rsvps');
         done();
       });
     });
@@ -224,9 +252,25 @@ describe('Questioner Server', function () {
       });
     });
 
+    it('/api/v1/meetups should respond with status code 404 if that meetup is not available', function (done) {
+      _chai2.default.request(_server2.default).delete('/api/v1/meetups/100000000').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.error).to.eql('Meetup Record not found');
+        done();
+      });
+    });
+
     it('/api/v1/meetups/1 should respond with status code 200 and delete all Meetups', function (done) {
       _chai2.default.request(_server2.default).delete('/api/v1/meetups').set('x-access-token', authTokenAdmin).end(function (err, res) {
         expect(res.status).to.equal(200);
+        done();
+      });
+    });
+
+    it('/api/v1/meetups/1 should respond with status code 404 if no meetup is found', function (done) {
+      _chai2.default.request(_server2.default).delete('/api/v1/meetups').set('x-access-token', authTokenAdmin).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.error).to.eql('Meetup Records not found');
         done();
       });
     });
@@ -235,6 +279,14 @@ describe('Questioner Server', function () {
       _chai2.default.request(_server2.default).get('/api/v1/meetups').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(404);
         expect(res.body.data).to.eql('No meetups is available');
+        done();
+      });
+    });
+
+    it('/api/v1/meetups/upcoming should respond with status code 404 if there is no upcoming meetup', function (done) {
+      _chai2.default.request(_server2.default).get('/api/v1/meetups/upcoming').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.error).to.eql('There are no upcoming meetups');
         done();
       });
     });

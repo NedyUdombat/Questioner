@@ -110,7 +110,7 @@ const getSingleMeetupQuestions = () => {
       'x-access-token': token,
     }),
   };
-  fetch(`http://127.0.0.1:8080/api/v1//${meetupId}/questions`, options)
+  fetch(`http://127.0.0.1:8080/api/v1/${meetupId}/questions`, options)
     .then(res => res.json())
     .then((res) => {
       let output ='';
@@ -123,61 +123,71 @@ const getSingleMeetupQuestions = () => {
       } else {
         document.querySelector('.question-amount').innerHTML = `${res.amount}`;
         res.data.forEach((question) => {
-          fetch(`http://127.0.0.1:8080/api/v1//user/${question.user_id}`, options)
+          fetch(`http://127.0.0.1:8080/api/v1/user/${question.user_id}`, options)
             .then(response => response.json())
             .then((response) => {
-              output += `<div class="question-card">
-                <div class="card-header details">
-                  <div class="d-flex">
-                    <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-                    <div class="">
-                      <p>${response.data.firstname} ${response.data.lastname}</p>
-                      <p class="f-14 text-grey">@${response.data.username}</p>
+              fetch(`http://127.0.0.1:8080/api/v1/${question.user_id}/upvote`, options)
+              .then(upvote => upvote.json())
+              .then((upvote) => {
+                console.log(upvote);
+                fetch(`http://127.0.0.1:8080/api/v1/${question.user_id}/downvote`, options)
+                .then(downvote => downvote.json())
+                .then(downvote => {
+                  console.log(downvote);
+                  output += `<div class="question-card">
+                    <div class="card-header details">
+                      <div class="d-flex">
+                        <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
+                        <div class="">
+                          <p>${response.data.firstname} ${response.data.lastname}</p>
+                          <p class="f-14 text-grey">@${response.data.username}</p>
+                        </div>
+                      </div>
+                      <div class="">
+                        <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="">
-                    <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
-                  </div>
-                </div>
-                <div class="card-body question">
-                  <p>Question: ${question.body}</p>
-                </div>
-                <div class="card-footer actions">
-                  <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
-                    <div class="d-flex  w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                        <i class="fas fa-caret-up rsvp-blue f-28 mr-3"></i>
-                      </button>
-                      <span class="up-vote-amount">61</span>
+                    <div class="card-body question">
+                      <p>Question: ${question.body}</p>
                     </div>
-                    <div class="d-flex w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                        <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                      </button>
-                      <span class="down-vote-amount">4</span>
-                    </div>
-                    <div class="d-flex w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
-                        <i class="fas fa-comment f-24"></i>
-                      </button>
-                      <span class="amount">8</span>
-                    </div>
+                    <div class="card-footer actions">
+                      <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
+                        <div class="d-flex  w-100 justify-content-center ">
+                          <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
+                            <i class="fas fa-caret-up rsvp-blue f-28 mr-3"></i>
+                          </button>
+                          <span class="up-vote-amount">${upvote.amount}</span>
+                        </div>
+                        <div class="d-flex w-100 justify-content-center ">
+                          <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
+                            <i class="fas fa-caret-down text-red f-28 mr-3"></i>
+                          </button>
+                          <span class="down-vote-amount">${downvote.amount}</span>
+                        </div>
+                        <div class="d-flex w-100 justify-content-center ">
+                          <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
+                            <i class="fas fa-comment f-24"></i>
+                          </button>
+                          <span class="amount">8</span>
+                        </div>
 
-                  </div>
-                </div>
-                <div class="bg-white d-none comment-div">
-                  <form>
-                    <div class="d-flex justify-content-center ">
-                      <textarea class="w-100" rows="5" maxlength="300" name="question" placeholder="Type your comment here (300 characters max)"></textarea>
+                      </div>
                     </div>
-                    <div class="d-flex justify-content-end">
-                      <button type="submit" class="btn btn-blue">comment</button>
+                    <div class="bg-white d-none comment-div">
+                      <form>
+                        <div class="d-flex justify-content-center ">
+                          <textarea class="w-100" rows="5" maxlength="300" name="question" placeholder="Type your comment here (300 characters max)"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                          <button type="submit" class="btn btn-blue">comment</button>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
-              </div>`
-              const meetupContainer = document.querySelector('.question-content');
-              meetupContainer.innerHTML = output;
+                  </div>`
+                  const meetupContainer = document.querySelector('.question-content');
+                  meetupContainer.innerHTML = output;
+                })
+              })
             })
         });
       }

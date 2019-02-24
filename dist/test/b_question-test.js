@@ -68,9 +68,21 @@ describe('Questioner Server', function () {
       });
     });
 
+    /*
+    ** Testing Comment Creation
+    */
     it('/api/v1/1/comments should respond with status code 201 and comment on a question', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/1/comments').set('x-access-token', authToken).send(comment).end(function (err, res) {
         expect(res.status).to.equal(201);
+        done();
+      });
+    });
+
+    it('/api/v1/1/comments should respond with status code 404 if question does not exist', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/10000000/comments').set('x-access-token', authToken).send(comment).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.eql('Question does not exist');
+        expect(res.body.error).to.eql(true);
         done();
       });
     });
@@ -254,7 +266,15 @@ describe('Questioner Server', function () {
     it('/api/v1/question/<question-id>/upvote should respond with status code 200 and upvote a question', function (done) {
       _chai2.default.request(_server2.default).patch('/api/v1/questions/1/upvote').set('x-access-token', authToken).send(validUpvote).end(function (err, res) {
         expect(res.status).to.equal(201);
-        expect(res.body.message).to.eql('Upvote successful');
+        expect(res.body.message).to.eql('upvote successful');
+        done();
+      });
+    });
+    it('/api/v1/question/<question-id>/upvote should respond with status code 404 if question does not exist', function (done) {
+      _chai2.default.request(_server2.default).patch('/api/v1/questions/20000/upvote').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.eql('Question does not exist');
+        expect(res.body.error).to.eql(true);
         done();
       });
     });
@@ -263,8 +283,17 @@ describe('Questioner Server', function () {
     ** Testing Question Downvote
     */
     it('/api/v1/question/<question-id>/downvote should respond with status code 200 and downvote a question', function (done) {
-      _chai2.default.request(_server2.default).patch('/api/v1/questions/2/downvote').set('x-access-token', authToken).send(validDownvote).end(function (err, res) {
+      _chai2.default.request(_server2.default).patch('/api/v1/questions/2/downvote').set('x-access-token', authToken).end(function (err, res) {
         expect(res.status).to.equal(201);
+        expect(res.body.message).to.eql('downvote successful');
+        done();
+      });
+    });
+    it('/api/v1/question/<question-id>/downvote should respond with status code 404 if question does not exist', function (done) {
+      _chai2.default.request(_server2.default).patch('/api/v1/questions/20000/downvote').set('x-access-token', authToken).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.eql('Question does not exist');
+        expect(res.body.error).to.eql(true);
         done();
       });
     });
