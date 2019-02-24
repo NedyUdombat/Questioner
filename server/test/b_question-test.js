@@ -79,7 +79,9 @@ describe('Questioner Server', () => {
         .set('x-access-token', authToken)
         .send(comment)
         .end((err, res) => {
-          expect(res.status).to.equal(500);
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('Question does not exist');
+          expect(res.body.error).to.eql(true);
           done();
         });
     });
@@ -279,7 +281,7 @@ describe('Questioner Server', () => {
           done();
         });
     });
-    
+
 
     it('/api/v1/questions should respond with status code 401 if user is not logged in', (done) => {
       chai.request(app)
@@ -331,7 +333,18 @@ describe('Questioner Server', () => {
         .send(validUpvote)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.message).to.eql('Upvote successful');
+          expect(res.body.message).to.eql('upvote successful');
+          done();
+        });
+    });
+    it('/api/v1/question/<question-id>/upvote should respond with status code 404 if question does not exist', (done) => {
+      chai.request(app)
+        .patch('/api/v1/questions/20000/upvote')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('Question does not exist');
+          expect(res.body.error).to.eql(true);
           done();
         });
     });
@@ -343,9 +356,20 @@ describe('Questioner Server', () => {
       chai.request(app)
         .patch('/api/v1/questions/2/downvote')
         .set('x-access-token', authToken)
-        .send(validDownvote)
         .end((err, res) => {
           expect(res.status).to.equal(201);
+          expect(res.body.message).to.eql('downvote successful');
+          done();
+        });
+    });
+    it('/api/v1/question/<question-id>/downvote should respond with status code 404 if question does not exist', (done) => {
+      chai.request(app)
+        .patch('/api/v1/questions/20000/downvote')
+        .set('x-access-token', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.eql('Question does not exist');
+          expect(res.body.error).to.eql(true);
           done();
         });
     });

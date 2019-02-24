@@ -1,9 +1,9 @@
 import pool from '../../database/dbConfig';
 
 class Vote {
-  static getAllVotesByUser(voteType, id) {
+  static getAllVotesForQuestion(voteType, id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM votes where vote_type = '${voteType}' AND user_id = ${id.userId} AND question_id = ${id.questionId}`)
+      pool.query(`SELECT * FROM votes where vote_type = '${voteType}' AND question_id = ${id}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
@@ -11,7 +11,7 @@ class Vote {
 
   static checkForDuplicateVoteByUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM votes where user_id = ${id.userId}' AND question_id = ${id.questionId}`)
+      pool.query(`SELECT * FROM votes where user_id = ${id.userId} AND question_id = ${id.questionId}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
@@ -19,7 +19,7 @@ class Vote {
 
   static changeVoteByUserForQuestion(question) {
     return new Promise((resolve, reject) => {
-      pool.query(`UPDATE votes  SET vote_type = '${question.voteType}' where user_id = ${question.userId}' AND question_id = ${question.questionId}`)
+      pool.query(`UPDATE votes  SET vote_type = '${question.newVoteType}' where user_id = ${question.userId} AND question_id = ${question.questionId} returning *`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

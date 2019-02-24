@@ -149,7 +149,7 @@ const userAccounts = {
   },
   nonExistentUser: {
     email: 'nedyety@gmail.com',
-    password: 'Iamtheadmin',
+    password: 'Iameadmin',
   },
 };
 
