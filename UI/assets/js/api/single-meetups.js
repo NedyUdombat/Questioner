@@ -127,10 +127,7 @@ const getSingleMeetupQuestions = () => {
             <div class="card-header details">
               <div class="d-flex">
                 <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-                <div class="">
-                  <p>${response.data.firstname} ${response.data.lastname}</p>
-                  <p class="f-14 text-grey">@${response.data.username}</p>
-                </div>
+                
               </div>
               <div class="">
                 <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
@@ -174,7 +171,7 @@ const getSingleMeetupQuestions = () => {
             </div>
           </div>`
           const meetupContainer = document.querySelector('.question-content');
-          meetupContainer.innerHTML = output;});
+          meetupContainer.innerHTML = output;
           // fetch(`http://127.0.0.1:8080/api/v1/user/${question.user_id}`, options)
           //   .then(response => response.json())
           //   .then((response) => {
