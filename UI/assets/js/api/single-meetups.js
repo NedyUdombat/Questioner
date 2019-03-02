@@ -123,66 +123,68 @@ const getSingleMeetupQuestions = () => {
       } else {
         document.querySelector('.question-amount').innerHTML = `${res.amount}`;
         res.data.forEach((question) => {
-          output += `<div class="question-card">
-            <div class="card-header details">
-              <div class="d-flex">
-                <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
-                
-              </div>
-              <div class="">
-                <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
-              </div>
-            </div>
-            <div class="card-body question">
-              <p>Question: ${question.body}</p>
-            </div>
-            <div class="card-footer actions">
-              <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
-                <div class="d-flex  w-100 justify-content-center ">
-                  <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="upvote(${question.id})">
-                    <i class="fas fa-caret-up rsvp-blue f-28 mr-3"></i>
-                  </button>
+          fetch(`http://127.0.0.1:8080/api/v1/user/${question.user_id}`, options)
+            .then(response => response.json())
+            .then((response) => {
+              output += `<div class="question-card">
+                <div class="card-header details">
+                  <div class="d-flex">
+                    <img src="assets/images/placeholder.png" alt="Meetup Image" class="profile-image">
+                    <div class="">
+                      <p>${response.data.firstname} ${response.data.lastname}</p>
+                      <p class="f-14 text-grey">@${response.data.username}</p>
+                    </div>
+                  </div>
+                  <div class="">
+                    <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()} &nbsp; ${question.id}</p>
+                  </div>
                 </div>
-                <div class="d-flex w-100 justify-content-center ">
-                  <span class="amount">${question.vote_amount}</span>
+                <div class="card-body question">
+                  <p>Question: ${question.body}</p>
                 </div>
-                <div class="d-flex w-100 justify-content-center ">
-                  <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                    <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                  </button>
-                </div>
-                <div class="d-flex w-100 justify-content-center ">
-                  <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
-                    <i class="fas fa-comment f-24"></i>
-                  </button>
-                </div>
+                <div class="card-footer actions">
+                  <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
+                    <div class="d-flex  w-100 justify-content-center ">
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="vote('upvote', ${question.id})">
+                        <i class="fas fa-chevron-up rsvp-blue f-28 mr-3"></i>
+                      </button>
+                    </div>
+                    <div class="d-flex w-100 justify-content-center ">
+                      <span class="amount">${question.vote_amount}</span>
+                    </div>
+                    <div class="d-flex w-100 justify-content-center ">
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="vote('downvote', ${question.id})">
+                        <i class="fas fa-chevron-down text-red f-28 mr-3"></i>
+                      </button>
+                    </div>
+                    <div class="d-flex w-100 justify-content-center ">
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="comment(${question.id});">
+                        <i class="fas fa-comment f-24"></i>
+                      </button>
+                    </div>
 
-              </div>
-            </div>
-            <div class="bg-white d-none comment-div">
-              <form>
-                <div class="d-flex justify-content-center ">
-                  <textarea class="w-100" rows="5" maxlength="300" name="question" placeholder="Type your comment here (300 characters max)"></textarea>
+                  </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-blue">comment</button>
+                <div class="bg-white d-none comment-div">
+                  <form>
+                    <div class="d-flex justify-content-center ">
+                      <textarea class="w-100" rows="5" maxlength="300" name="question" placeholder="Type your comment here (300 characters max)"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button type="submit" class="btn btn-blue">comment</button>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-          </div>`
-          const meetupContainer = document.querySelector('.question-content');
-          meetupContainer.innerHTML = output;
-          // fetch(`http://127.0.0.1:8080/api/v1/user/${question.user_id}`, options)
-          //   .then(response => response.json())
-          //   .then((response) => {
-
-            //   fetch(`http://127.0.0.1:8080/api/v1/${question.id}/comments`, options)
-            //   .then(comments => comments.json())
-            //   .then(comments => {
-            //     console.log(comments);
-            //
-            //   })
-            // })
+              </div>`
+              const meetupContainer = document.querySelector('.question-content');
+              meetupContainer.innerHTML = output;
+              // fetch(`http://127.0.0.1:8080/api/v1/${question.id}/comments`, options)
+              // .then(comments => comments.json())
+              // .then(comments => {
+              //   console.log(comments);
+              //
+              // })
+            })
         });
       }
     });
@@ -190,34 +192,22 @@ const getSingleMeetupQuestions = () => {
 
 
 
-//
-// const upvote = (id) => {
-//   const options = {
-//     method: 'PATCH',
-//     headers: new Headers({
-//       Accept: 'application/json',
-//       'Content-Type': 'application/json',
-//       'x-access-token': token,
-//     }),
-//   };
-//   const options2 = {
-//     method: 'GET',
-//     headers: new Headers({
-//       Accept: 'application/json',
-//       'Content-Type': 'application/json',
-//       'x-access-token': token,
-//     }),
-//   };
-//   fetch(`http://127.0.0.1:8080/api/v1/questions/${id}/upvote`, options)
-//     .then(res => res.json())
-//     .then((res) => {
-//       fetch(`http://127.0.0.1:8080/api/v1/${id}/upvote`, options2)
-//         .then(result => result.json())
-//         .then((result) => {
-//           console.log(res);
-//           // document.querySelector('.up-vote-amount').innerHTML = result.amount;
-//           console.log(result.amount);
-//         })
-//     })
-//   console.log(id, upvotediv, upvotedivA, va);
-// }
+const vote = (voteType, id) => {
+  const options = {
+    method: 'PATCH',
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  };
+  fetch(`http://127.0.0.1:8080/api/v1/questions/${id}/${voteType}`, options)
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 409) {
+        alert(res.message);
+      } else {
+        document.location.reload();
+      }
+    })
+}
