@@ -77,11 +77,11 @@ router.get('/', (req, res) => {
   res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
 
-// router.post('/images', Upload.single('image'), (req, res) => {
-//   res.status(201).json({
-//     result: req.file,
-//   });
-// });
+router.post('/images', Upload.single('image'), (req, res) => {
+  res.status(201).json({
+    result: req.file,
+  });
+});
 
 
 // meetup endpoints

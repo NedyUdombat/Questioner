@@ -4,7 +4,7 @@ import pool from '../../database/dbConfig';
 class Question {
   static getAllQuestions() {
     return new Promise((resolve, reject) => {
-      pool.query('SELECT * FROM questions')
+      pool.query('SELECT * FROM questions ORDER BY vote_amount DESC')
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
@@ -12,7 +12,7 @@ class Question {
 
   static getAllQuestionsForMeetup(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM questions where meetup_id = ${id}`)
+      pool.query(`SELECT * FROM questions where meetup_id = ${id} ORDER BY vote_amount DESC`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
@@ -20,7 +20,7 @@ class Question {
 
   static getSpecificQuestionsForMeetupByUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM questions where meetup_id = ${id.meetupId} AND user_id = ${id.userId}`)
+      pool.query(`SELECT * FROM questions where meetup_id = ${id.meetupId} AND user_id = ${id.userId} ORDER BY vote_amount DESC`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
@@ -28,7 +28,7 @@ class Question {
 
   static getAllQuestionsByUser(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM questions where user_id = ${id}`)
+      pool.query(`SELECT * FROM questions where user_id = ${id} ORDER BY vote_amount DESC`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });

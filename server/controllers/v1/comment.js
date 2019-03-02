@@ -40,11 +40,13 @@ class CommentController {
             status: 200,
             message: 'Successfully retreived all comments',
             data: comments.rows,
+            amount: comments.rowCount,
           });
         }
         return res.status(404).json({
           status: 404,
           message: 'No comments For this question',
+          amount: 0,
         });
       })
       .catch(error => res.status(500).json({

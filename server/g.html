@@ -8,61 +8,68 @@
     <form id="imag"  enctype="multipart/form-data" method="post">
 
         <label for="exampleInputFile">File input</label>
-        <input type="file" id="exampleInputFile" name="image">
+        <input type="file" id="filee" name="image" accept="image/*">
       <input type="submit">
     </form>
 
+
+
     <script>
 
-      const sendImage = (image) => {
-        const options = {
-          method: 'POST',
-          body: JSON.stringify(image),
-          // headers: new Headers({
-          //   'Content-Type': 'application/form-data',
-          // }),
-        };
+      // const sendImage = (image) => {
+      //   const options = {
+      //     method: 'POST',
+      //     body: JSON.stringify(image),
+      //     headers: new Headers({
+      //       'Content-Type': 'multipart/form-data',
+      //     }),
+      //   };
+      //
+      //   fetch('http://127.0.0.1:8080/api/v1/images', options)
+      //     // .then(res => res.json())
+      //     .then((res) => {
+      //       console.log(res)
+      //     })
+      //     .catch(err => console.log(err));
+      // };
 
-        fetch('http://127.0.0.1:8080/api/v1/images', options)
-          // .then(res => res.json())
-          .then((res) => {
-            console.log(res)
-          })
-          .catch(err => console.log(err));
-      };
+      // const sendImageJob = (event) => {
+      //   event.preventDefault();
+      //
+      //
+      //   sendImage(image);
+      // };
+      function readFile(file) {
+      	var reader = new FileReader();
 
-      const sendImageJob = (event) => {
-        event.preventDefault();
+      	reader.onloadend = function () {
+      		processFile(reader.result, file.type);
+      	}
 
-        // const el = document.getElementById('exampleInputFile');
-        // const image = el.files[0];
-        // console.log(image);
-        // const bodi = { image };
-        const data = {
-        	image: imageField.files[0]
-        };
+      	reader.onerror = function () {
+      		alert('There was an error reading the file!');
+      	}
 
-        const fd = new FormData(document.querySelector('#imag'))
-        for (const p of fd) {
-        	fd.append(p, data[p])
-        }
+      	reader.readAsDataURL(file);
+      }
 
-        const image {
-        	body: fd
-        }
-        //
-        // const formData = new FormData(document.querySelector('#imag'));
-        // const image = {};
-        // for (const [key, value] of formData.entries()) {
-        //   console.log(image[key] = value);
-        // }
+      if (window.File && window.FileReader && window.FormData) {
 
-        sendImage(image);
-      };
+        document.querySelector('#filee').addEventListener('change', (event) => {
+          var file = event.target.files[0];
 
-      document.querySelector('#imag').addEventListener('submit', (event) => {
-        sendImageJob(event);
-      });
+          if (file) {
+            if (/^image\//i.test(file.type)) {
+              readFile(file);
+            } else {
+              alert('Not a valid image!');
+            }
+          }
+        });
+
+      } else {
+        alert("File upload is not supported!");
+      }
 
     </script>
   </body>

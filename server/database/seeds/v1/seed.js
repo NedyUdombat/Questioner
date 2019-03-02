@@ -12,15 +12,15 @@ const seedTables = {
         ('Jermaine', 'Umanah', 'emmanuel', 'Jermaine1', 'jm1@gmail.com', '${bcrypt.hashSync('Iamtheseededuser', 10)}', 08025137999, 'user')
         `,
 
-  questionsTable: `INSERT INTO questions( meetup_id, user_id, title, body)
-      VALUES (1, 2, 'Possessions', 'If you lost all of your possessions but one, what would you want it to be?'),
-      (2, 1, 'Creation', 'What have you created that you are most proud of?'),
-      (2, 2, 'Interests', 'What are you interested in that most people haven''t heard of?'),
-      (2, 1, 'Book', 'What''s your favorite book?'),
-      (2, 2, 'Learn', 'What''s something you learned in the last week?'),
-      (2, 1, 'Honesty', 'What issue will you always speak your mind about?'),
-      (1, 2, 'Accomplishment', 'What dumb accomplishment are you most proud of?'),
-      (2, 1, 'Clothe', 'What''s your favorite piece of clothing you own?')
+  questionsTable: `INSERT INTO questions( meetup_id, user_id, title, body, vote_amount)
+      VALUES (1, 2, 'Possessions', 'If you lost all of your possessions but one, what would you want it to be?', 0),
+      (2, 1, 'Creation', 'What have you created that you are most proud of?', 0),
+      (2, 2, 'Interests', 'What are you interested in that most people haven''t heard of?', 0),
+      (2, 1, 'Book', 'What''s your favorite book?', 0),
+      (2, 2, 'Learn', 'What''s something you learned in the last week?', 0),
+      (2, 1, 'Honesty', 'What issue will you always speak your mind about?', 0),
+      (1, 2, 'Accomplishment', 'What dumb accomplishment are you most proud of?', 0),
+      (2, 1, 'Clothe', 'What''s your favorite piece of clothing you own?', 0)
       `,
 
   rsvpsTable: `INSERT INTO rsvps (meetup_id, user_id, response)
