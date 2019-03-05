@@ -45,7 +45,7 @@ class Question {
   static askQuestion(question) {
     const createdOn = moment().format();
     return new Promise((resolve, reject) => {
-      pool.query(`INSERT INTO questions ( meetup_id, user_id, title, body, created_on) VALUES (${question.meetupId}, ${question.userId}, '${question.title}', '${question.body}', '${createdOn}') returning *`)
+      pool.query(`INSERT INTO questions ( meetup_id, user_id, title, body, vote_amount, created_on) VALUES (${question.meetupId}, ${question.userId}, '${question.title}', '${question.body}', 0, '${createdOn}') returning *`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
