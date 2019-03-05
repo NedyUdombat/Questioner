@@ -32,7 +32,7 @@ const getSingleMeetupDetails = () => {
           <div class="w-100">
             <div class="card-header">
               <div class="d-flex justify-content-center">
-                <img src="assets/images/meetup1.jfif" alt="Meetup Image" class="meetup-image">
+                <img src="${res.data.image}" alt="Meetup Image" class="meetup-image">
               </div>
               <div class="d-block">
                 <p class="f-24">${res.data.topic}</p>
