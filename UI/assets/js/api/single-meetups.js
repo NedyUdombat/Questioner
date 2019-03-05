@@ -110,7 +110,7 @@ const getSingleMeetupQuestions = () => {
       'x-access-token': token,
     }),
   };
-  fetch(`http://127.0.0.1:8080/api/v1//${meetupId}/questions`, options)
+  fetch(`http://127.0.0.1:8080/api/v1/${meetupId}/questions`, options)
     .then(res => res.json())
     .then((res) => {
       let output ='';
@@ -123,7 +123,7 @@ const getSingleMeetupQuestions = () => {
       } else {
         document.querySelector('.question-amount').innerHTML = `${res.amount}`;
         res.data.forEach((question) => {
-          fetch(`http://127.0.0.1:8080/api/v1//user/${question.user_id}`, options)
+          fetch(`http://127.0.0.1:8080/api/v1/user/${question.user_id}`, options)
             .then(response => response.json())
             .then((response) => {
               output += `<div class="question-card">
@@ -136,7 +136,7 @@ const getSingleMeetupQuestions = () => {
                     </div>
                   </div>
                   <div class="">
-                    <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()}</p>
+                    <p class="f-14 text-grey time-posted">Asked : ${moment(question.created_on, 'YYYYMMDD').fromNow()} &nbsp; ${question.id}</p>
                   </div>
                 </div>
                 <div class="card-body question">
@@ -145,22 +145,22 @@ const getSingleMeetupQuestions = () => {
                 <div class="card-footer actions">
                   <div class="w-45 inner-footer  h-100 d-flex justify-content-between align-items-center">
                     <div class="d-flex  w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 up-vote-btn">
-                        <i class="fas fa-caret-up rsvp-blue f-28 mr-3"></i>
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="vote('upvote', ${question.id})">
+                        <i class="fas fa-chevron-up rsvp-blue f-28 mr-3"></i>
                       </button>
-                      <span class="up-vote-amount">61</span>
                     </div>
                     <div class="d-flex w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 down-vote-btn ">
-                        <i class="fas fa-caret-down text-red f-28 mr-3"></i>
-                      </button>
-                      <span class="down-vote-amount">4</span>
+                      <span class="amount">${question.vote_amount}</span>
                     </div>
                     <div class="d-flex w-100 justify-content-center ">
-                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3 " onclick="comment();">
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="vote('downvote', ${question.id})">
+                        <i class="fas fa-chevron-down text-red f-28 mr-3"></i>
+                      </button>
+                    </div>
+                    <div class="d-flex w-100 justify-content-center ">
+                      <button type="button" class="btn bg-transparent p-0 d-flex mr-3" onclick="comment(${question.id});">
                         <i class="fas fa-comment f-24"></i>
                       </button>
-                      <span class="amount">8</span>
                     </div>
 
                   </div>
@@ -178,8 +178,36 @@ const getSingleMeetupQuestions = () => {
               </div>`
               const meetupContainer = document.querySelector('.question-content');
               meetupContainer.innerHTML = output;
+              // fetch(`http://127.0.0.1:8080/api/v1/${question.id}/comments`, options)
+              // .then(comments => comments.json())
+              // .then(comments => {
+              //   console.log(comments);
+              //
+              // })
             })
         });
       }
     });
+}
+
+
+
+const vote = (voteType, id) => {
+  const options = {
+    method: 'PATCH',
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    }),
+  };
+  fetch(`http://127.0.0.1:8080/api/v1/questions/${id}/${voteType}`, options)
+    .then(res => res.json())
+    .then((res) => {
+      if (res.status === 409) {
+        alert(res.message);
+      } else {
+        document.location.reload();
+      }
+    })
 }

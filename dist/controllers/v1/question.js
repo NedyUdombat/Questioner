@@ -112,22 +112,15 @@ var QuestionController = function () {
       var questionId = req.params.questionId;
 
       _getSpecificQuestion(questionId).then(function (question) {
-        if (question.rowCount > 0) {
-          var userId = question.rows[0].user_id;
-          getSpecificUser(userId).then(function (user) {
-            return res.status(200).json({
-              question: question.rows[0],
-              user: user.rows[0]
-            });
-          }).catch(function (error) {
-            return res.status(500).json({ status: 500, error: error });
+        var userId = question.rows[0].user_id;
+        getSpecificUser(userId).then(function (user) {
+          return res.status(200).json({
+            question: question.rows[0],
+            user: user.rows[0]
           });
-        } else {
-          return res.status(404).json({
-            status: 404,
-            data: 'Question does not exist'
-          });
-        }
+        }).catch(function (error) {
+          return res.status(500).json({ status: 500, error: error });
+        });
       }).catch(function (error) {
         return res.status(500).json({ status: 500, error: error });
       });

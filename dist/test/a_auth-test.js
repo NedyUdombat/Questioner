@@ -48,7 +48,7 @@ describe('Questioner Server', function () {
       });
     });
 
-    it('/api/v1/auth/signup should respond with status code 400 if any fiels=ds is empty or off wrong data type', function (done) {
+    it('/api/v1/auth/signup should respond with status code 400 if any fields is empty or off wrong data type', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/auth/signup').set('Accept', 'application/json').send(invalidUserAccount).end(function (err, res) {
         expect(res.status).to.equal(400);
         done();
@@ -59,18 +59,14 @@ describe('Questioner Server', function () {
     ** Testing Account Login
     */
 
-    // it('/api/v1/auth/login should respond with status code 404 if user does not exist', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/auth/login')
-    //     .set('Accept', 'application/json')
-    //     .send(nonExistentUser)
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(404);
-    //       expect(res.body).to.be.a('object');
-    //       expect(res.body.message).eql('User does not exist');
-    //       done();
-    //     });
-    // });
+    it('/api/v1/auth/login should respond with status code 404 if user does not exist', function (done) {
+      _chai2.default.request(_server2.default).post('/api/v1/auth/login').set('Accept', 'application/json').send(nonExistentUser).end(function (err, res) {
+        expect(res.status).to.equal(404);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).eql('User does not exist');
+        done();
+      });
+    });
 
     it('/api/v1/auth/login should respond with status code 401 if password is incorrect', function (done) {
       _chai2.default.request(_server2.default).post('/api/v1/auth/login').set('Accept', 'application/json').send(wrongPassword).end(function (err, res) {

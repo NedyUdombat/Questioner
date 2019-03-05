@@ -10,6 +10,13 @@ var mockMeetupDetails = {
     happeningOn: '2019-12-12',
     location: 'Uyo, Akwa Ibom State'
   },
+  validEditMeetup: {
+    organizerName: 'DevFest',
+    id: 1,
+    topic: 'Web Accessibility',
+    happeningOn: '2019-12-12',
+    location: 'Uyo, Akwa Ibom State'
+  },
   invalidPastMeetup: {
     organizerName: 'DevFest',
     topic: 'Web Accessibility',
@@ -106,6 +113,16 @@ var userAccounts = {
     phonenumber: '07025137999',
     role: 'user'
   },
+  validTestAccount: {
+    firstname: 'u',
+    lastname: 'er',
+    othername: '',
+    username: 'test',
+    email: 'test@test.com',
+    password: 'tester',
+    phonenumber: '07025137999',
+    role: 'user'
+  },
   invalidUserAccount: {
     firstname: '',
     lastname: 'er',
@@ -136,7 +153,7 @@ var userAccounts = {
   },
   nonExistentUser: {
     email: 'nedyety@gmail.com',
-    password: 'Iamtheadmin'
+    password: 'Iameadmin'
   }
 };
 

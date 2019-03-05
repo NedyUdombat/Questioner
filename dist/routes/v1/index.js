@@ -54,6 +54,10 @@ var _CreateMeetupValidator = require('../../middlewares/CreateMeetupValidator');
 
 var _CreateMeetupValidator2 = _interopRequireDefault(_CreateMeetupValidator);
 
+var _FindValidator = require('../../middlewares/FindValidator');
+
+var _FindValidator2 = _interopRequireDefault(_FindValidator);
+
 var _AccountValidator = require('../../middlewares/AccountValidator');
 
 var _AccountValidator2 = _interopRequireDefault(_AccountValidator);
@@ -118,6 +122,7 @@ var createMeetupValidator = _CreateMeetupValidator2.default.createMeetupValidato
 var createAccountInputValidator = _AccountValidator2.default.createAccountInputValidator,
     loginAccountValidator = _AccountValidator2.default.loginAccountValidator,
     createAccountDuplicateValidator = _AccountValidator2.default.createAccountDuplicateValidator;
+var verifyQuestionId = _FindValidator2.default.verifyQuestionId;
 var verifyToken = _VerifyToken2.default.verifyToken;
 var jwtDecode = _jwtDecode2.default.jwtDecode;
 
@@ -129,12 +134,12 @@ router.get('/', function (req, res) {
   res.json({ message: 'Hi there! Welcome to version 1 of Questioner API!' });
 });
 
-router.post('/images', _ImageUpload2.default.single('image'), function (req, res) {
-  res.status(201).json({
-    result: req.file,
-    ok: 'lets see'
-  });
-});
+// router.post('/images', Upload.single('image'), (req, res) => {
+//   res.status(201).json({
+//     result: req.file,
+//   });
+// });
+
 
 // meetup endpoints
 router.get('/meetups', verifyToken, getAllMeetups); //
@@ -156,15 +161,15 @@ router.post('/auth/logout', logout);
 // User endpoints
 router.get('/users', verifyToken, isAdmin, getAllUsers);
 router.get('/user', verifyToken, getSpecificUser);
-router.get('/user/:userId', verifyToken, getAnyUser);
+router.get('/user/:userId', verifyToken, idValidator, getAnyUser);
 router.delete('/users', verifyToken, isAdmin, deleteAllUsers);
-router.delete('/users/:userId', verifyToken, isAdmin, deleteSpecificUser);
+router.delete('/users/:userId', verifyToken, isAdmin, idValidator, deleteSpecificUser);
 
 // Rsvp endpoints
 router.get('/rsvps', verifyToken, isAdmin, getAllRsvps); //
 router.get('/:meetupId/rsvps', verifyToken, isAdmin, idValidator, getAllRsvpsForMeetup); //
 router.get('/rsvps/user', verifyToken, getAllRsvpsByUser); //
-router.get('/:meetupId/rsvp/user', verifyToken, checkRsvpMeetup); //
+router.get('/:meetupId/rsvp/user', verifyToken, idValidator, checkRsvpMeetup); //
 
 router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, rsvpDuplicateValidator, rsvpMeetup); //
 
@@ -172,20 +177,20 @@ router.post('/meetups/:meetupId/rsvp', verifyToken, idValidator, rsvpDuplicateVa
 router.get('/questions', verifyToken, isAdmin, getAllQuestions); //
 router.get('/:meetupId/questions', verifyToken, idValidator, getAllQuestionsForMeetup); //
 router.get('/questions/user', verifyToken, getAllQuestionsByUser); //
-router.get('/questions/:questionId', verifyToken, getSpecificQuestion); //
-router.get('/:questionId/upvote', verifyToken, idValidator, getAllUpvoteForQuestion); //
-router.get('/:questionId/downvote', verifyToken, idValidator, getAllDownvoteForQuestion); //
+router.get('/questions/:questionId', verifyToken, idValidator, verifyQuestionId, getSpecificQuestion); //
+router.get('/:questionId/upvote', verifyToken, idValidator, verifyQuestionId, getAllUpvoteForQuestion); //
+router.get('/:questionId/downvote', verifyToken, idValidator, verifyQuestionId, getAllDownvoteForQuestion); //
 
 router.post('/questions', verifyToken, createQuestionValidator, createQuestion); //
-router.patch('/questions/:questionId/upvote', verifyToken, idValidator, upVote); //
-router.patch('/questions/:questionId/downvote', verifyToken, idValidator, downVote); //
+router.patch('/questions/:questionId/upvote', verifyToken, idValidator, verifyQuestionId, upVote); //
+router.patch('/questions/:questionId/downvote', verifyToken, idValidator, verifyQuestionId, downVote); //
 
 // comments endpoints
 router.get('/comments', verifyToken, isAdmin, getAllComments); //
-router.get('/:questionId/comments', verifyToken, getAllCommentsForQuestion); //
+router.get('/:questionId/comments', verifyToken, idValidator, verifyQuestionId, getAllCommentsForQuestion); //
 router.get('/comments/user/', verifyToken, getAllCommentsByUser); //
 
-router.post('/:questionId/comments', verifyToken, idValidator, commentQuestion); //
+router.post('/:questionId/comments', verifyToken, idValidator, verifyQuestionId, commentQuestion); //
 
 router.get('/decode', verifyToken, jwtDecode);
 

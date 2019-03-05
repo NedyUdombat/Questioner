@@ -20,10 +20,10 @@ var Vote = function () {
   }
 
   _createClass(Vote, null, [{
-    key: 'getAllVotesByUser',
-    value: function getAllVotesByUser(voteType, id) {
+    key: 'getAllVotesForQuestion',
+    value: function getAllVotesForQuestion(voteType, id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM votes where vote_type = \'' + voteType + '\' AND user_id = ' + id.userId + ' AND question_id = ' + id.questionId).then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM votes where vote_type = \'' + voteType + '\' AND question_id = ' + id).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -34,7 +34,7 @@ var Vote = function () {
     key: 'checkForDuplicateVoteByUser',
     value: function checkForDuplicateVoteByUser(id) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('SELECT * FROM votes where user_id = ' + id.userId + '\' AND question_id = ' + id.questionId).then(function (response) {
+        _dbConfig2.default.query('SELECT * FROM votes where user_id = ' + id.userId + ' AND question_id = ' + id.questionId).then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);
@@ -45,7 +45,7 @@ var Vote = function () {
     key: 'changeVoteByUserForQuestion',
     value: function changeVoteByUserForQuestion(question) {
       return new Promise(function (resolve, reject) {
-        _dbConfig2.default.query('UPDATE votes  SET vote_type = \'' + question.voteType + '\' where user_id = ' + question.userId + '\' AND question_id = ' + question.questionId).then(function (response) {
+        _dbConfig2.default.query('UPDATE votes  SET vote_type = \'' + question.newVoteType + '\' where user_id = ' + question.userId + ' AND question_id = ' + question.questionId + ' returning *').then(function (response) {
           return resolve(response);
         }).catch(function (error) {
           return reject(error);

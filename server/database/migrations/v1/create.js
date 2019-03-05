@@ -29,6 +29,7 @@ const createTables = {
       user_id INT not null,
       title VARCHAR not null,
       body VARCHAR not null,
+      vote_amount INT,
       FOREIGN KEY (meetup_id) REFERENCES meetups (id) ON DELETE CASCADE,
       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
       created_on DATE DEFAULT NOW()
