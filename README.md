@@ -4,9 +4,7 @@ An application to crowd-source questions for a meetup.
 
 [![Build Status](https://travis-ci.org/NedyUdombat/Questioner.svg?branch=develop)](https://travis-ci.org/NedyUdombat/Questioner)
 [![Maintainability](https://api.codeclimate.com/v1/badges/04aa1cdcac75f7879189/maintainability)](https://codeclimate.com/github/NedyUdombat/Questioner/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/04aa1cdcac75f7879189/test_coverage)](https://codeclimate.com/github/NedyUdombat/Questioner/test_coverage)
-[![Coverage Status](https://coveralls.io/repos/github/NedyUdombat/Questioner/badge.svg?branch=develop&kill=cache=1")](https://coveralls.io/github/NedyUdombat/Questioner?branch=develop)
-
+[![Coverage Status](https://coveralls.io/repos/github/NedyUdombat/Questioner/badge.svg?branch=develop)](https://coveralls.io/github/NedyUdombat/Questioner?branch=develop)
 ## Introduction
 Questioner is a web application that helps event organizers gather and prioritize questions to be answered during a meetup event
 * This application helps event organizers arrange questions based on the number of upvotes.
