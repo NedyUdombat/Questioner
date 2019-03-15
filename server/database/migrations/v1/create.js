@@ -19,6 +19,7 @@ const createTables = {
       email VARCHAR UNIQUE not null,
       password VARCHAR not null,
       phonenumber VARCHAR,
+      image VARCHAR,
       role VARCHAR not null,
       registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`,
