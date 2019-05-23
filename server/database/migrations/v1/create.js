@@ -12,8 +12,8 @@ const createTables = {
 
   usersTable: `CREATE TABLE IF NOT EXISTS users(
       id SERIAL PRIMARY KEY,
-      firstname VARCHAR not null,
-      lastname VARCHAR not null,
+      firstname VARCHAR,
+      lastname VARCHAR,
       othername VARCHAR,
       username VARCHAR UNIQUE not null,
       email VARCHAR UNIQUE not null,

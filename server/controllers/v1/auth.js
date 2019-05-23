@@ -40,8 +40,8 @@ class AuthController {
           },
         });
       })
-      .catch(error => res.status(400).json({
-        status: 400,
+      .catch(error => res.status(500).json({
+        status: 500,
         error: error.message,
       }));
   }

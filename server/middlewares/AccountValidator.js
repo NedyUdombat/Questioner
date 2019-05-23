@@ -4,16 +4,11 @@ import pool from '../database/dbConfig';
 
 class AccountValidator {
   static createAccountInputValidator(req, res, next) {
-    const { firstname, lastname, username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    const fields = { firstname, lastname, username, email, password };
-    const fields2 = {
-      othername: req.body.othername,
-      phonenumber: req.body.phonenumber,
-    };
+    const fields = { username, email, password };
     const validator = new Validator();
     validator.validate(fields, 'required|string');
-    validator.validate(fields2, 'string');
 
     if (validator.hasErrors) {
       return res.status(400).json({
