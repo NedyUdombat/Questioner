@@ -57,7 +57,7 @@ const mockQuestionDetails = {
     userId: 1,
     meetupId: 1,
     title: '',
-    body: 'why is GFW not workig when I insert TYF in the config file?',
+    body: '',
   },
   invalidMeetupQuestion: {
     userId: 1,

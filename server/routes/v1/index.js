@@ -90,7 +90,7 @@ router.get('/meetups/upcoming', getUpcomingMeetups);//
 router.get('/meetups/:meetupId', verifyToken, idValidator, getSingleMeetup);//
 
 router.post('/meetups', verifyToken, isAdmin, createMeetupValidator, createMeetupDuplicateValidator, Upload.single('image'), createMeetup);//
-router.patch('/meetups', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), editMeetup);//
+router.patch('/meetups/:id', verifyToken, isAdmin, createMeetupValidator, Upload.single('image'), editMeetup);//
 
 router.delete('/meetups/:meetupId', verifyToken, isAdmin, idValidator, deleteSingleMeetup);//
 router.delete('/meetups', verifyToken, isAdmin, deleteAllMeetups);//

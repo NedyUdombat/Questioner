@@ -83,7 +83,7 @@ class MeetupController {
 
   static editMeetup(req, res) {
     const meetupsDetails = req.body;
-    editMeetup(meetupsDetails, meetupsDetails.id)
+    editMeetup(meetupsDetails, req.params.id)
       .then(results => res.status(201).json({
         status: 201,
         message: 'Meetup Edited',

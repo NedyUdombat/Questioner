@@ -114,7 +114,7 @@ describe('Questioner Server', () => {
     */
     it('/api/v1/meetups should respond with status code 201 and edit a meetup', (done) => {
       chai.request(app)
-        .patch('/api/v1/meetups')
+        .patch('/api/v1/meetups/1')
         .set('x-access-token', authTokenAdmin)
         .send(validEditMeetup)
         .end((err, res) => {
@@ -130,7 +130,7 @@ describe('Questioner Server', () => {
         .set('x-access-token', authTokenAdmin)
         .send(validMeetup)
         .end((err, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           done();
         });
     });
