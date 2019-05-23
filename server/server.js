@@ -5,7 +5,7 @@ import router from './routes/v1/index';
 
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 9000;
 
 app.use(cors());
 app.use(bodyParser.json());
