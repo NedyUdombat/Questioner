@@ -73,7 +73,7 @@ class MeetupController {
       .then(results => res.status(201).json({
         status: 201,
         message: 'Meetup creation successful',
-        data: results.rows,
+        data: results.rows[0],
       }))
       .catch(error => res.status(400).json({
         status: 400,
