@@ -12,7 +12,7 @@ class Question {
 
   static getAllQuestionsForMeetup(id) {
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT * FROM questions where meetup_id = ${id} ORDER BY vote_amount DESC`)
+      pool.query(`SELECT *, (SELECT row_to_json(users) FROM (SELECT firstname, lastname, id, email FROM users WHERE questions.user_id = users.id) AS users) AS users FROM questions where meetup_id = ${id} ORDER BY vote_amount DESC`)
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
